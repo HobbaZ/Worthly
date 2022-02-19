@@ -7,6 +7,8 @@ const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
 const db = require('./config/connection');
 
+const cors = require('cors');
+
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -20,6 +22,7 @@ const server = new ApolloServer({
 server.applyMiddleware({ app });
 
 app.use(express.urlencoded({ extended: false }));
+app.use(cors);
 app.use(express.json());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
