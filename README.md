@@ -5,7 +5,7 @@
 [![GitHub latest commit](https://img.shields.io/github/last-commit/HobbaZ/Worthly)](https://github.com/HobbaZ/Worthly/branches)
 [![GitHub followers](https://img.shields.io/github/followers/HobbaZ.svg)]()
 ![GitHub repo size](https://img.shields.io/github/repo-size/HobbaZ/Worthly)
-[![GitHub issues](https://img.shields.io/github/issues/HobbaZ/Worthly)](https://img.shields.io/github/issues/HobbaZ/Worthly)
+![[GitHub issues](https://img.shields.io/github/issues/HobbaZ/Worthly)](https://img.shields.io/github/issues/HobbaZ/Worthly)
 ![GitHub forks](https://img.shields.io/github/forks/HobbaZ/Worthly)
 ![GitHub language count](https://img.shields.io/github/languages/count/HobbaZ/Worthly)
 
@@ -72,13 +72,13 @@ Then I’m returned to the login screen.
 ## Screenshots
 
 Mobile version
-![Mobile version of Site Homepage](client/images/mobile-version.png)
+![Mobile version of Site Homepage](client/src/assets/images/desktop-version.png)
 
 Desktop version
-![Desktop version of site homepage](client/images/desktop-version.png)
+![Desktop version of site homepage](client/src/assets/images/desktop-version.png)
 
 Saved Stuff page
-![Desktop version of site homepage](client/images/saved-stuff.png)
+![Desktop version of site homepage](client/src/assets/images/saved-stuff.png)
 
 ## Installation
 
