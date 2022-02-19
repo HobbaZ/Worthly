@@ -19,7 +19,7 @@ border: 2px solid black;
 `;
 
 export const Container = styled.div`
-    width: 100%;
+    width: 90%;
     height: 100%;
     margin: 10px auto;
     justify-content: center;

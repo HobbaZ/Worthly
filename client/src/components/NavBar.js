@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Nav, NavBtnLink } from '../styles/NavbarStyle'
+import { NavLink, Nav, NavBtnLink, TitleNav } from '../styles/NavbarStyle'
 
 import Auth from '../utils/auth';
 
@@ -12,7 +12,7 @@ const AppNavbar = () => {
     {/*Show if user not logged in or logged in*/}
       <Nav>
 
-          <NavLink to='/'>Worthly</NavLink>
+          <NavLink to='/'><TitleNav>Worthly</TitleNav></NavLink>
 
           <NavLink to='/'>Search For Stuff</NavLink>
 
