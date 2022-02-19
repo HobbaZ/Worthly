@@ -1,0 +1,31 @@
+{
+  "name": "worthly",
+  "version": "1.0.0",
+  "description": "App that tracks value of your items",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HobbaZ/Project-3-Final-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HobbaZ/Project-3-Final-Project/issues"
+  },
+  "homepage": "https://github.com/HobbaZ/Project-3-Final-Project#readme",
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  },
+  "dependencies": {}
+}
