@@ -20,7 +20,7 @@ Collates estimated values of your various items so you can keep track of them an
 Learnt more about React and incorporating styled components
 
 ## Deployment
-(Website running on Heroku here)[https://worthly.herokuapp.com/])
+[Website running on Heroku here](https://worthly.herokuapp.com/)
 
 ## Table of Contents
 - [Description](#description)
@@ -71,11 +71,14 @@ Then I’m returned to the login screen.
 
 ## Screenshots
 
-Site homepage
-![Site Homepage](client/images/screencapture-localhost-3000-2022-02-08-12_44_39.png)
+Mobile version
+![Mobile version of Site Homepage](client/images/mobile-version.png)
 
-Creating an item
-![Creating an item](client/images/screencapture-localhost-3000-saved-stuff-2022-02-08-12_42_01.png)
+Desktop version
+![Desktop version of site homepage](client/images/desktop-version.png)
+
+Saved Stuff page
+![Desktop version of site homepage](client/images/saved-stuff.png)
 
 ## Installation
 

@@ -151,11 +151,9 @@ const SavedItems = () => {
   }
 
   return (
-    <>
+    <Container>
       <div>
           <h1>Your Saved Stuff!</h1>
-      </div>
-      <div>
       <h2>
           {userData.savedItems?.length
             ? `Viewing ${userData.savedItems.length} saved ${userData.savedItems.length === 1 ? 'item' : 'items'}:`
@@ -245,7 +243,7 @@ const SavedItems = () => {
 
             </Container>
       </div>
-    </>
+    </Container>
   );
 };
 
