@@ -72,7 +72,7 @@ Then I’m returned to the login screen.
 ## Screenshots
 
 Mobile version
-![Mobile version of Site Homepage](client/src/assets/images/desktop-version.png)
+![Mobile version of Site Homepage](client/src/assets/images/mobile-version.png)
 
 Desktop version
 ![Desktop version of site homepage](client/src/assets/images/desktop-version.png)
