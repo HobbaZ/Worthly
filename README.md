@@ -104,8 +104,9 @@ Saved Stuff page
 - React
 - JWT
 - MongoDB
-- Countdown API Ebay API
+- Countdown Ebay API
 - Styled Components
+- Google Fonts
 
 ## Contributors
 [Zachary Hobba](https://github.com/HobbaZ)

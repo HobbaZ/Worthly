@@ -68,6 +68,17 @@ const SavedItems = () => {
     
     return total.toFixed(2);
     };
+
+    const totalValue = () => {
+      let total = 0;
+  
+      for (let index = 0; index < userData.savedItems?.length; index++) {
+        let calcPrice = userData.savedItems[index].price;
+        total = total + parseFloat(calcPrice);
+      }
+      
+      return total.toFixed(2);
+      };
   
     //_____________HIGHEST/LOWEST VALUE ITEMS CALCULATION_____________________
 
@@ -234,12 +245,14 @@ const SavedItems = () => {
 
             {/*Display net profit and loses*/}
             <Container>
-                <h1> Total Stuff Networth</h1>
-                <h4>${netWorth()}</h4>
+                <h1 > Stuff Breakdown</h1>
+                <h4>Total Value: ${totalValue()}</h4>
+                <h4>Total Profit: ${netWorth()}</h4>
+                <h4>Total Spent: ${totalValue()-netWorth()}</h4>
 
-                <h5>Highest profit: ${sort()[0]}</h5>
+                <h4>Highest profit: ${sort()[0]}</h4>
 
-                <h5>Highest loss: ${sort()[1]}</h5>
+                <h4>Highest loss: ${sort()[1]}</h4>
 
             </Container>
       </div>

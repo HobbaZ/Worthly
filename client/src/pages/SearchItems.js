@@ -11,6 +11,7 @@ import { useMutation } from '@apollo/client';
 import { SAVE_ITEM } from '../utils/mutations';
 
 import { saveItemIds, getSavedItemIds } from '../utils/localStorage';
+import HeroImage from '../components/HeroImage';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -155,9 +156,12 @@ return (
     <>
     <Container>
       <div>
+      {/*<HeroImage></HeroImage>*/}
 
           <h1>What is Worthly?</h1>
           <h3>Worthly is a place to track the valuation of the books, toys, collectables and memorabilia on your shelves, in your cupboards or on your desk. Get a reliable estimated value, track this value over time and see how it contributes to your overall stuff networth.</h3>
+
+          
 
           <h2>Search For Stuff!</h2>
               <h3>Search Tips...</h3>
