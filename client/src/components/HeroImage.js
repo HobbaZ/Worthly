@@ -34,37 +34,26 @@
       return currentColour = 'rgba(39, 40, 41, 0.377)';
 
     } else {
-      return currentColour = 'rgba(73, 74, 99, 0.644)';
-      //return currentColour = 'rgb(165, 68, 3, 0.3)';
+      //return currentColour = 'rgba(73, 74, 99, 0.3)';
+      return currentColour = 'rgb(165, 68, 3, 0.3)';
     }
 }
 
 function randBookWidth() {
 
-  let bookWidth = Math.floor(Math.random() * 300 - 250 + 1) + 250;
+  let bookWidth = Math.floor(Math.random() * (300 - 250 + 1)) + 250;
   let bookHeight = Math.floor(Math.random() * (300 - 200 + 1)) + 200;
 
-  let coverHeight = Math.floor(Math.random() * bookHeight) + 1;
-  let coverWidth = Math.floor(Math.random() * bookWidth) + 1;
+  let coverHeight = Math.floor(Math.random() * (bookHeight - (bookHeight/3) +1)) + (bookHeight/3);
+  let coverWidth = Math.floor(Math.random() * (bookWidth - (bookWidth/3) +1)) + (bookWidth/3);
 
   return [bookWidth, bookHeight, coverWidth, coverHeight]
-}
-
-function randToyWidth() {
-
-  let toyWidth = Math.floor(Math.random() * 300 - 250 + 1) + 250;
-  let toyHeight = Math.floor(Math.random() * (200 - 100 + 1)) + 100;
-
-  let coverHeight = Math.floor(Math.random() * toyHeight) + 1;
-  let coverWidth = Math.floor(Math.random() * toyWidth) + 1;
-
-  return [toyWidth, toyHeight, coverWidth, coverHeight]
 }
 
 //Store generated values
 
 function objectToGen() {
-  let object = ["book"];
+  let object = ["book", "collectable", "toy"];
 
   let randNumber = Math.floor(Math.random()*object.length);
     
@@ -77,7 +66,7 @@ function objectToGen() {
       let genCoverWidth = randBookWidth()[2]
       let genCoverHeight = randBookWidth()[3]
 
-      let spineWidth = genBookWidth/4;
+      let spineWidth = genBookWidth/6;
 
       console.log("book ", genBookWidth, genBookHeight, spineWidth)
         
@@ -108,11 +97,93 @@ function objectToGen() {
       {/*cover*/}
       <rect x={0 + (spineWidth + spineWidth/4)} y={0 + (genCoverHeight/4)} width={genCoverWidth} height={genCoverHeight} fill={createRandomColor()} />
       </g>
+
+      {/*shade overlay*/}
+      <rect x="0" y= "0" width="100%" height= "100%" fill={dayChange()} />
+
       </svg>
       
       </>
     )
     }
+
+    if (object[randNumber] === "collectable") {
+      randBookWidth()
+      let genBookWidth = randBookWidth()[0]
+      let genBookHeight = randBookWidth()[1]
+
+      let genCoverWidth = randBookWidth()[2]
+      let genCoverHeight = randBookWidth()[3]
+
+      let cameraLense = createRandomColor();
+
+      let spineWidth = genBookWidth/4;
+
+      console.log("book ", genBookWidth, genBookHeight, spineWidth)
+        
+    return (
+      <>
+      <svg width = {genBookWidth+spineWidth} height = {genBookHeight/2}>
+      
+        {/*old camera*/}
+      <rect x="0" y= "0" width="100%" height= "100%" fill={chosenColour} />
+      
+      <g>
+      {/*stripe*/}
+      <rect x={0 + (spineWidth/3)} y="0" width={randBookWidth()[0]/10} height="100%" fill={createRandomColor()}/>
+      </g>
+
+      <g>
+      {/*strap*/}
+      <rect x={0 - (spineWidth/2)} y="50%" width={spineWidth} height="10%" fill={createRandomColor()}/>
+      </g>
+
+      <g>
+      {/*side*/}
+      <rect x="0" y="0" width={spineWidth} height="100%" fill={dayChange()} />
+      </g>
+
+      <svg x={0 + (spineWidth + spineWidth/4)} y={0 + (genCoverHeight/4)} width={genCoverWidth/4} height={genCoverHeight/4}>
+ 
+      <g>
+      {/*viewfinder*/}
+      <rect x="0" y="0" width="100%" height="100%" fill={cameraLense}/>
+      </g>
+      </svg>
+
+      <svg width = {genBookWidth} height = {genBookHeight/2} x ={spineWidth-10} y ="5%">
+      <g>
+      {/*camera surround*/}
+      <circle cx= "45%" cy="50%" r={(genBookWidth/2)/3} fill="black" />
+      </g>
+
+      <g>
+      {/*lense 1*/}
+      <circle cx="49%" cy="50%" r={(genBookWidth/2)/3} fill={createRandomColor()} />
+      </g>
+
+      <g>
+      {/*lense 2*/}
+      <circle cx="50%" cy="50%" r={(genBookWidth/2)/4} fill="black" />
+      </g>
+
+      <g>
+      {/*lense 3*/}
+      <circle cx="50%" cy="50%" r={(genBookWidth/2)/6} fill={cameraLense} />
+      </g>
+      </svg>
+      {/*shade overlay*/}
+      <rect x="0" y= "0" width="100%" height= "100%" fill={dayChange()} />
+      </svg>
+      
+      </>
+    )
+    }
+
+    if (object[randNumber] === "toy") {
+
+    }
+
 }
   
 const HeroImage = () => {

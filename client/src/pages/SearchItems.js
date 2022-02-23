@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Form, FormField, Label, FormGroup } from '../styles/FormStyle';
 
-import { Button, Container, Image, TextBlock, ResultsContainer, ImageBlock } from '../styles/GenericStyles';
+import { Button, Container, Image, TextBlock, ResultsContainer, ImageBlock, Spinner } from '../styles/GenericStyles';
 
 import Auth from '../utils/auth';
 
@@ -10,7 +10,6 @@ import { useMutation } from '@apollo/client';
 
 import { SAVE_ITEM } from '../utils/mutations';
 
-import { saveItemIds, getSavedItemIds } from '../utils/localStorage';
 import HeroImage from '../components/HeroImage';
 
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -24,17 +23,17 @@ const SearchItemsForm = () => {
     const [showError, setShowError] = useState({itemError: '', priceError: ''});
 
     const [validated] = useState(false);
-  
-    // create state to hold saved itemId values
-    const [savedItemIds] = useState(getSavedItemIds());
 
+    const [loading, setIsLoading] = useState(false);
+  
     // Set up our mutation with an option to handle errors, put in parent form function
-    const [saveItem, { error, data, loading } ] = useMutation(SAVE_ITEM);
+    const [saveItem, { error, data } ] = useMutation(SAVE_ITEM);
   
     // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
-    useEffect(() => {
-      return () => saveItemIds(savedItemIds);
-    });
+    /*useEffect(() => {
+      setTimeout(() => 
+        setIsLoading(true), 3000);
+    }, []); // <- add empty brackets here*/
 
     //Search form handler
     const handleInputChange = event => {
@@ -58,11 +57,12 @@ const SearchItemsForm = () => {
 
     //searchInput.userPaid can't be zero
     if (searchInput.userPaid < 0.01) {
-      return false;
+      return setShowError({itemError: "User Paid can't be zero"})
     }
 
     try {
-  
+      //show loading after button clicked
+      setIsLoading(true)
       const response = await fetch(`https://api.countdownapi.com/request?api_key=${apiKey}&type=search&ebay_domain=ebay.com.au&search_term=${searchInput.itemName}&sold_items=true&completed_items=true&sort_by=price_high_to_low`)
 
       if (!response.ok) {
@@ -72,6 +72,9 @@ const SearchItemsForm = () => {
 
     //Has to match the name of one of the arrays in the response or it won't work
     const { search_results } = await response.json();
+
+    //set loading state back to false after response received
+    setIsLoading(false)
 
     //find total price by adding all prices from the found records
     const averagePrice = () => {
@@ -160,18 +163,16 @@ const SearchItemsForm = () => {
     <p styled={{color: 'green'}}></p>
   }
 
-  if(loading) return <div>Loading...</div>
-
 return (
     <>
     <Container>
       <div>
-      {/*<HeroImage></HeroImage>*/}
+        <div>
+      <HeroImage></HeroImage>
+      </div>
 
           <h1>What is Worthly?</h1>
           <h3>Worthly is a place to track the valuation of the books, toys, collectables and memorabilia on your shelves, in your cupboards or on your desk. Get a reliable estimated value, track this value over time and see how it contributes to your overall stuff networth.</h3>
-
-          
 
           <h2>Search For Stuff!</h2>
               <h3>Search Tips...</h3>
@@ -222,6 +223,7 @@ return (
               Submit
             </Button>
             </FormGroup>
+            
           </Form>
           )}
 
@@ -230,7 +232,9 @@ return (
           )}
 
           {loading? (
-            <div>Searching For Item...</div>
+            <div>Searching For Item...
+              <Spinner>W</Spinner>
+            </div>
             ) : (
       //Display search results
       <div>

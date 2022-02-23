@@ -36,6 +36,23 @@ export const Negative = styled.span`
     color: red;
 `;
 
+export const Spinner = styled.div` 
+    text-align: center;
+    font-size: 30px;
+    text-shadow: 7px 0px black;
+    color: white;
+    text-decoration-line: underline;
+    font-weight: 900;
+    animation: spin 3s linear infinite;
+    margin-top:10px;
+    }
+
+    @keyframes spin {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+`;
+
 export const ResultsContainer = styled.div`
     flex-direction: row;
     width: 70%;

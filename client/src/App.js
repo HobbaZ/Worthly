@@ -16,6 +16,8 @@ import SavedItems from './pages/SavedItems';
 import Footer from './components/Footer';
 import AppNavBar from './components/NavBar';
 
+import './app.css';
+
 const httpLink = createHttpLink({
   uri: '/graphql',
 });

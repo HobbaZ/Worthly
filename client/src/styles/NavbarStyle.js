@@ -25,7 +25,7 @@ export const Nav = styled.nav`
 `;
 
 export const NavLink = styled(Link)`
-  color: rgb(0, 0, 0);
+  color: black;
   margin: 0 auto;
   font-size: 25px;
   font-weight: 500;
