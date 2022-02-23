@@ -17,7 +17,7 @@ const SignupForm = () => {
   // set state for form validation
   const [validated] = useState(false);
 
-  const [addUser ] = useMutation(ADD_USER);
+  const [addUser, { error, data } ] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -54,8 +54,13 @@ const SignupForm = () => {
   return (
     <>
     <Container>
-      {/* This is needed for the validation functionality above */}
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+    <h4>Sign Up</h4>
+      {data ? (
+              <p>
+                Success! Creating your account...
+              </p>
+            ) : (
+      <Form validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
 
         <FormGroup>
@@ -97,6 +102,13 @@ const SignupForm = () => {
           Submit
         </Button>
       </Form>
+      )}
+
+            {error && (
+              <div>
+                {error.message}
+              </div>
+            )}
       </Container>
     </>
   );

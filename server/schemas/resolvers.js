@@ -30,6 +30,7 @@ const resolvers = {
       }
 
       const correctPw = await user.isCorrectPassword(password);
+      
 
       if (!correctPw) {
         throw new AuthenticationError('Incorrect password or email address entered');
@@ -64,6 +65,7 @@ const resolvers = {
 
     //Save item if logged in
     saveItem: async (parent, args, context) => {
+
         if (context.user) {
 
           console.log("These are the arguments passed \n", args)

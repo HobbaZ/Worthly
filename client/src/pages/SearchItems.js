@@ -19,13 +19,17 @@ const SearchItemsForm = () => {
     // create state for holding returned eBay api data
     const [searchedItems, setSearcheditems] = useState([]);
     // create state for holding our search field data
-    const [searchInput, setSearchInput] = useState({ itemName: '', userPaid: 0});
+    const [searchInput, setSearchInput] = useState({ itemName: '', userPaid: 0.01});
+    //display any error messages
+    const [showError, setShowError] = useState({itemError: '', priceError: ''});
+
+    const [validated] = useState(false);
   
     // create state to hold saved itemId values
     const [savedItemIds] = useState(getSavedItemIds());
 
     // Set up our mutation with an option to handle errors, put in parent form function
-    const [saveItem ] = useMutation(SAVE_ITEM);
+    const [saveItem, { error, data, loading } ] = useMutation(SAVE_ITEM);
   
     // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
     useEffect(() => {
@@ -42,14 +46,23 @@ const SearchItemsForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
     if (!searchInput) {
       return false;
     }
 
-    //const search = new SerpApi.GoogleSearch(apiKey)
+    //searchInput.userPaid can't be zero
+    if (searchInput.userPaid < 0.01) {
+      return false;
+    }
 
     try {
-
+  
       const response = await fetch(`https://api.countdownapi.com/request?api_key=${apiKey}&type=search&ebay_domain=ebay.com.au&search_term=${searchInput.itemName}&sold_items=true&completed_items=true&sort_by=price_high_to_low`)
 
       if (!response.ok) {
@@ -57,10 +70,6 @@ const SearchItemsForm = () => {
         throw new Error('something went wrong!');
       }
 
-    /*if (!search) {
-      console.log('Error occured trying to search');
-    }*/
-    
     //Has to match the name of one of the arrays in the response or it won't work
     const { search_results } = await response.json();
 
@@ -92,7 +101,6 @@ const SearchItemsForm = () => {
     const profit = () => {
       let ave = averagePrice()
       let difference = (ave - searchInput.userPaid).toFixed(2)
-
       return difference;
     }
 
@@ -109,10 +117,10 @@ const SearchItemsForm = () => {
       setSearcheditems(searchData);
 
       setSearchInput({
-      //Reset all fields
+      //Persist searchterms until cleared by user
 
-      itemName: '',
-      userPaid: 0,
+      itemName: searchInput.itemName,
+      userPaid: searchInput.userPaid,
     });
     } catch (err) {
       console.error(err);
@@ -152,6 +160,8 @@ const SearchItemsForm = () => {
     <p styled={{color: 'green'}}></p>
   }
 
+  if(loading) return <div>Loading...</div>
+
 return (
     <>
     <Container>
@@ -169,7 +179,13 @@ return (
               <p>The more specific the search term, the better the results</p>
       </div>
 
-          <Form onSubmit={handleFormSubmit}>
+      {data ? (
+              <div>
+                Searching for item...
+              </div>
+            ) : (
+
+          <Form validated={validated} onSubmit={handleFormSubmit}>
 
               <FormGroup>
               <Label>Item Name</Label>
@@ -178,17 +194,22 @@ return (
                 placeholder='Name of item'
                 name='itemName'
                 onChange={handleInputChange}
+                required
+                minLength={1}
                 value={searchInput.itemName}>
+                
               </FormField>
               </FormGroup>
             
               <FormGroup>
               <Label>User Paid</Label>
-              <FormField
-                type='text'
+              <FormField 
+                type='number'
                 placeholder='Cost of Item'
                 name='userPaid'
                 onChange={handleInputChange}
+                required
+                minLength={1}
                 value={searchInput.userPaid}>
               </FormField>
               </FormGroup>
@@ -202,26 +223,30 @@ return (
             </Button>
             </FormGroup>
           </Form>
-      </Container>
+          )}
 
-      <ResultsContainer>
-      {/* Results container */}
+          {error && (
+            <div>{error.message}</div>
+          )}
 
-      <ImageBlock>  
+          {loading? (
+            <div>Searching For Item...</div>
+            ) : (
+      //Display search results
+      <div>
+      {searchedItems.itemName
+      ? (
+        <>
+        <ResultsContainer>
+        <ImageBlock>  
         {searchedItems.itemImages ? (
-                  <Image src={searchedItems.itemImages} alt={`The default for ${searchInput.itemName}`} variant='top'></Image>
+                  <Image src={searchedItems.itemImages} alt={`${searchInput.itemName}`} variant='top'></Image>
                 ) : null}
         </ImageBlock>
+        <TextBlock>
+      <h2>{searchedItems.itemName}</h2>
 
-      <TextBlock>
-      <h2>
-      {searchedItems.itemName
-      ?
-      `${searchedItems.itemName}`
-      : `No search results found`}
-       </h2>
-
-        <h4>
+      <h4>
           {searchedItems.quantity
             ? 
             `${searchedItems.quantity} results`
@@ -253,12 +278,21 @@ return (
         {Auth.loggedIn() && (
             <Button
             onClick={() => handleSaveItem()}>
-              {/*Add local storage check for itemId*/}
                 Track Item
             </Button>          
         )}
-        </TextBlock>
-        </ResultsContainer>
+      </TextBlock>
+      </ResultsContainer>
+      </>
+      ) : <h2>We couldn't find any results</h2>}
+       </div>
+
+          )}; 
+
+      </Container>
+      
+
+      
         
     </>
   );

@@ -16,7 +16,17 @@ export const FormField = styled.input`
     height: 40px;
     border-radius: 2px;
     padding: 5px;
+
+    input:valid {
+        border: 2px solid black;
+    }
+
+    input:invalid {
+        border: 2px solid red;
+    }
 `;
+
+
 
 export const Label = styled.label`
 	margin-bottom: 5px;

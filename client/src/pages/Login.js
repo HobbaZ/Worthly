@@ -10,8 +10,10 @@ import { Form, FormField, Label, FormGroup } from '../styles/FormStyle';
 import { Button, Container } from '../styles/GenericStyles';
 
 const Login = () => {
+
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [validated] = useState(false);
 
   // update state based on form input changes
   const handleInputChange = (event) => {
@@ -26,6 +28,13 @@ const Login = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState);
+
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
     try {
       const { data } = await login({
         variables: { ...formState },
@@ -51,7 +60,7 @@ const Login = () => {
                 Success! Logging you in
               </p>
             ) : (
-              <Form onSubmit={handleFormSubmit}>
+              <Form validated={validated} onSubmit={handleFormSubmit}>
 
                 <FormGroup>
                   <Label>Email</Label>
@@ -61,6 +70,7 @@ const Login = () => {
                   name="email"
                   type="email"
                   value={formState.email}
+                  required
                   onChange={handleInputChange}>
                   </FormField>
                   </FormGroup>
@@ -73,7 +83,9 @@ const Login = () => {
                   name="password"
                   type="password"
                   value={formState.password}
+                  required
                   onChange={handleInputChange}>
+                  
                   </FormField>
                   </FormGroup>
                 
