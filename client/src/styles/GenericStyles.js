@@ -28,6 +28,13 @@ export const Container = styled.div`
     align-items: center;
 `;
 
+export const IntroContainer = styled.div`
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
 export const Positive = styled.span`
     color: green;
 `;
@@ -38,10 +45,8 @@ export const Negative = styled.span`
 
 export const Spinner = styled.div` 
     text-align: center;
-    font-size: 30px;
-    text-shadow: 7px 0px black;
-    color: white;
-    text-decoration-line: underline;
+    font-size: 40px;
+    color: black;
     font-weight: 900;
     animation: spin 3s linear infinite;
     margin-top:10px;

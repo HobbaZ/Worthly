@@ -1,3 +1,4 @@
+import { Spinner } from '../styles/GenericStyles';
 
   //create random color
   function createRandomColor() {
@@ -39,15 +40,17 @@
     }
 }
 
-function randBookWidth() {
+function randValues() {
 
-  let bookWidth = Math.floor(Math.random() * (300 - 250 + 1)) + 250;
-  let bookHeight = Math.floor(Math.random() * (300 - 200 + 1)) + 200;
+  let randWidth = Math.floor(Math.random() * (350 - 150 + 1)) + 150;
+  let randHeight = Math.floor(Math.random() * (250 - 100 + 1)) + 100;
 
-  let coverHeight = Math.floor(Math.random() * (bookHeight - (bookHeight/3) +1)) + (bookHeight/3);
-  let coverWidth = Math.floor(Math.random() * (bookWidth - (bookWidth/3) +1)) + (bookWidth/3);
+  let truckWidth = Math.floor(Math.random() * (400 - 200 + 1)) + 200;
 
-  return [bookWidth, bookHeight, coverWidth, coverHeight]
+  let coverHeight = Math.floor(Math.random() * (randHeight - (randHeight/3) +1)) + (randHeight/3);
+  let coverWidth = Math.floor(Math.random() * (randWidth - (randWidth/3) +1)) + (randWidth/3);
+
+  return [randWidth, randHeight, coverWidth, coverHeight, truckWidth]
 }
 
 //Store generated values
@@ -59,20 +62,20 @@ function objectToGen() {
     
   if (object[randNumber] === "book") {
 
-      randBookWidth()
-      let genBookWidth = randBookWidth()[0]
-      let genBookHeight = randBookWidth()[1]
+      randValues()
+      let genrandWidth = randValues()[0]
+      let genrandHeight = randValues()[1]
 
-      let genCoverWidth = randBookWidth()[2]
-      let genCoverHeight = randBookWidth()[3]
+      let genCoverWidth = randValues()[2]
+      let genCoverHeight = randValues()[3]
 
-      let spineWidth = genBookWidth/6;
+      let spineWidth = genrandWidth/6;
 
-      console.log("book ", genBookWidth, genBookHeight, spineWidth)
+      console.log("book ", genrandWidth, genrandHeight, spineWidth)
         
     return (
       <>
-      <svg width = {genBookWidth} height = {genBookHeight}>
+      <svg width = {genrandWidth} height = {genrandHeight} x ="0" y="0">
       
       <g>
         {/*book*/}
@@ -100,29 +103,31 @@ function objectToGen() {
     };
 
     if (object[randNumber] === "collectable") {
-      randBookWidth()
-      let genBookWidth = randBookWidth()[0]
-      let genBookHeight = randBookWidth()[1]
+      randValues()
+      let genrandWidth = randValues()[0]/2
+      let genrandHeight = randValues()[1]
 
-      let genCoverWidth = randBookWidth()[2]
-      let genCoverHeight = randBookWidth()[3]
+      let genCoverWidth = randValues()[2]
+      let genCoverHeight = randValues()[3]
 
       let cameraLense = createRandomColor();
 
-      let spineWidth = genBookWidth/4;
+      let spineWidth = genrandWidth/4;
 
-      console.log("camera ", genBookWidth, genBookHeight, spineWidth)
+      console.log("camera ", genrandWidth, genrandHeight, spineWidth)
+
+      let randLensePlacement = Math.floor(Math.random() * (100 - 40 + 1)) + 40
         
     return (
       <>
-      <svg width = {genBookWidth+spineWidth} height = {genBookHeight/2}>
+      <svg width = {genrandWidth+spineWidth} height = {genrandHeight}>
       
       <g>
         {/*old camera*/}
       <rect x="0" y= "0" width="100%" height= "100%" fill={chosenColour} />
 
       {/*stripe*/}
-      <rect x={0 + (spineWidth/3)} y="0" width={randBookWidth()[0]/10} height="100%" fill={createRandomColor()}/>
+      <rect x={0 + (spineWidth/3)} y="0" width={randValues()[0]/10} height="100%" fill={createRandomColor()}/>
 
       {/*strap*/}
       <rect x={0 - (spineWidth/2)} y="50%" width={spineWidth} height="10%" fill={createRandomColor()}/>
@@ -133,22 +138,21 @@ function objectToGen() {
       {/*viewfinder*/}
       <rect x={0 + (spineWidth + spineWidth/4)} y={0 + (genCoverHeight/4)} width={genCoverWidth/4} height={genCoverHeight/4} fill={cameraLense}/>
 
-
       {/*parts for lense*/}
-      <svg width = {genBookWidth} height = {genBookHeight/2} x ={spineWidth-10} y ="5%">
-      <g>
-      {/*camera surround*/}
-      <circle cx= "45%" cy="50%" r={(genBookWidth/2)/3} fill="black" />
+      <svg width = {genrandWidth} height = {genrandHeight/2} x ="50%" y ="5%">
+            <g>
+            {/*camera surround*/}
+            <circle cx= "45%" cy="50%" r={(genrandWidth/2)/3} fill="black" />
 
-      {/*lense 1*/}
-      <circle cx="49%" cy="50%" r={(genBookWidth/2)/3} fill={createRandomColor()} />
+            {/*lense 1*/}
+            <circle cx="49%" cy="50%" r={(genrandWidth/2)/3} fill={createRandomColor()} />
 
-      {/*lense 2*/}
-      <circle cx="50%" cy="50%" r={(genBookWidth/2)/4} fill="black" />
+            {/*lense 2*/}
+            <circle cx="50%" cy="50%" r={(genrandWidth/2)/4} fill="black" />
 
-      {/*lense 3*/}
-      <circle cx="50%" cy="50%" r={(genBookWidth/2)/6} fill={cameraLense} />
-      </g>
+            {/*lense 3*/}
+            <circle cx="50%" cy="50%" r={(genrandWidth/2)/6} fill={cameraLense} />
+            </g>
       </svg>
 
       {/*shade overlay*/}
@@ -161,110 +165,112 @@ function objectToGen() {
 
     if (object[randNumber] === "toy") {
 
-      randBookWidth()
-      let genBookWidth = randBookWidth()[0]
-      let genBookHeight = randBookWidth()[1]
+      randValues()
+      let genrandWidth = randValues()[4]
+      let genrandHeight = randValues()[1]
 
       let windScreen = createRandomColor();
 
-      let spineWidth = genBookWidth/4;
+      let spineWidth = genrandWidth/4;
 
-      let tireSize = genBookHeight/6;
+      let tireSize = genrandHeight/4;
 
       let wheelColour= createRandomColor();
 
-      console.log("truck ", genBookWidth, genBookHeight, spineWidth)
+      let randRadiatorHeight = Math.floor(Math.random() * (genrandHeight/4) - (genrandHeight/8) + 1) + (genrandHeight/8)
+      let randRadiatorWidth = Math.floor(Math.random() * (spineWidth/2) - (spineWidth/8) + 1) + (spineWidth/8)
 
       return (
         <>
         {/*truck toy*/}
-      <svg width = {genBookWidth+spineWidth} height = {genBookHeight/2} x="0" y="0">
+      <svg width = {genrandWidth+spineWidth} height = {genrandHeight} x="0" y="0">
       
       {/*truck bed collection*/}
-      <svg width = "65%" height = "100%" x="15%" y="0%" >
+      <svg width = "70%" height = "100%" x="20%" y="0%" >
 
       {/*truck bed*/}
-      <svg width = "100%" height = "80%" x="0%" y="0%" >
+      <svg width = "100%" height = "100%" x="0%" y="0%" >
       <g>
       <rect x="0" y= "0" width="100%" height= "100%" fill={createRandomColor()}/>
 
       {/*front of bed*/}
       <rect x="0" y="0" width={spineWidth+10} height="100%" fill={dayChange()} />
-      </g>
-      </svg>
+      
 
-        {/*tire 1*/}
-        <svg width = {tireSize} height = {tireSize} x ="65%" y ="60%">
-                <g>
+{/*rear tire*/}
+<svg width = {tireSize} height = {tireSize} x ="80%" y ="80%">
+              <g>
                 {/*tire sidewell*/}
-                <circle cx="48%" cy="50%" r={(tireSize)/2} fill="black" />
+                <circle cx="45%" cy="50%" r={(tireSize)/2} fill="black" />
           
                 {/*rim*/}
-                <circle cx="49%" cy="50%" r={(tireSize)/3} fill={wheelColour} />
+                <circle cx="46%" cy="50%" r={(tireSize)/3} fill={wheelColour} />
 
                 {/*inner rim*/}
-                <circle cx="49%" cy="50%" r={(tireSize)/4} fill="black" />
+                <circle cx="46%" cy="50%" r={(tireSize)/4} fill="black" />
 
                 {/*hubcap*/}
-                <circle cx="49%" cy="50%" r={(tireSize)/5} fill="grey" />
+                <circle cx="46%" cy="50%" r={(tireSize)/5} fill="grey" />
             
                 {/*outer guard*/}
-                <rect x="0%" y="0%" width= "100%" height="20%" fill={chosenColour} />
+                <rect x="0%" y="0%" width= "100%" height="30%" fill={chosenColour} />
                 </g>
             </svg>
 
-      {/*shade overlay*/}
-      <rect x="0" y= "0" width="100%" height= "80%" fill={dayChange()} />
+        {/*shade overlay*/}
+        <rect x="0" y= "0" width="100%" height= "100%" fill={dayChange()} />
+        </g>
+        </svg>
+        
       </svg>
 
-
       {/*cab parts collection*/}
-      <svg width = "36%" height = "100%" x="0" y="0%">
+      <svg width = "35%" height = "100%" x="0" y="0%">
 
       {/*cab*/}
-      <svg width= "100%" height="80%" x ="0" y="10%">
+      <svg width= "100%" height="80%" x ="0" y="20%">
       
       <g>
       <rect x="0" y= "0%" width="100%" height= "100%" fill={chosenColour} />
             
       {/*radiator*/}
-      <rect x={0 + (spineWidth/3)} y="50%" width={randBookWidth()[0]/10} height="40%" fill={createRandomColor()}/>
+      <rect x={(spineWidth/2)-(randRadiatorWidth/2)} y="50%" width={randRadiatorWidth} height={randRadiatorHeight} fill={createRandomColor()}/>
 
       {/*windscreen*/}
-      <rect x="0" y="20%" width={spineWidth} height="20%" fill={windScreen}/>
+      <rect x="0" y="20%" width={spineWidth} height="25%" fill={windScreen}/>
 
       {/*side Window*/}
-      <rect x={0 + spineWidth} y="20%" width="30%" height="20%" fill={windScreen}/>
+      <rect x={0 + spineWidth} y="20%" width="25%" height="25%" fill={windScreen}/>
 
       {/*front*/}
       <rect x="0" y="0%" width={spineWidth} height="100%" fill={dayChange()} />
       </g>
-      </svg>
 
-          {/*tire 1*/}
-          <svg width = "50%" height = {tireSize} x ="60%" y ="60%">
+      {/*front tire*/}
+      <svg width = {tireSize} height = {tireSize} x ="60%" y ="75%">
                 <g>
                 {/*tire sidewell*/}
-                <circle cx="48%" cy="50%" r={(tireSize)/2} fill="black" />
+                <circle cx="45%" cy="50%" r={(tireSize)/2} fill="black" />
           
                 {/*rim*/}
-                <circle cx="49%" cy="50%" r={(tireSize)/3} fill={wheelColour} />
+                <circle cx="46%" cy="50%" r={(tireSize)/3} fill={wheelColour} />
 
                 {/*inner rim*/}
-                <circle cx="49%" cy="50%" r={(tireSize)/4} fill="black" />
+                <circle cx="46%" cy="50%" r={(tireSize)/4} fill="black" />
 
                 {/*hubcap*/}
-                <circle cx="49%" cy="50%" r={(tireSize)/5} fill="grey" />
+                <circle cx="46%" cy="50%" r={(tireSize)/5} fill="grey" />
             
                 {/*outer guard*/}
-                <rect x="0%" y="0%" width= "100%" height="20%" fill={chosenColour} />
+                <rect x="0%" y="0%" width= "100%" height="30%" fill={chosenColour} />
                 </g>
             </svg>
-                
-          {/*shade overlay*/}
-          <rect x="0" y= "10%" width="100%" height= "80%" fill={dayChange()} />
-      </svg>
 
+                     {/*shade overlay*/}
+          <rect x="0" y= "0%" width="100%" height= "100%" fill={dayChange()} /> 
+
+      </svg>
+      </svg>
 </svg>
 </>
       )
@@ -274,26 +280,10 @@ function objectToGen() {
   
 const HeroImage = () => {
 
-  //Create with svg
-
 return (
     <>
-      <svg width= "500px" height="500px" style={{
-          /*clipPath: "circle(50% at 50% 50%)",*/
-          margin:"auto",
-        }}>
-
-      
-      <rect x="50%" y="50%" fill={createRandomColor()}/>
-
-      <svg x="50%" y= "50%">
+    <Spinner></Spinner>
       {objectToGen()}
-      </svg>
-
-      <rect x="50%" y="50%" fill={dayChange()} />
-      
-      </svg>
-
     </>
   );
 
