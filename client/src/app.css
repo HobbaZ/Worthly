@@ -1,6 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap');
 
 body,html, nav, footer {
-    background-color: white;
     color: black;
+}
+
+#genImage {
+    background-color: black;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    display: inline-block;
+}
+
+#imageContainer {
+    width:50%;
+    background-color: blue;
+    display: inline-block;
+    text-align: center;
 }

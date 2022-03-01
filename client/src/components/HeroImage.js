@@ -1,5 +1,7 @@
 import { Spinner } from '../styles/GenericStyles';
 
+import '../app.css'
+
   //create random color
   function createRandomColor() {
     
@@ -17,8 +19,6 @@ import { Spinner } from '../styles/GenericStyles';
     const date = new Date();
     let currentHour = date.getHours();
     let currentColour = '';
-
-    console.log("Current hour is " + currentHour);
     
     if (currentHour >=5 && currentHour < 7) {
         return currentColour = 'rgb(165, 68, 3, 0.3)';
@@ -42,15 +42,13 @@ import { Spinner } from '../styles/GenericStyles';
 
 function randValues() {
 
-  let randWidth = Math.floor(Math.random() * (350 - 150 + 1)) + 150;
-  let randHeight = Math.floor(Math.random() * (250 - 100 + 1)) + 100;
-
-  let truckWidth = Math.floor(Math.random() * (400 - 200 + 1)) + 200;
+  let randWidth = Math.floor(Math.random() * (450 - 250 + 1)) + 250;
+  let randHeight = Math.floor(Math.random() * (400 - 250 + 1)) + 250;
 
   let coverHeight = Math.floor(Math.random() * (randHeight - (randHeight/3) +1)) + (randHeight/3);
   let coverWidth = Math.floor(Math.random() * (randWidth - (randWidth/3) +1)) + (randWidth/3);
 
-  return [randWidth, randHeight, coverWidth, coverHeight, truckWidth]
+  return [randWidth, randHeight, coverWidth, coverHeight]
 }
 
 //Store generated values
@@ -59,7 +57,9 @@ function objectToGen() {
   let object = ["book", "collectable", "toy"];
 
   let randNumber = Math.floor(Math.random()*object.length);
-    
+  
+  
+
   if (object[randNumber] === "book") {
 
       randValues()
@@ -91,7 +91,7 @@ function objectToGen() {
       <rect x={0 + (spineWidth/3)} y="0" width={spineWidth/2} height="100%" fill="white" style={{stroke:"black", strokeWidth:"1"}}/>
 
       {/*cover*/}
-      <rect x={0 + (spineWidth + spineWidth/4)} y={0 + (genCoverHeight/4)} width={genCoverWidth} height={genCoverHeight} fill={createRandomColor()} />
+      <rect x={0 + (spineWidth + spineWidth/2)} y={0 + (genCoverHeight/2)} width={genCoverWidth} height={genCoverHeight} fill={createRandomColor()} />
 
       {/*shade overlay*/}
       <rect x="0" y= "0" width="100%" height= "100%" fill={dayChange()} />
@@ -115,8 +115,6 @@ function objectToGen() {
       let spineWidth = genrandWidth/4;
 
       console.log("camera ", genrandWidth, genrandHeight, spineWidth)
-
-      let randLensePlacement = Math.floor(Math.random() * (100 - 40 + 1)) + 40
         
     return (
       <>
@@ -126,8 +124,10 @@ function objectToGen() {
         {/*old camera*/}
       <rect x="0" y= "0" width="100%" height= "100%" fill={chosenColour} />
 
-      {/*stripe*/}
-      <rect x={0 + (spineWidth/3)} y="0" width={randValues()[0]/10} height="100%" fill={createRandomColor()}/>
+      {/*stripes*/}
+      <rect x= "1%" y="0" width= "3%" height="100%" fill={createRandomColor()}/>
+      <rect x= "4%" y="0" width= "3%" height="100%" fill={createRandomColor()}/>
+      <rect x= "8%" y="0" width= "3%" height="100%" fill={createRandomColor()}/>
 
       {/*strap*/}
       <rect x={0 - (spineWidth/2)} y="50%" width={spineWidth} height="10%" fill={createRandomColor()}/>
@@ -166,24 +166,26 @@ function objectToGen() {
     if (object[randNumber] === "toy") {
 
       randValues()
-      let genrandWidth = randValues()[4]
+      let genrandWidth = randValues()[0]
       let genrandHeight = randValues()[1]
 
       let windScreen = createRandomColor();
 
       let spineWidth = genrandWidth/4;
 
-      let tireSize = genrandHeight/4;
+      let tireSize = genrandHeight/5;
 
       let wheelColour= createRandomColor();
 
-      let randRadiatorHeight = Math.floor(Math.random() * (genrandHeight/4) - (genrandHeight/8) + 1) + (genrandHeight/8)
-      let randRadiatorWidth = Math.floor(Math.random() * (spineWidth/2) - (spineWidth/8) + 1) + (spineWidth/8)
+      let bedColour= createRandomColor();
+
+      let randRadiatorHeight = Math.floor(Math.random() * (genrandHeight/3) - (genrandHeight/8) + 1) + (genrandHeight/8)
+      let randRadiatorWidth = Math.floor(Math.random() * (spineWidth/2) - (spineWidth/7) + 1) + (spineWidth/87)
 
       return (
         <>
         {/*truck toy*/}
-      <svg width = {genrandWidth+spineWidth} height = {genrandHeight} x="0" y="0">
+      <svg width = {genrandWidth*2} height = {genrandHeight} x="0" y="0">
       
       {/*truck bed collection*/}
       <svg width = "70%" height = "100%" x="20%" y="0%" >
@@ -191,15 +193,22 @@ function objectToGen() {
       {/*truck bed*/}
       <svg width = "100%" height = "100%" x="0%" y="0%" >
       <g>
-      <rect x="0" y= "0" width="100%" height= "100%" fill={createRandomColor()}/>
+      <rect x="0" y= "0" width="100%" height= "100%" fill={bedColour}/>
+      <rect x="0" y= "40%" width="100%" height= "10%" fill={createRandomColor()}/>
+      <rect x="0" y= "50%" width="100%" height= "10%" fill={createRandomColor()}/>
+      <rect x="0" y= "60%" width="100%" height= "10%" fill={createRandomColor()}/>
 
       {/*front of bed*/}
       <rect x="0" y="0" width={spineWidth+10} height="100%" fill={dayChange()} />
       
 
 {/*rear tire*/}
-<svg width = {tireSize} height = {tireSize} x ="80%" y ="80%">
+<svg width = {tireSize} height = {tireSize} x ="70%" y ="82%">
               <g>
+
+                {/*inner guard*/}
+                <rect x="0" y="20%" width="100%" height="80%" fill="black" />
+
                 {/*tire sidewell*/}
                 <circle cx="45%" cy="50%" r={(tireSize)/2} fill="black" />
           
@@ -207,13 +216,13 @@ function objectToGen() {
                 <circle cx="46%" cy="50%" r={(tireSize)/3} fill={wheelColour} />
 
                 {/*inner rim*/}
-                <circle cx="46%" cy="50%" r={(tireSize)/4} fill="black" />
+                <circle cx="46%" cy="50%" r={(tireSize)/5} fill="black" />
 
                 {/*hubcap*/}
-                <circle cx="46%" cy="50%" r={(tireSize)/5} fill="grey" />
+                <circle cx="46%" cy="50%" r={(tireSize)/7} fill="grey" />
             
                 {/*outer guard*/}
-                <rect x="0%" y="0%" width= "100%" height="30%" fill={chosenColour} />
+                <rect x="0%" y="0%" width= "100%" height="30%" fill={bedColour} />
                 </g>
             </svg>
 
@@ -225,7 +234,7 @@ function objectToGen() {
       </svg>
 
       {/*cab parts collection*/}
-      <svg width = "35%" height = "100%" x="0" y="0%">
+      <svg width = "30%" height = "100%" x="0" y="0%">
 
       {/*cab*/}
       <svg width= "100%" height="80%" x ="0" y="20%">
@@ -235,6 +244,9 @@ function objectToGen() {
             
       {/*radiator*/}
       <rect x={(spineWidth/2)-(randRadiatorWidth/2)} y="50%" width={randRadiatorWidth} height={randRadiatorHeight} fill={createRandomColor()}/>
+
+      {/*bumper*/}
+      <rect x="0" y= "90%" width="100%" height= "10%" fill="grey"/>
 
       {/*windscreen*/}
       <rect x="0" y="20%" width={spineWidth} height="25%" fill={windScreen}/>
@@ -247,8 +259,12 @@ function objectToGen() {
       </g>
 
       {/*front tire*/}
-      <svg width = {tireSize} height = {tireSize} x ="60%" y ="75%">
+      <svg width = {tireSize} height = {tireSize} x ="60%" y ="77%">
                 <g>
+
+                {/*inner guard*/}
+                <rect x="0" y="20%" width="100%" height="80%" fill="black" />
+
                 {/*tire sidewell*/}
                 <circle cx="45%" cy="50%" r={(tireSize)/2} fill="black" />
           
@@ -256,10 +272,10 @@ function objectToGen() {
                 <circle cx="46%" cy="50%" r={(tireSize)/3} fill={wheelColour} />
 
                 {/*inner rim*/}
-                <circle cx="46%" cy="50%" r={(tireSize)/4} fill="black" />
+                <circle cx="46%" cy="50%" r={(tireSize)/5} fill="black" />
 
                 {/*hubcap*/}
-                <circle cx="46%" cy="50%" r={(tireSize)/5} fill="grey" />
+                <circle cx="46%" cy="50%" r={(tireSize)/8} fill="grey" />
             
                 {/*outer guard*/}
                 <rect x="0%" y="0%" width= "100%" height="30%" fill={chosenColour} />
@@ -276,13 +292,14 @@ function objectToGen() {
       )
     }
 
+    
+
 }
   
 const HeroImage = () => {
 
 return (
     <>
-    <Spinner></Spinner>
       {objectToGen()}
     </>
   );

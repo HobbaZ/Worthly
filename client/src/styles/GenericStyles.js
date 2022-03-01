@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import '../app.css';
+
 export const Button = styled.button`
 width: 25%;
 height: auto;
@@ -32,7 +34,26 @@ export const IntroContainer = styled.div`
 
     display: flex;
     flex-direction: row;
-    align-items: center;
+    width: 100%;
+    height: 100%;
+`;
+
+export const IntroText = styled.div`
+display: flex;
+flex-direction: row;
+width: 90%;
+height: 100%;
+font-family: 'Fugaz One', cursive;
+font-size: 40px;
+margin: auto;
+align-items: center;
+justify-content: center;
+padding-top:25vh;
+
+@media (max-width: 620px) {
+    flex-direction: column;
+  }
+
 `;
 
 export const Positive = styled.span`
@@ -102,3 +123,13 @@ export const Image = styled.img`
     width: 250px;
     height: 100%;
 `
+
+export const FooterStyle = styled.footer`
+
+      width: 100%;
+      height: 30px;
+      text-align: center;
+      position: fixed;
+      bottom:10px;
+      left:0;
+`;

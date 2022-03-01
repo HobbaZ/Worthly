@@ -14,12 +14,12 @@ const AppNavbar = () => {
 
           <NavLink to='/'><TitleNav>Worthly</TitleNav></NavLink>
 
-          <NavLink to='/'>Search For Stuff</NavLink>
+          <NavLink to='/search'>Search For Stuff</NavLink>
 
           {/*Only show if user logged in*/}
           {Auth.loggedIn() ? ( 
             <>
-          <NavLink to='/saved-stuff'>Your Saved Stuff</NavLink>
+          <NavLink to='/saved'>Your Saved Stuff</NavLink>
 
           <NavLink to='/profile'>Your Profile</NavLink>
           

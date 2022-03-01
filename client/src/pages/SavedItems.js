@@ -248,7 +248,7 @@ const SavedItems = () => {
                 <h1 > Stuff Breakdown</h1>
                 <h4>Total Value: ${totalValue()}</h4>
                 <h4>Total Profit: ${netWorth()}</h4>
-                <h4>Total Spent: ${totalValue()-netWorth()}</h4>
+                <h4>Total Spent: ${(totalValue()-netWorth()).toFixed(2)}</h4>
 
                 <h4>Highest profit: ${sort()[0]}</h4>
 

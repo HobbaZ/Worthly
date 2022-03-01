@@ -33,7 +33,7 @@ const Profile = () => {
         <h2>Your Profile</h2>
 
         <div>
-          <p>Hey {userData.username}, {currentDate()}here are your current account details</p>
+          <p>Hey {userData.username}, here are your current account details</p>
           <p>Username: {userData.username}</p>
           <p>Email: {userData.email}</p>
           

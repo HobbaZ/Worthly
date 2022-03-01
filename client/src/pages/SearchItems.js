@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Form, FormField, Label, FormGroup } from '../styles/FormStyle';
 
-import { Button, Container, Image, TextBlock, ResultsContainer, ImageBlock, Spinner } from '../styles/GenericStyles';
+import { Button, Container, Image, TextBlock, ResultsContainer, ImageBlock, Spinner} from '../styles/GenericStyles';
 
 import Auth from '../utils/auth';
 
@@ -166,16 +166,12 @@ const SearchItemsForm = () => {
 return (
     <>
     <Container>
-
-          <h1>What is Worthly?</h1>
-          <h3>Worthly is a place to track the valuation of the books, toys, collectables and memorabilia on your shelves, in your cupboards or on your desk. Get a reliable estimated value, track this value over time and see how it contributes to your overall stuff networth.</h3>
-          <HeroImage></HeroImage>
-          <h2>Search For Stuff!</h2>
+          <div>
               <h3>Search Tips...</h3>
-              <p>Search for the item's brand and model number instead of vague search terms like colour and type of item</p>
-              <p>The more specific the search term, the better the results</p>
+              <p>Search for the item's brand and model number instead of vague search terms like colour and type of item.</p>
+              <p>The more specific the search term, the better the results.</p>
+              </div>
               
-
       {data ? (
               <div>
                 Searching for item...

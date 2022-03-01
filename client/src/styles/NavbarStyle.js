@@ -18,7 +18,7 @@ export const Nav = styled.nav`
   margin-bottom: 10px;
   border-bottom: 2px solid black;
 
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
     flex-direction: column;
     justify-content: center;
   }
