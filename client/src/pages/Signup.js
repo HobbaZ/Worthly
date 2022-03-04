@@ -6,9 +6,9 @@ import { ADD_USER } from '../utils/mutations'
 
 import Auth from '../utils/auth';
 
-import { Form, FormField, Label, FormGroup } from '../styles/FormStyle';
+import { Form, FormField, Label, FormGroup, FormButton } from '../styles/FormStyle';
 
-import { Button, Container } from '../styles/GenericStyles';
+import { Container } from '../styles/GenericStyles';
 
 const SignupForm = () => {
 
@@ -96,11 +96,13 @@ const SignupForm = () => {
             </FormField>
         </FormGroup>
 
-        <Button
+        <div style={{"textAlign": "center"}}>
+        <FormButton
           disabled={!(userFormData.username && userFormData.email && userFormData.password)}
           type='submit'>
-          Submit
-        </Button>
+          Sign Up
+        </FormButton>
+        </div>
       </Form>
       )}
 

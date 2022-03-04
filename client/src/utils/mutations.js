@@ -24,12 +24,12 @@ export const ADD_USER = gql`
   }
 `;
 
-export const UPDATE_USER = gql`
-mutation updateIser($user: userInput) {
-  updateUser(user: $user) {
+export const UPDATE_ME = gql`
+mutation updateUser($username: String, $email: String) {
+  updateUser(username: $username, email: $email) {
+    _id
     username
     email
-    password
   }
 }
 

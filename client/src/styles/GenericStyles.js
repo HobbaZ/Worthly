@@ -4,19 +4,22 @@ import '../app.css';
 
 export const Button = styled.button`
 width: 25%;
+align-items: center;
 height: auto;
+background: rgba(255, 255, 255, 0);
 padding: 10px;
 font-size: 20px;
 margin: 5px;
-border-radius: 5px;
-border: 2px solid black;
+cursor: pointer;
 
 :hover {
     background: rgb(14, 56, 110);
     color: white;
 }
-@media (max-width: 500px) {
-    width: 50%;
+
+@media (max-width: 700px) {
+    width:50%;
+    padding: 20px;
   }
 `;
 
@@ -101,6 +104,7 @@ export const TextBlock = styled.div`
     padding: 10px;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 `;
 
 export const ListBlock = styled.div`
@@ -116,20 +120,19 @@ export const ListText = styled.p`
 
 export const ImageBlock = styled.div`
     padding: 10px;
-    
 `;
 
 export const Image = styled.img`
     width: 250px;
-    height: 100%;
-`
+    height: auto;
+`;
 
 export const FooterStyle = styled.footer`
-
       width: 100%;
       height: 30px;
       text-align: center;
       position: fixed;
       bottom:10px;
       left:0;
+      background-color: whiite;
 `;

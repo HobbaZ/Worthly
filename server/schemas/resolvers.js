@@ -41,6 +41,23 @@ const resolvers = {
       return { token, user };
     },
 
+    //edit user info if logged in
+    updateUser: async (parent, {username, email} , context) => {
+      if (context.user) {
+        return await User.findOneAndUpdate(
+            {_id: context.user._id},
+            {$set: {username: username, email: email} },
+            { new: true})
+            .then (result => {
+              console.log("This is the result", result)
+          })
+          .catch (err => {
+              console.error(err)
+          })   
+        }
+    throw new AuthenticationError('Please login to update an item!');
+    },
+
     //Update item if logged in
     updateItem: async (parent, itemToUpdate, fieldUpdated, context) => {
 

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { Form, FormField, Label, FormGroup } from '../styles/FormStyle';
+import { Form, FormField, Label, FormGroup, FormButton } from '../styles/FormStyle';
 
 import { Button, Container, Image, TextBlock, ResultsContainer, ImageBlock, Spinner} from '../styles/GenericStyles';
 
@@ -9,8 +9,6 @@ import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 
 import { SAVE_ITEM } from '../utils/mutations';
-
-import HeroImage from '../components/HeroImage';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -57,7 +55,7 @@ const SearchItemsForm = () => {
 
     //searchInput.userPaid can't be zero
     if (searchInput.userPaid < 0.01) {
-      return setShowError({itemError: "User Paid can't be zero"})
+      return setShowError({itemError: "User paid can't be zero"})
     }
 
     try {
@@ -146,7 +144,7 @@ const SearchItemsForm = () => {
         variables: {item: itemToSave },
         
       });
-      window.location.replace("/saved-stuff");
+      window.location.replace("/saved");
       // if item successfully saves to user's account, save item to state
 
       //setsavedItemIds([...savedItemIds, itemToSave]);
@@ -158,20 +156,21 @@ const SearchItemsForm = () => {
   };
 
   if (searchedItems.profit <= 0) {
-    <p styled={{color: 'red'}}></p>
+    <p styled={{"color": 'red'}}></p>
   } else {
-    <p styled={{color: 'green'}}></p>
+    <p styled={{"color": 'green'}}></p>
   }
 
 return (
     <>
     <Container>
-          <div>
+      <div>
               <h3>Search Tips...</h3>
-              <p>Search for the item's brand and model number instead of vague search terms like colour and type of item.</p>
+              <p>Include the item's brand, colour, size and model number instead of vague search terms like colour and type of item.</p>
+              <p>To search for one word or another, put the words in parentheses divided by commas, e.g. [Volkswagen, VW]</p>
               <p>The more specific the search term, the better the results.</p>
-              </div>
-              
+      </div>     
+
       {data ? (
               <div>
                 Searching for item...
@@ -208,12 +207,15 @@ return (
               </FormGroup>
 
               <FormGroup>
-            <Button
+
+            <div style={{"text-align": "center"}}>
+            <FormButton
               disabled={!(searchInput.itemName || searchInput.userPaid)}
               type='submit'
               variant='success'>
               Submit
-            </Button>
+            </FormButton>
+            </div>
             </FormGroup>
             
           </Form>

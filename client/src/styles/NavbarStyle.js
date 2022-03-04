@@ -38,8 +38,7 @@ export const NavLink = styled(Link)`
   }
 
   :hover {
-      color: white;
-      background: black;
+    text-decoration: underline;
   }
 `;
 
@@ -60,8 +59,7 @@ export const NavBtnLink = styled.button`
   }
 
   :hover {
-      color: white;
-      background: black;
+      text-decoration: underline;
   }
 `;
   

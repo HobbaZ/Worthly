@@ -5,9 +5,9 @@ import { LOGIN_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
-import { Form, FormField, Label, FormGroup } from '../styles/FormStyle';
+import { Form, FormField, Label, FormGroup, FormButton } from '../styles/FormStyle';
 
-import { Button, Container } from '../styles/GenericStyles';
+import { Container } from '../styles/GenericStyles';
 
 const Login = () => {
 
@@ -89,7 +89,11 @@ const Login = () => {
                   </FormField>
                   </FormGroup>
                 
-                <Button type="submit">Submit</Button>
+                <div style={{"textAlign": "center"}}>
+                <FormButton
+                disabled={!(formState.email && formState.password)}
+                type="submit">Submit</FormButton>
+                </div>
               </Form>
             )}
 

@@ -4,6 +4,10 @@ import { Button, Container, ImageBlock, IntroText } from '../styles/GenericStyle
 
 import HeroImage from '../components/HeroImage';
 
+function itemSearch() {
+    window.location.replace("/search");
+}
+
 const Home = () => {
 
     return (
@@ -15,8 +19,13 @@ const Home = () => {
               <ImageBlock>
             <HeroImage></HeroImage>
             </ImageBlock>
-            <div> How much is your stuff worth?</div>
+            <div style={{"textAlign": "center"}}> How much is your stuff worth?<br></br>
+            <Button onClick={itemSearch}>Find Out</Button>
+            </div>
+            
             </IntroText>
+
+            
         </Container>
         </>
     );

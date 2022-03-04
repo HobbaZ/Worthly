@@ -121,6 +121,8 @@ You can also contribute by opening a pull request or submitting an issue.
 
 [https://styled-components.com/docs/basics#getting-started](https://styled-components.com/docs/basics#getting-started)
 
+[https://www.thebalancesmb.com/mastering-ebay-search-for-sellers-2531709](https://www.thebalancesmb.com/mastering-ebay-search-for-sellers-2531709)
+
 
 ## Testing
 No tests at the moment
