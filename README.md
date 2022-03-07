@@ -81,7 +81,7 @@ Saved Stuff page
 ![Desktop version of site homepage](client/src/assets/images/saved-stuff.png)
 
 Playing around with semi dynamic created SVGs atm
-1[colourful toy truck](client/src/assets/images/examplesvg.png)
+![colourful toy truck](client/src/assets/images/examplesvg.png)
 
 ## Installation
 
