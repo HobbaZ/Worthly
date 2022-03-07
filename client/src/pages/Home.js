@@ -15,7 +15,7 @@ const Home = () => {
         <Container>
         
               <IntroText>
-              <div>Worthly... </div>
+              <div style={{"textAlign": "center"}}>Worthly... </div>
               <ImageBlock>
             <HeroImage></HeroImage>
             </ImageBlock>

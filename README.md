@@ -80,6 +80,9 @@ Desktop version
 Saved Stuff page
 ![Desktop version of site homepage](client/src/assets/images/saved-stuff.png)
 
+Playing around with semi dynamic created SVGs atm
+1[colourful toy truck](client/src/assets/images/examplesvg.png)
+
 ## Installation
 
 1. Clone the repo to your computer by clicking the green code button and copying the SSH version.
@@ -94,7 +97,8 @@ Saved Stuff page
 
 ## Features
 
-- Create and track your items
+- Create, delete your items
+- Create, delete and edit your account
 
 ## Technology
 
@@ -103,6 +107,7 @@ Saved Stuff page
 - GraphQL
 - React
 - JWT
+- SVGs
 - MongoDB
 - Countdown Ebay API
 - Styled Components

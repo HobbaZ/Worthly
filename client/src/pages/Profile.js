@@ -139,7 +139,7 @@ console.log("User details have been saved", userUpdateInput.username, userUpdate
       await deleteUser({
         variables: { ...userData },
       });
-
+      window.location.replace("/signup");
       console.log('Deleting account...')
 
     } catch (err) {

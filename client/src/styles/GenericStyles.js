@@ -7,8 +7,9 @@ width: 25%;
 align-items: center;
 height: auto;
 background: rgba(255, 255, 255, 0);
-padding: 10px;
+padding: 5px;
 font-size: 20px;
+margin-bottom: 10px;
 margin: 5px;
 cursor: pointer;
 
@@ -20,6 +21,7 @@ cursor: pointer;
 @media (max-width: 700px) {
     width:50%;
     padding: 20px;
+
   }
 `;
 
@@ -43,18 +45,20 @@ export const IntroContainer = styled.div`
 
 export const IntroText = styled.div`
 display: flex;
-flex-direction: row;
+flex-direction: column;
 width: 90%;
 height: 100%;
+padding-bottom: 10vh;
 font-family: 'Fugaz One', cursive;
 font-size: 40px;
 margin: auto;
 align-items: center;
 justify-content: center;
-padding-top:25vh;
+padding-top:10vh;
 
 @media (max-width: 620px) {
     flex-direction: column;
+    padding-top:25vh;
   }
 
 `;

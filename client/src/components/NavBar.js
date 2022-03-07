@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Nav, NavBtnLink, TitleNav } from '../styles/NavbarStyle'
+import { NavLink, Nav, NavBtnLink, TitleNav, NavLayout } from '../styles/NavbarStyle'
 
 import Auth from '../utils/auth';
 
@@ -11,10 +11,11 @@ const AppNavbar = () => {
     <>
     {/*Show if user not logged in or logged in*/}
       <Nav>
-
+          
           <NavLink to='/'><TitleNav>Worthly</TitleNav></NavLink>
 
-          <NavLink to='/search'>Search For Stuff</NavLink>
+          <NavLayout>
+          <NavLink to='/search'>Search</NavLink>
 
           {/*Only show if user logged in*/}
           {Auth.loggedIn() ? ( 
@@ -32,7 +33,8 @@ const AppNavbar = () => {
 
           <NavLink to='/signup'>Sign Up</NavLink>
           </>
-          )}        
+          )}  
+          </NavLayout>  
       </Nav>
     </>
   );

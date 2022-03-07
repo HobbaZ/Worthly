@@ -1,4 +1,3 @@
-import { Spinner } from '../styles/GenericStyles';
 
 import '../app.css'
 
@@ -42,7 +41,7 @@ import '../app.css'
 
 function randValues() {
 
-  let randWidth = Math.floor(Math.random() * (450 - 250 + 1)) + 250;
+  let randWidth = Math.floor(Math.random() * (400 - 250 + 1)) + 250;
   let randHeight = Math.floor(Math.random() * (400 - 250 + 1)) + 250;
 
   let coverHeight = Math.floor(Math.random() * (randHeight - (randHeight/3) +1)) + (randHeight/3);
@@ -118,7 +117,7 @@ function objectToGen() {
         
     return (
       <>
-      <svg width = {genrandWidth+spineWidth} height = {genrandHeight}>
+      <svg width = {genrandWidth+spineWidth} height = {genrandHeight/2}>
       
       <g>
         {/*old camera*/}
@@ -185,10 +184,10 @@ function objectToGen() {
       return (
         <>
         {/*truck toy*/}
-      <svg width = {genrandWidth*2} height = {genrandHeight} x="0" y="0">
+      <svg width = "100%" height = "50%" x="75" y="75">
       
       {/*truck bed collection*/}
-      <svg width = "70%" height = "100%" x="20%" y="0%" >
+      <svg width = "65%" height = "100%" x="20%" y="0%" >
 
       {/*truck bed*/}
       <svg width = "100%" height = "100%" x="0%" y="0%" >
@@ -196,10 +195,10 @@ function objectToGen() {
       <rect x="0" y= "0" width="100%" height= "100%" fill={bedColour}/>
       <rect x="0" y= "40%" width="100%" height= "10%" fill={createRandomColor()}/>
       <rect x="0" y= "50%" width="100%" height= "10%" fill={createRandomColor()}/>
-      <rect x="0" y= "60%" width="100%" height= "10%" fill={createRandomColor()}/>
+      <rect x="0" y= "50%" width="100%" height= "10%" fill={createRandomColor()}/>
 
       {/*front of bed*/}
-      <rect x="0" y="0" width={spineWidth+10} height="100%" fill={dayChange()} />
+      <rect x="0" y="0" width="40%" height="100%" fill={dayChange()} />
       
 
 {/*rear tire*/}
@@ -234,7 +233,7 @@ function objectToGen() {
       </svg>
 
       {/*cab parts collection*/}
-      <svg width = "30%" height = "100%" x="0" y="0%">
+      <svg width = "35%" height = "100%" x="0" y="0%">
 
       {/*cab*/}
       <svg width= "100%" height="80%" x ="0" y="20%">
@@ -255,7 +254,7 @@ function objectToGen() {
       <rect x={0 + spineWidth} y="20%" width="25%" height="25%" fill={windScreen}/>
 
       {/*front*/}
-      <rect x="0" y="0%" width={spineWidth} height="100%" fill={dayChange()} />
+      <rect x="0" y="0%" width="50%" height="100%" fill={dayChange()} />
       </g>
 
       {/*front tire*/}
@@ -300,7 +299,19 @@ const HeroImage = () => {
 
 return (
     <>
-      {objectToGen()}
+      
+     <div className='svgContainer'>
+     <svg width = "400px" height = "400px" x ="0" y="0">
+     <circle cx="50%" cy="50%" r="50%" fill={createRandomColor()}/>
+     <g transform='translate(-50% -50%)'>
+     {objectToGen()}
+     </g>
+     </svg>
+
+     
+     </div>
+        
+      
     </>
   );
 
