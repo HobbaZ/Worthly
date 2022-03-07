@@ -7,6 +7,7 @@ export const LOGIN_USER = gql`
       user {
         _id
         username
+        email
       }
     }
   }
@@ -32,7 +33,37 @@ mutation updateUser($username: String, $email: String) {
     email
   }
 }
+`;
 
+export const RESET_PASSWORD = gql`
+mutation resetPassword($password: String!) {
+  resetPassword(password: $password) {
+    _id
+    username
+    email
+  }
+}
+`;
+
+export const DELETE_ME = gql`
+  mutation deleteUser {
+    deleteUser {
+        _id
+        username
+        email
+        savedItems{ 
+                    purchasePrice
+                    price
+                    itemName
+                    percent
+                    profit
+                    quantity
+                    itemImages
+                    purchasePrice
+                    quantity
+                  }
+    }
+}
 `;
 
 export const SAVE_ITEM = gql`

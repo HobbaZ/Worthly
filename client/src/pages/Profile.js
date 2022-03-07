@@ -9,7 +9,7 @@ import { Form, FormField, Label, FormGroup, FormButton } from '../styles/FormSty
 
 import { QUERY_ME } from '../utils/queries';
 
-import { UPDATE_ME } from '../utils/mutations'; 
+import { UPDATE_ME, DELETE_ME } from '../utils/mutations'; 
 
 import Auth from '../utils/auth';
 
@@ -41,6 +41,8 @@ const Profile = () => {
   const { loading, data } = useQuery(QUERY_ME);
 
   const [ updateUser ] = useMutation(UPDATE_ME);
+
+  const [ deleteUser ] = useMutation(DELETE_ME);
 
   const [validated] = useState(false);
 
@@ -123,9 +125,41 @@ console.log("User details have been saved", userUpdateInput.username, userUpdate
     };
   };
 
-  const updateForm = () => {
-    return (
-      <>
+  const handleDeleteUser = async (_id) => {
+    // delete user by user id
+
+    // get token
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      await deleteUser({
+        variables: { ...userData },
+      });
+
+      console.log('Deleting account...')
+
+    } catch (err) {
+      console.error(err);
+    };
+  };
+
+  return (
+    <>
+    <Container>
+      {Auth.loggedIn() && (
+      <div>
+        <h2>Your Profile</h2>
+
+        <div>
+          <p>{greeting()} {userData.username}, here are your current account details</p>
+          <p>Username: {userData.username}</p>
+          <p>Email: {userData.email}</p>
+          </div>
+
       <Form validated={validated} onSubmit={handleFormSubmit}>
                 <h2>Update Your details</h2>
                 <FormGroup>
@@ -161,43 +195,31 @@ console.log("User details have been saved", userUpdateInput.username, userUpdate
                 Save Details
                 </FormButton>
                 </div>
+
+                <div style={{"textAlign": "center"}}>
+                <FormButton
+                onClick={() => handleUpdateUser()}>
+                Update Details
+                </FormButton>
+                </div>
+
+                
                 </FormGroup>
 
                 </Form>
 
+                
+
                 <div style={{"textAlign": "center"}}>
-                <Button
-                onClick={() => handleUpdateUser()}>
-                Update Details
-                </Button>
+                <FormButton
+                style={{ "border" : "2px red solid", "color" : "red"}}
+                onClick={() => handleDeleteUser()}>
+                Delete Account
+                </FormButton>
                 </div>
-      </>
-    );
-  }
-
-  return (
-    <>
-    <Container>
-      {Auth.loggedIn() && (
-      <div>
-        <h2>Your Profile</h2>
-
-        <div>
-          <p>{greeting()} {userData.username}, here are your current account details</p>
-          <p>Username: {userData.username}</p>
-          <p>Email: {userData.email}</p>
-          </div>
-
-          {data ? (
-                updateForm()          
-            ) : (
-              null
-        )}
       </div>
       
       )};
-
-            
 
     </Container>
     </>

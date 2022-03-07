@@ -2,15 +2,10 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type User {
-    _id: ID
+    _id: ID!
     username: String!
     email: String!
     savedItems: [Item]
-  }
-
-  input userInput {
-    username: String
-    email: String
   }
 
   input updateItem {
@@ -25,7 +20,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
-    user(username: String!): User
+    user(_id: ID): User
     me: User
   }
 
@@ -59,7 +54,9 @@ const typeDefs = gql`
 
     saveItem(item: itemInput): User
 
-    deleteItem(_id: ID): User 
+    deleteItem(_id: ID!): User 
+
+    deleteUser: User 
 
     updateItem(_id: ID, item: updateItem): User 
   }

@@ -17,8 +17,6 @@ const SearchItemsForm = () => {
     const [searchedItems, setSearcheditems] = useState([]);
     // create state for holding our search field data
     const [searchInput, setSearchInput] = useState({ itemName: '', userPaid: 0.01});
-    //display any error messages
-    const [showError, setShowError] = useState({itemError: '', priceError: ''});
 
     const [validated] = useState(false);
 
@@ -55,7 +53,7 @@ const SearchItemsForm = () => {
 
     //searchInput.userPaid can't be zero
     if (searchInput.userPaid < 0.01) {
-      return setShowError({itemError: "User paid can't be zero"})
+      return ("User paid can't be zero")
     }
 
     try {

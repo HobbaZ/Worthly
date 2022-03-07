@@ -92,7 +92,7 @@ const Login = () => {
                 <div style={{"textAlign": "center"}}>
                 <FormButton
                 disabled={!(formState.email && formState.password)}
-                type="submit">Submit</FormButton>
+                type="submit">Login</FormButton>
                 </div>
               </Form>
             )}
