@@ -39,17 +39,6 @@ import '../app.css'
     }
 }
 
-function randValues() {
-
-  let randWidth = Math.floor(Math.random() * (400 - 250 + 1)) + 250;
-  let randHeight = Math.floor(Math.random() * (400 - 250 + 1)) + 250;
-
-  let coverHeight = Math.floor(Math.random() * (randHeight - (randHeight/3) +1)) + (randHeight/3);
-  let coverWidth = Math.floor(Math.random() * (randWidth - (randWidth/3) +1)) + (randWidth/3);
-
-  return [randWidth, randHeight, coverWidth, coverHeight]
-}
-
 //Store generated values
 
 function objectToGen() {
@@ -57,40 +46,35 @@ function objectToGen() {
 
   let randNumber = Math.floor(Math.random()*object.length);
   
-  
-
   if (object[randNumber] === "book") {
 
-      randValues()
-      let genrandWidth = randValues()[0]
-      let genrandHeight = randValues()[1]
+      let svgWidth = Math.floor(Math.random() * (80 - 50 + 1) + 50);
+      let spineWidth = svgWidth/4;
 
-      let genCoverWidth = randValues()[2]
-      let genCoverHeight = randValues()[3]
-
-      let spineWidth = genrandWidth/6;
-
-      console.log("book ", genrandWidth, genrandHeight, spineWidth)
+      let coverPosX = Math.floor(Math.random() * (90 - 30 + 1) + 30);
+      let coverPosY = Math.floor(Math.random() * (90 - 30 + 1) + 30);
         
     return (
       <>
-      <svg width = {genrandWidth} height = {genrandHeight} x ="0" y="0">
+      <svg width = {(svgWidth)+"%"} height = "60%" x={50- (svgWidth/2)+ "%"} y="20%">
       
       <g>
         {/*book*/}
       <rect x="0" y= "0" width="100%" height= "100%" fill={chosenColour} />
       
       {/*spine*/}
-      <rect x="0" y="0" width={spineWidth} height="100%" fill={dayChange()} />
-
-      {/*light spine*/}
-      <rect x={0 + (spineWidth/8)} y="0" width={spineWidth/4} height="100%" fill={chosenColour} />
+      <svg width = {(spineWidth)+"%"} height = "100%" x="0" y="0">
+      <g>
+      
+      <rect x="0" y="0" width="60%" height="100%" fill={dayChange()} />
 
       {/*pages*/}
-      <rect x={0 + (spineWidth/3)} y="0" width={spineWidth/2} height="100%" fill="white" style={{stroke:"black", strokeWidth:"1"}}/>
+      <rect x="10%" y="0" width="50%" height="100%" fill="white" style={{stroke:"black", strokeWidth:"1"}}/>
+      </g>
+      </svg>
 
       {/*cover*/}
-      <rect x={0 + (spineWidth + spineWidth/2)} y={0 + (genCoverHeight/2)} width={genCoverWidth} height={genCoverHeight} fill={createRandomColor()} />
+      <rect x={coverPosX} y={coverPosY} width={coverPosX} height={coverPosY} fill={createRandomColor()} />
 
       {/*shade overlay*/}
       <rect x="0" y= "0" width="100%" height= "100%" fill={dayChange()} />
@@ -102,55 +86,48 @@ function objectToGen() {
     };
 
     if (object[randNumber] === "collectable") {
-      randValues()
-      let genrandWidth = randValues()[0]/2
-      let genrandHeight = randValues()[1]
-
-      let genCoverWidth = randValues()[2]
-      let genCoverHeight = randValues()[3]
 
       let cameraLense = createRandomColor();
 
-      let spineWidth = genrandWidth/4;
+      let viewfinderPosX = Math.floor(Math.random() * (45 - 15 + 1) + 15);
+      let viewfinderPosY = Math.floor(Math.random() * (50 - 10 + 1) + 10);
 
-      console.log("camera ", genrandWidth, genrandHeight, spineWidth)
+      let lensePosX = Math.floor(Math.random() * (70 - 50 + 1) + 50);
         
     return (
       <>
-      <svg width = {genrandWidth+spineWidth} height = {genrandHeight/2}>
+      <svg width = "80%" height = "50%" x="10%" y="25%">
       
       <g>
         {/*old camera*/}
       <rect x="0" y= "0" width="100%" height= "100%" fill={chosenColour} />
 
       {/*stripes*/}
-      <rect x= "1%" y="0" width= "3%" height="100%" fill={createRandomColor()}/>
-      <rect x= "4%" y="0" width= "3%" height="100%" fill={createRandomColor()}/>
-      <rect x= "8%" y="0" width= "3%" height="100%" fill={createRandomColor()}/>
+      <rect x= "7%" y="0" width= "3%" height="100%" fill={createRandomColor()}/>
 
       {/*strap*/}
-      <rect x={0 - (spineWidth/2)} y="50%" width={spineWidth} height="10%" fill={createRandomColor()}/>
+      <rect x="0" y="50%" width="8%" height="10%" fill={createRandomColor()}/>
 
       {/*side*/}
-      <rect x="0" y="0" width={spineWidth} height="100%" fill={dayChange()} />
+      <rect x="0" y="0" width="10%" height="100%" fill={dayChange()} />
 
       {/*viewfinder*/}
-      <rect x={0 + (spineWidth + spineWidth/4)} y={0 + (genCoverHeight/4)} width={genCoverWidth/4} height={genCoverHeight/4} fill={cameraLense}/>
+      <rect x={(viewfinderPosX)+"%"} y={(viewfinderPosY)+"%"} width={(viewfinderPosX)+"%"} height={(viewfinderPosY)+"%"} fill={cameraLense}/>
 
       {/*parts for lense*/}
-      <svg width = {genrandWidth} height = {genrandHeight/2} x ="50%" y ="5%">
+      <svg width = {(lensePosX)+"%"} height = {(lensePosX)+"%"} x ="50%" y ="40%">
             <g>
             {/*camera surround*/}
-            <circle cx= "45%" cy="50%" r={(genrandWidth/2)/3} fill="black" />
+            <circle cx= "45%" cy="50%" r={(lensePosX/2)} fill="black" />
 
             {/*lense 1*/}
-            <circle cx="49%" cy="50%" r={(genrandWidth/2)/3} fill={createRandomColor()} />
+            <circle cx="49%" cy="50%" r={(lensePosX/2)} fill={createRandomColor()} />
 
             {/*lense 2*/}
-            <circle cx="50%" cy="50%" r={(genrandWidth/2)/4} fill="black" />
+            <circle cx="50%" cy="50%" r={(lensePosX/3)} fill="black" />
 
             {/*lense 3*/}
-            <circle cx="50%" cy="50%" r={(genrandWidth/2)/6} fill={cameraLense} />
+            <circle cx="50%" cy="50%" r={(lensePosX/4)} fill={cameraLense} />
             </g>
       </svg>
 
@@ -163,8 +140,6 @@ function objectToGen() {
     }
 
     if (object[randNumber] === "toy") {
-
-      randValues()
 
       let windScreen = createRandomColor();
 
@@ -183,7 +158,7 @@ function objectToGen() {
       return (
         <>
         {/*truck toy*/}
-      <svg width = "100%" height = "50%" x="5%" y="25%">
+        <svg width = "90%" height = "50%" x="10%" y="25%">
       
       {/*truck bed collection*/}
       <svg width = "65%" height = "100%" x="20%" y="0%" >
@@ -311,9 +286,6 @@ function objectToGen() {
 </>
       )
     }
-
-    
-
 }
   
 const HeroImage = () => {
@@ -328,11 +300,8 @@ return (
      {objectToGen()}
      </g>
      </svg>
-
-     
      </div>
-        
-      
+     
     </>
   );
 
