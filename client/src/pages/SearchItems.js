@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Form, FormField, Label, FormGroup, FormButton } from '../styles/FormStyle';
 
-import { Button, Container, Image, TextBlock, ResultsContainer, ImageBlock, Spinner} from '../styles/GenericStyles';
+import { Button, Container, Image, TextBlock, ResultsContainer, ImageBlock} from '../styles/GenericStyles';
 
 import Auth from '../utils/auth';
 
@@ -10,7 +10,26 @@ import { useMutation } from '@apollo/client';
 
 import { SAVE_ITEM } from '../utils/mutations';
 
+import HeroImage from '../components/HeroImage';
+
 const apiKey = process.env.REACT_APP_API_KEY;
+
+function SpinnerContent() {
+
+  const [newSVG, setNewSVG] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNewSVG((genSVG) => genSVG + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <HeroImage></HeroImage>
+  )
+}
 
 const SearchItemsForm = () => {
     // create state for holding returned eBay api data
@@ -192,7 +211,7 @@ return (
               </FormGroup>
             
               <FormGroup>
-              <Label>User Paid</Label>
+              <Label>You paid How Much!?</Label>
               <FormField 
                 type='number'
                 placeholder='Cost of Item'
@@ -206,7 +225,7 @@ return (
 
               <FormGroup>
 
-            <div style={{"text-align": "center"}}>
+            <div style={{"textAlign": "center"}}>
             <FormButton
               disabled={!(searchInput.itemName || searchInput.userPaid)}
               type='submit'
@@ -224,8 +243,8 @@ return (
           )}
 
           {loading? (
-            <div>Searching For Item...
-              <Spinner>W</Spinner>
+            <div>
+              <SpinnerContent></SpinnerContent>
             </div>
             ) : (
       //Display search results
