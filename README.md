@@ -80,7 +80,7 @@ Desktop version
 Saved Stuff page
 ![Desktop version of site homepage](client/src/assets/images/saved-stuff.png)
 
-Playing around with semi dynamic created SVGs atm
+Semi dynamic created SVGs
 ![colourful toy truck](client/src/assets/images/examplesvg.png)
 
 ## Installation
@@ -93,12 +93,16 @@ Playing around with semi dynamic created SVGs atm
 
 4. Open a new Terminal in VS Code and type ```npm install``` to install the repo dependencies.
 
-5. Finally, type ```npm run develop``` into the terminal and navigate to localhost:3000 in your web browser.
+5. Create a .env file like the image below in the server folder and input your database link from MongoDb Atlas and obtain your api key from [Countdown api](https://www.countdownapi.com/)
+![example .env file](client/src/assets/images/envexample.PNG)
+
+6. Finally, type ```npm run develop``` into the terminal and it will start the dev server at localhost:3000.
 
 ## Features
 
 - Create, delete your items
 - Create, delete and edit your account
+- Price tracking and charts (coming soon)
 
 ## Technology
 
@@ -112,6 +116,7 @@ Playing around with semi dynamic created SVGs atm
 - Countdown Ebay API
 - Styled Components
 - Google Fonts
+- ChartJS
 
 ## Contributors
 [Zachary Hobba](https://github.com/HobbaZ)
@@ -121,6 +126,7 @@ You can also contribute by opening a pull request or submitting an issue.
 ## Acknowledgements
 [https://medium.com/serpapi/how-to-scrape-product-data-from-google-shopping-f1193abd5dc3](https://medium.com/serpapi/how-to-scrape-product-data-from-google-shopping-f1193abd5dc3)
 
+[https://www.countdownapi.com/docs/ebay-product-data-api/overview](https://www.countdownapi.com/docs/ebay-product-data-api/overview)
 
 [https://www.amp-what.com/unicode/search/up%20arrow](https://www.amp-what.com/unicode/search/up%20arrow)
 

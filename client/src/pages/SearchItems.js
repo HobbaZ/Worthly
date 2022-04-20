@@ -182,10 +182,13 @@ return (
     <>
     <Container>
       <div>
-              <h3>Search Tips...</h3>
-              <p>Include the item's brand, colour, size and model number instead of vague search terms like colour and type of item.</p>
-              <p>To search for one word or another, put the words in parentheses divided by commas, e.g. [Volkswagen, VW]</p>
-              <p>The more specific the search term, the better the results.</p>
+          <h3>Search Tips...</h3>
+          <p>Include specific search terms like the item's brand, colour, size and model number instead of more vague search terms like colour and type of item.
+          <br/><br/>
+          To search for one word or another, put the words in parentheses divided by commas, e.g. [Volkswagen, VW].</p>
+
+          <h4>Why create an account?</h4>
+          <p>You can use the site to look up single item values all day long, but what if you have many different items you'd like to keep track of? Creating an account gives you the option to track all your items and gives you a rundown of how much profit you'd make, total item value and how much you've spent on your collection, price tracking and graphs coming soon.</p>
       </div>     
 
       {data ? (
@@ -211,7 +214,7 @@ return (
               </FormGroup>
             
               <FormGroup>
-              <Label>You paid How Much!?</Label>
+              <Label>Cost of Item</Label>
               <FormField 
                 type='number'
                 placeholder='Cost of Item'
