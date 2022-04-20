@@ -33,6 +33,10 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @media (min-width: 800px) {
+        width: 60%;
+    }
 `;
 
 export const IntroContainer = styled.div`
@@ -44,22 +48,22 @@ export const IntroContainer = styled.div`
 `;
 
 export const IntroText = styled.div`
-display: flex;
-flex-direction: column;
-width: 90%;
-height: 100%;
-padding-bottom: 10vh;
-font-family: 'Fugaz One', cursive;
-font-size: 40px;
-margin: auto;
-align-items: center;
-justify-content: center;
-padding-top:10vh;
-
-@media (max-width: 620px) {
+    display: flex;
     flex-direction: column;
-    padding-top:25vh;
-  }
+    width: 90%;
+    height: 100%;
+    padding-bottom: 10vh;
+    font-family: 'Fugaz One', cursive;
+    font-size: 40px;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    padding-top:10vh;
+
+    @media (max-width: 620px) {
+        flex-direction: column;
+        padding-top:25vh;
+    }
 
 `;
 
@@ -109,6 +113,10 @@ export const TextBlock = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    @media (min-width: 800px) {
+        width: 60%;
+    }
 `;
 
 export const ListBlock = styled.div`

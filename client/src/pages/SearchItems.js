@@ -181,15 +181,23 @@ const SearchItemsForm = () => {
 return (
     <>
     <Container>
-      <div>
+      <TextBlock>
           <h3>Search Tips...</h3>
           <p>Include specific search terms like the item's brand, colour, size and model number instead of more vague search terms like colour and type of item.
           <br/><br/>
           To search for one word or another, put the words in parentheses divided by commas, e.g. [Volkswagen, VW].</p>
 
-          <h4>Why create an account?</h4>
-          <p>You can use the site to look up single item values all day long, but what if you have many different items you'd like to keep track of? Creating an account gives you the option to track all your items and gives you a rundown of how much profit you'd make, total item value and how much you've spent on your collection, price tracking and graphs coming soon.</p>
-      </div>     
+          {/*Show create account message if user not logged in*/}
+          {Auth.loggedIn() ? (
+            null
+          ) : (
+            <>
+            <h4>Why create an account?</h4>
+            <p>You can use the site to look up single item values all day long, but what if you have many different items you'd like to keep track of? Creating an account gives you the option to track all your items and gives you a rundown of how much profit you'd make, total item value and how much you've spent on your collection, price tracking and graphs coming soon.</p>
+            </>
+          )};
+          
+      </TextBlock>     
 
       {data ? (
               <div>

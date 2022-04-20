@@ -10,8 +10,6 @@ import '../app.css'
     return `rgba(${r},${g},${b})`;
   }
 
-  let chosenColour = createRandomColor()
-
   //parts of image change to time specific highlights
   function dayChange() {
 
@@ -20,27 +18,26 @@ import '../app.css'
     let currentColour = '';
     
     if (currentHour >=5 && currentHour < 7) {
-        return currentColour = 'rgb(165, 68, 3, 0.3)';
+        return currentColour = 'rgba(165, 68, 3, 0.2)';
 
     } else if (currentHour >=7 && currentHour < 12) {
-      return currentColour = 'rgb(165, 68, 3, 0.3)';
+      return currentColour = 'rgba(3, 133, 165, 0.2)';
 
     } else if (currentHour >=12 && currentHour < 13) {
-      //return currentColour = 'rgb(165, 68, 3, 0.3)';
-      return currentColour = 'rgba(73, 74, 99, 0.3)';
+      return currentColour = '125, 229, 255, 0.2)';
 
-    } else if (currentHour >= 13 && currentHour < 18 ) {
-      //return currentColour = 'rgb(165, 68, 3, 0.3)';
-      return currentColour = 'rgba(39, 40, 41, 0.377)';
+    } else if (currentHour >= 13 && currentHour < 15 ) {
+      return currentColour = 'rgba(3, 133, 165, 0.2)';
+
+    } else if (currentHour >= 15 && currentHour < 18 ) {
+      return currentColour = 'rgba(165, 68, 3, 0.2)';
 
     } else {
-      //return currentColour = 'rgba(73, 74, 99, 0.3)';
-      return currentColour = 'rgb(165, 68, 3, 0.3)';
+      return currentColour = 'rgb(165, 68, 3, 0.2)';
     }
 }
 
 //Store generated values
-
 function objectToGen() {
   let object = ["book", "collectable", "toy"];
 
@@ -60,7 +57,7 @@ function objectToGen() {
       
       <g>
         {/*book*/}
-      <rect x="0" y= "0" width="100%" height= "100%" fill={chosenColour} />
+      <rect x="0" y= "0" width="100%" height= "100%" fill={createRandomColor()} />
       
       {/*spine*/}
       <svg width = {(spineWidth)+"%"} height = "100%" x="0" y="0">
@@ -75,11 +72,7 @@ function objectToGen() {
 
       {/*cover*/}
       <rect x={coverPosX} y={coverPosY} width={coverPosX} height={coverPosY} fill={createRandomColor()} />
-
-      {/*shade overlay*/}
-      <rect x="0" y= "0" width="100%" height= "100%" fill={dayChange()} />
       </g>
-
       </svg>
       </>
     )
@@ -100,7 +93,7 @@ function objectToGen() {
       
       <g>
         {/*old camera*/}
-      <rect x="0" y= "0" width="100%" height= "100%" fill={chosenColour} />
+      <rect x="0" y= "0" width="100%" height= "100%" fill={createRandomColor()} />
 
       {/*stripes*/}
       <rect x= "7%" y="0" width= "3%" height="100%" fill={createRandomColor()}/>
@@ -109,7 +102,7 @@ function objectToGen() {
       <rect x="0" y="50%" width="8%" height="10%" fill={createRandomColor()}/>
 
       {/*side*/}
-      <rect x="0" y="0" width="10%" height="100%" fill={dayChange()} />
+      <rect x="0" y="0" width="12%" height="100%" fill={dayChange()} />
 
       {/*viewfinder*/}
       <rect x={(viewfinderPosX)+"%"} y={(viewfinderPosY)+"%"} width={(viewfinderPosX)+"%"} height={(viewfinderPosY)+"%"} fill={cameraLense}/>
@@ -130,9 +123,6 @@ function objectToGen() {
             <circle cx="50%" cy="50%" r={(lensePosX/4)} fill={cameraLense} />
             </g>
       </svg>
-
-      {/*shade overlay*/}
-      <rect x="0" y= "0" width="100%" height= "100%" fill={dayChange()} />
       </g>
       </svg>
       </>
@@ -152,9 +142,13 @@ function objectToGen() {
 
       let bedColour= createRandomColor();
 
-      let randRadiatorHeight = Math.floor(Math.random() * (60 - 20 + 1) + 20);
-      let randRadiatorWidth = Math.floor(Math.random() * (60 - 30 + 1) + 30);
-      
+      let randRadiatorHeight = Math.floor(Math.random() * (60 - 10 + 1) + 10);
+      let randRadiatorWidth = Math.floor(Math.random() * (100 - 10 + 1) + 10);
+
+      let lightHeight = (Math.floor(Math.random() * (30 - 10 + 1) + 10)) +"%";
+
+      let cabColour = createRandomColor();
+
       return (
         <>
         {/*truck toy*/}
@@ -167,9 +161,9 @@ function objectToGen() {
       <svg width = "100%" height = "100%" x="0%" y="0%" >
       <g>
       <rect x="0" y= "0" width="100%" height= "100%" fill={bedColour}/>
-      <rect x="0" y= "40%" width="100%" height= "10%" fill={createRandomColor()}/>
-      <rect x="0" y= "50%" width="100%" height= "10%" fill={createRandomColor()}/>
-      <rect x="0" y= "60%" width="100%" height= "10%" fill={createRandomColor()}/>
+      <rect x="0" y= "40%" width="100%" height= {Math.floor(Math.random() * (25 - 5 + 1) + 5)} fill={createRandomColor()}/>
+      <rect x="0" y= "50%" width="100%" height= {Math.floor(Math.random() * (25 - 5 + 1) + 5)} fill={createRandomColor()}/>
+      <rect x="0" y= "60%" width="100%" height= {Math.floor(Math.random() * (25 - 5 + 1) + 5)} fill={createRandomColor()}/>
 
       {/*front of bed*/}
       <rect x="0" y="0" width="40%" height="100%" fill={dayChange()} />
@@ -203,9 +197,6 @@ function objectToGen() {
         </g>
 
       </svg>
-
-        {/*shade overlay*/}
-        <rect x="0" y= "0" width="100%" height= "100%" fill={dayChange()} />
         </g>
         </svg>
         
@@ -218,7 +209,7 @@ function objectToGen() {
       <svg width= "100%" height="80%" x ="0" y="20%">
       
       <g>
-      <rect x="0" y= "0%" width="100%" height= "100%" fill={chosenColour} />
+      <rect x="0" y= "0%" width="100%" height= "100%" fill={cabColour} />
             
       {/*side Window*/}
       <rect x="55%" y="20%" width="25%" height={randRadiatorHeight} fill={windScreen}/>
@@ -229,16 +220,16 @@ function objectToGen() {
         {/*radiator area*/}
         <svg height="50%" width="100%" x ="0" y ="50%">
           <g>
-      <rect  y={20+randRadiatorHeight/2} width={randRadiatorWidth} height={randRadiatorHeight} x={0+randRadiatorWidth/2} fill={createRandomColor()}/>
+      <rect  y={(randRadiatorWidth/2)+"%"} width={randRadiatorWidth+"%"} height={(Math.floor(Math.random() * (100 - 10 + 1) + 10))+"%"} x={0+randRadiatorWidth/2} fill="black"/>
 
       {/*bumper*/}
       <rect x="0" y= "80%" width="100%" height= "20%" fill="grey"/>
 
       {/*left light*/}
-      <rect x="0" y= "20%" width="20%" height= "20%" fill="white"/>
+      <rect x="0" y= "20%" width="20%" height= {lightHeight} fill="white"/>
 
       {/*right light*/}
-      <rect x="80%" y= "20%" width="20%" height= "20%" fill="white"/>
+      <rect x="80%" y= "20%" width="20%" height= {lightHeight} fill="white"/>
       </g>
       
       </svg>
@@ -273,13 +264,9 @@ function objectToGen() {
                 <circle cx="46%" cy="50%" r="15%" fill="grey" />
             
                 {/*outer guard*/}
-                <rect x="0%" y="0%" width= "100%" height="30%" fill={chosenColour} />
+                <rect x="0%" y="0%" width= "100%" height="30%" fill={cabColour} />
                 </g>
             </svg>
-
-                     {/*shade overlay*/}
-          <rect x="0" y= "0%" width="100%" height= "100%" fill={dayChange()} /> 
-
       </svg>
       </svg>
 </svg>

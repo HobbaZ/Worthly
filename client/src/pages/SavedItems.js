@@ -168,7 +168,7 @@ const SavedItems = () => {
 
   return (
     <Container>
-      <div>
+      <div style={{"textAlign": "center"}}>
           <h1>Your Saved Stuff!</h1>
       <h2>
           {userData.savedItems?.length
