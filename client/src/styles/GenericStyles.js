@@ -77,7 +77,7 @@ export const Negative = styled.span`
 
 export const ResultsContainer = styled.div`
     flex-direction: row;
-    width: 70%;
+    width: 90%;
     height: auto;
     margin: 30px auto;
     padding: 10px;

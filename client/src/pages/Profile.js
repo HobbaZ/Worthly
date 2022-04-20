@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 
-import { Container, Button} from '../styles/GenericStyles';
+import { Container} from '../styles/GenericStyles';
 
 import { Form, FormField, Label, FormGroup, FormButton } from '../styles/FormStyle';
 
@@ -13,7 +13,7 @@ import { UPDATE_ME, DELETE_ME } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
-function greeting() {
+function Greeting(props) {
 
   const date = new Date();
   let currentHour = date.getHours();
@@ -28,16 +28,18 @@ function greeting() {
   } else {
     currentGreeting = 'Good Evening';
   }
-  return currentGreeting
+  return (
+  <>
+  <h1>{currentGreeting}, {props.name}</h1>
+  <h4>Your current details are:</h4>
+  <p>Username: {props.name}</p>
+  <p>Email: {props.email}</p>
+  </>
+  )
 }
 
-function currentDate() {
-  let date = new Date();
-  let today = `${date.getDate()}/${(date.getMonth()+1)}/${date.getFullYear()}`;
-  return today;
-}
 
-const Profile = () => {
+const Profile = (props) => {
   const { loading, data } = useQuery(QUERY_ME);
 
   const [ updateUser ] = useMutation(UPDATE_ME);
@@ -46,8 +48,11 @@ const Profile = () => {
 
   const [validated] = useState(false);
 
-    // create state for holding returned user data
-    const [newUserData, setNewUserData] = useState([]);
+  // create state for holding returned user data
+  const [newUserData, setNewUserData] = useState([]);
+
+  // state for error messages
+  const [infoMessage, setInfoMessage] = useState('');
 
   const userData = data?.me || [];
 
@@ -65,6 +70,8 @@ const Profile = () => {
     const { name, value } = event.target;
     setUpdateUserInput({ ...userUpdateInput, [name]: value });
   };
+
+  const welcome = <Greeting name={userData.username} email={userData.email}/>
 
 // create method to search for items and set state on form submit
 const handleFormSubmit = async (event) => {
@@ -86,7 +93,6 @@ try {
 
   setUpdateUserInput({
   //Persist inputs until cleared by user
-
   username: userUpdateInput.username,
   email: userUpdateInput.email,
 
@@ -112,10 +118,9 @@ console.log("User details have been saved", userUpdateInput.username, userUpdate
     try {
       await updateUser({
         variables: {username: infoToSave.username, email: infoToSave.email },
-        
       });
 
-      // if item successfully saves to user's account, save item to state
+      setInfoMessage("Your details have been updated")
 
       console.log('user details have been updated', infoToSave.username, infoToSave.email)
       window.location.replace("/profile");
@@ -139,6 +144,9 @@ console.log("User details have been saved", userUpdateInput.username, userUpdate
       await deleteUser({
         variables: { ...userData },
       });
+
+      setInfoMessage("Your account has been deleted")
+
       window.location.replace("/signup");
       console.log('Deleting account...')
 
@@ -147,29 +155,37 @@ console.log("User details have been saved", userUpdateInput.username, userUpdate
     };
   };
 
+  function showMsg() {
+    setInfoMessage("Details have been saved")
+  }
+
   return (
     <>
     <Container>
       {Auth.loggedIn() && (
-      <div>
-        <h2>Your Profile</h2>
+      <>
+        <h2 style={{"textAlign": "center"}}>Your Profile</h2>
 
         <div>
-          <p>{greeting()} {userData.username}, here are your current account details</p>
-          <p>Username: {userData.username}</p>
-          <p>Email: {userData.email}</p>
-          </div>
+          {welcome}
+        </div>
 
+      
       <Form validated={validated} onSubmit={handleFormSubmit}>
-                <h2>Update Your details</h2>
+                <h3 style = {{"textAlign": "center"}}>Update Your details</h3>
+
+                {infoMessage && (
+                  <div>{infoMessage}</div>
+                )}
+
                 <FormGroup>
                 <Label>Username</Label>
                 <FormField
                   type='text'
-                  placeholder= {userData.username}
+                  placeholder= {props.name}
                   name='username'
                   onChange={handleInputChange}
-                  minLength={1}
+                  minLength={2}
                   value={userUpdateInput.username}>
                   
                 </FormField>
@@ -179,7 +195,7 @@ console.log("User details have been saved", userUpdateInput.username, userUpdate
                 <Label>Email</Label>
                 <FormField 
                   type='email'
-                  placeholder={userData.email}
+                  placeholder={props.email}
                   name='email'
                   onChange={handleInputChange}
                   minLength={1}
@@ -191,7 +207,8 @@ console.log("User details have been saved", userUpdateInput.username, userUpdate
 
                 <div style={{"textAlign": "center"}}>
                 <FormButton
-                type='submit'>
+                type='submit'
+                onClick={showMsg}>
                 Save Details
                 </FormButton>
                 </div>
@@ -203,13 +220,10 @@ console.log("User details have been saved", userUpdateInput.username, userUpdate
                 </FormButton>
                 </div>
 
-                
                 </FormGroup>
-
                 </Form>
 
-                
-
+                <Form>
                 <div style={{"textAlign": "center"}}>
                 <FormButton
                 style={{ "border" : "2px red solid", "color" : "red"}}
@@ -217,8 +231,8 @@ console.log("User details have been saved", userUpdateInput.username, userUpdate
                 Delete Account
                 </FormButton>
                 </div>
-      </div>
-      
+                </Form>
+      </>
       )};
 
     </Container>

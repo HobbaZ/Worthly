@@ -16,8 +16,8 @@ export const Form = styled.form`
 `;
 
 export const FormField = styled.input`
-    width: 100%;
-    height: 40px;
+    width: 80%;
+    height: 30px;
     border-radius: 2px;
     padding: 5px;
 
@@ -30,8 +30,6 @@ export const FormField = styled.input`
     }
 `;
 
-
-
 export const Label = styled.label`
 	margin-bottom: 5px;
 	color: black;
@@ -42,13 +40,14 @@ export const Label = styled.label`
 export const FormGroup = styled.div`
     display: block;
 	width: 100%;
-	margin: 20px auto;
+    text-align: center;
+	margin: 10px auto;
 `;
 
 export const FormButton = styled.button`
-    width: 70%;
-    padding: 10px;
-    font-size: 20px;
+    width: 50%;
+    padding: 5px;
+    font-size: 15px;
     margin: 5px;
     cursor: pointer;
 
