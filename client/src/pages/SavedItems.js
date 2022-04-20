@@ -8,6 +8,8 @@ import { Button, Container, Image, ResultsContainer, ImageBlock, TextBlock, List
 
 //import { Form, FormField, Label, FormGroup } from '../styles/FormStyle';
 
+import { line } from 'react-chartjs-2';
+
 import Auth from '../utils/auth';
 
 const SavedItems = () => {
@@ -58,17 +60,20 @@ const SavedItems = () => {
   //Calculate networth by adding all profits from the individual items listed
   const netWorth = () => {
     let total = 0;
-
-    
+    const netWorthArray = [];
   
     for (let index = 0; index < userData.savedItems?.length; index++) {
       let calcProfit = userData.savedItems[index].profit;
       total = total + parseFloat(calcProfit);
+      netWorthArray.push(total.toFixed(2));
     }
     
     return total.toFixed(2);
     };
 
+    //_____________TOTAL VALUE CALCULATION_____________________
+
+  //Calculate total average value of all items
     const totalValue = () => {
       let total = 0;
   
