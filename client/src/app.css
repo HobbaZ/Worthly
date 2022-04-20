@@ -4,6 +4,11 @@ body,html, nav, footer {
     color: black;
 }
 
+html {
+    min-height: fit-content;
+    margin-bottom: 50px;
+}
+
 #genImage {
     background-color: black;
     width: 50%;

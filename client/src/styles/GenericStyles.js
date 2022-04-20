@@ -75,21 +75,6 @@ export const Negative = styled.span`
     color: red;
 `;
 
-export const Spinner = styled.div` 
-    text-align: center;
-    font-size: 40px;
-    color: black;
-    font-weight: 900;
-    animation: spin 3s linear infinite;
-    margin-top:10px;
-    }
-
-    @keyframes spin {
-    0% { transform: rotateY(0deg); }
-    100% { transform: rotateY(360deg); }
-}
-`;
-
 export const ResultsContainer = styled.div`
     flex-direction: row;
     width: 70%;
@@ -99,7 +84,6 @@ export const ResultsContainer = styled.div`
     justify-content: center;
     display: flex;
     align-items: center;
-    border-bottom: black solid 1px;
 
     @media (max-width: 800px) {
         flex-direction: column;
@@ -141,10 +125,34 @@ export const Image = styled.img`
 
 export const FooterStyle = styled.footer`
       width: 100%;
-      height: 30px;
-      text-align: center;
+      border-top: black solid 2px;
+      padding-top: 10px;
+      height: fit-content;
       position: fixed;
-      bottom:10px;
+      text-align: center;
+      bottom:0px;
       left:0;
-      background-color: whiite;
+      background-color: white;
+
+      .fab, .fas {
+        padding: 0px 10px;  
+        font-size: 25px;
+        }
+        h4 {
+            margin: auto;
+        }
+        a {
+            color:black;
+        }
+        a :hover {
+            pointer:hand;
+        }
+
+        @media (max-width: 800px) {
+            .fab, .fas {
+                padding: 0px 20px; 
+                font-size: 30px;
+                }
+        }
+  }
 `;

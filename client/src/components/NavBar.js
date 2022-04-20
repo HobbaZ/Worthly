@@ -4,8 +4,6 @@ import { NavLink, Nav, NavBtnLink, TitleNav, NavLayout } from '../styles/NavbarS
 import Auth from '../utils/auth';
 
 const AppNavbar = () => {
-  // set modal display state
-  //const [showModal, setShowModal] = useState(false);
 
   return (
     <>

@@ -2,13 +2,23 @@ import React from 'react';
 
 import { FooterStyle } from '../styles/GenericStyles';
 
-const Footer = () => {
+//Change year automatically
+function year() {
+  let date = new Date();
+  return date.getFullYear();
+}
 
-  return (
-    <FooterStyle>
-          <h4>Worthly, Est 2022</h4>
-    </FooterStyle>
-  );
+const Footer = () => {
+return (
+  <FooterStyle>
+      <h4>Worthly {year()} </h4>
+      <div className='icons'>
+          <a href="https://www.linkedin.com/in/zachary-hobba-52aaa182/"><i className="fab fa-linkedin"></i></a>
+          <a href="mailto:zachobba@gmail.com"><i className="fas fa-envelope-square"></i></a>
+          <a href="https://github.com/HobbaZ"><i className="fab fa-github"></i></a>
+      </div>
+  </FooterStyle>
+);
 };
 
 export default Footer;
