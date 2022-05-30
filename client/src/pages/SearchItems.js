@@ -97,7 +97,7 @@ const SearchItemsForm = () => {
     let average = 0;
 
     for (let index = 0; index < search_results.length; index++) {
-      let priceMinusPostage = search_results[index]?.price.value - 9;  //Guestimate of average postage
+      let priceMinusPostage = search_results[index]?.price.value; //Don't need shipping cost as only getting initial sold amount
       total = total+parseFloat(priceMinusPostage);
 
     }
