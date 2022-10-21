@@ -277,14 +277,14 @@ function objectToGen() {
   
 const HeroImage = () => {
 
-  let randRadius = (Math.floor(Math.random() * (50 - 20 + 1) + 20))+"%";
+  //let randRadius = (Math.floor(Math.random() * (50 - 20 + 1) + 20))+"%";
 
 return (
     <>
       
      <div className='svgContainer'>
      <svg width = "400px" height = "400px" x ="0" y="0">
-     <circle cx="50%" cy="50%" r={randRadius} fill={createRandomColor()}/>
+     {/*<circle cx="50%" cy="50%" r={randRadius} fill={createRandomColor()}/>*/}
      <g>
      {objectToGen()}
      </g>

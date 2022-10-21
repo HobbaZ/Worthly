@@ -193,9 +193,11 @@ return (
           ) : (
             <>
             <h4>Why create an account?</h4>
-            <p>You can use the site to look up single item values all day long, but what if you have many different items you'd like to keep track of? Creating an account gives you the option to track all your items and gives you a rundown of how much profit you'd make, total item value and how much you've spent on your collection, price tracking and graphs coming soon.</p>
+            <p>You can use the site to look up single item values all day long, but what if you have many different items you'd like to keep track of? 
+              Creating an account gives you the option to track all your items and gives you a rundown of how much profit you'd make, total item value and how much you've spent on your collection, 
+              price tracking and graphs coming soon.</p>
             </>
-          )};
+          )}
           
       </TextBlock>     
 
@@ -313,13 +315,9 @@ return (
       ) : <h2>We couldn't find any results</h2>}
        </div>
 
-          )}; 
+          )}
 
-      </Container>
-      
-
-      
-        
+      </Container> 
     </>
   );
 };

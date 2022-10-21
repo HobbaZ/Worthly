@@ -19,8 +19,6 @@ export const Nav = styled.nav`
   justify-content: center;
   padding: 5px;
   margin-bottom: 10px;
-  border-bottom: 2px solid black;
-
 `;
 
 export const NavLayout = styled.div`
@@ -39,7 +37,7 @@ margin-bottom: 10px;
 `;
 
 export const NavLink = styled(Link)`
-  color: black;
+  color: white;
   margin: 0 auto;
   font-size: 25px;
   font-weight: 700;

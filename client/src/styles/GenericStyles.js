@@ -6,7 +6,7 @@ export const Button = styled.button`
 width: 25%;
 align-items: center;
 height: auto;
-background: rgba(255, 255, 255, 0);
+background: rgba(255, 255, 255, 0)
 padding: 5px;
 font-size: 20px;
 margin-bottom: 10px;
@@ -123,16 +123,22 @@ export const Image = styled.img`
     height: auto;
 `;
 
+export const ClipPath = styled.div`
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    height: 100vh;
+    background-color: #ff0000;
+`;
+
 export const FooterStyle = styled.footer`
       width: 100%;
-      border-top: black solid 2px;
       padding-top: 10px;
-      height: fit-content;
+      height: 60px;
       position: fixed;
       text-align: center;
+      align-content: center;
       bottom:0px;
       left:0;
-      background-color: white;
+      //clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
 
       .fab, .fas {
         padding: 0px 10px;  

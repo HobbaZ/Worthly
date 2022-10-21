@@ -1,12 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap');
 
 body,html, nav, footer {
-    color: black;
+    color: white;
 }
 
 html {
     min-height: fit-content;
     margin-bottom: 50px;
+    scroll-behavior: smooth;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(23, 146, 146);
 }
 
 #genImage {
@@ -25,9 +32,9 @@ html {
 }
 
 #svgContainer {
-    max-width: 600px;
+    max-width: 1000px;
     display: flex;
-    max-height: 600px;
+    max-height: 1000px;
     margin: auto;
     justify-content: center;
     padding: 10px;
@@ -36,7 +43,13 @@ html {
 #svgContainer > svg {
     display: block;
     text-align: center;
-    height: 300px;
-    width: 300px;
+    height: 500px;
+    width: 500px;
     margin:0 auto;
+}
+
+.footerText, .footerText a {
+    margin: auto;
+    color: white;
+    margin-top: 10px;
 }
