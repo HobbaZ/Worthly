@@ -15,7 +15,7 @@ function itemSearch() {
 const Home = () => {
 
     useEffect(() => {
-        document.body.style = `background: ${randColor}`;
+        //document.body.style = `background: ${randColor}`;
     }, [])
 
     return (

@@ -26,9 +26,9 @@ cursor: pointer;
 `;
 
 export const Container = styled.div`
-    width: 90%;
+    width: 100%;
     height: 100%;
-    margin: 10px auto;
+    margin: auto;
     justify-content: center;
     display: flex;
     flex-direction: column;

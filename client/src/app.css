@@ -13,7 +13,7 @@ html {
 body {
     height: 100vh;
     width: 100vw;
-    background-color: rgb(23, 146, 146);
+    background-color: rgb(61, 61, 61);
 }
 
 #genImage {
@@ -22,6 +22,21 @@ body {
     height: 100%;
     text-align: center;
     display: inline-block;
+}
+
+.svg {
+    margin: auto;
+
+    
+}
+
+@media screen and (max-width: 400px) {
+    .svg {
+        width: 90%;
+        height: 90%;
+        margin: auto;
+        text-align: center;
+    }
 }
 
 #imageContainer {

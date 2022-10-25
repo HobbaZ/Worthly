@@ -10,6 +10,12 @@ import '../app.css'
     return `rgba(${r},${g},${b})`;
   }
 
+  function dollarSignGen() {
+    <svg height="100" width="100" x="0" y="0">
+    <circle cx="50" cy="50" r="40" stroke="green" stroke-width="3" fill='black'/>
+    </svg>
+  }  
+
   //parts of image change to time specific highlights
   function dayChange() {
 
@@ -39,57 +45,63 @@ import '../app.css'
 
 //Store generated values
 function objectToGen() {
-  let object = ["book", "collectable", "toy"];
+  let object = ["book", "camera", "toy"];
 
   let randNumber = Math.floor(Math.random()*object.length);
   
   if (object[randNumber] === "book") {
 
-      let svgWidth = Math.floor(Math.random() * (80 - 50 + 1) + 50);
-      let spineWidth = svgWidth/4;
+      let bookWidth = Math.floor(Math.random() * (80 - 50 + 1) + 50);
 
-      let coverPosX = Math.floor(Math.random() * (90 - 30 + 1) + 30);
-      let coverPosY = Math.floor(Math.random() * (90 - 30 + 1) + 30);
+      let coverVariables = Math.floor(Math.random() * (80 - 50 + 1) + 50);
+
+      let coverPos = (50 - (coverVariables/2) + "%");
+
+      let titleVariables = Math.floor(Math.random() * (70 - 50 + 1) + 50);
+
+      let titlePos = (50 - (titleVariables/2) + "%");
         
     return (
       <>
-      <svg width = {(svgWidth)+"%"} height = "60%" x={50- (svgWidth/2)+ "%"} y="20%">
-      
+      {/*Creates svg container of book size */}
+      <svg width = {(bookWidth)+"%"} height = "80%" x={50- (bookWidth/2)+ "%"} y="0">
       <g>
-        {/*book*/}
+      {/*book*/}
       <rect x="0" y= "0" width="100%" height= "100%" fill={createRandomColor()} />
-      
-      {/*spine*/}
-      <svg width = {(spineWidth)+"%"} height = "100%" x="0" y="0">
-      <g>
-      
-      <rect x="0" y="0" width="60%" height="100%" fill={dayChange()} />
+        
+      {/*cover svg container*/}
+      <svg width="90%" height="100%" x="10%" y="0">
+        <g>
+          {/*cover */}
+        <rect x="0" y= "0" width="100%" height= "100%" fill={createRandomColor()} />
+        <g>
+        {/*cover inset*/}
+        <rect x= {coverPos} y= {coverPos} width= {(coverVariables) + "%"} height= {(coverVariables) + "%"} fill={createRandomColor()} />
 
-      {/*pages*/}
-      <rect x="10%" y="0" width="50%" height="100%" fill="white" style={{stroke:"black", strokeWidth:"1"}}/>
-      </g>
+        {/*Title box*/}
+        <rect x= {titlePos} y= {titlePos} width= {(titleVariables) + "%"} height= {(titleVariables/2) + "%"} fill={createRandomColor()} />
+        </g>
+        </g>
       </svg>
-
-      {/*cover*/}
-      <rect x={coverPosX} y={coverPosY} width={coverPosX} height={coverPosY} fill={createRandomColor()} />
+        
       </g>
       </svg>
       </>
     )
     };
 
-    if (object[randNumber] === "collectable") {
+    if (object[randNumber] === "camera") {
 
       let cameraLense = createRandomColor();
 
       let viewfinderPosX = Math.floor(Math.random() * (45 - 15 + 1) + 15);
       let viewfinderPosY = Math.floor(Math.random() * (50 - 10 + 1) + 10);
 
-      let lensePosX = Math.floor(Math.random() * (70 - 50 + 1) + 50);
+      let lenseVariable = Math.floor(Math.random() * (70 - 40 + 1) + 40);
         
     return (
       <>
-      <svg width = "80%" height = "50%" x="10%" y="25%">
+      <svg width = "80%" height = "50%" x="0%" y="0%">
       
       <g>
         {/*old camera*/}
@@ -108,19 +120,19 @@ function objectToGen() {
       <rect x={(viewfinderPosX)+"%"} y={(viewfinderPosY)+"%"} width={(viewfinderPosX)+"%"} height={(viewfinderPosY)+"%"} fill={cameraLense}/>
 
       {/*parts for lense*/}
-      <svg width = {(lensePosX)+"%"} height = {(lensePosX)+"%"} x ="50%" y ="40%">
+      <svg width = {(lenseVariable)+"%"} height = {(lenseVariable)+"%"} x ={(lenseVariable/2)+"%"} y ={(lenseVariable/2)+"%"}>
             <g>
             {/*camera surround*/}
-            <circle cx= "45%" cy="50%" r={(lensePosX/2)} fill="black" />
+            <circle cx= "45%" cy="50%" r={(lenseVariable/2)+"%"} fill="black" />
 
             {/*lense 1*/}
-            <circle cx="49%" cy="50%" r={(lensePosX/2)} fill={createRandomColor()} />
+            <circle cx="49%" cy="50%" r={(lenseVariable/2)+"%"} fill={createRandomColor()} />
 
             {/*lense 2*/}
-            <circle cx="50%" cy="50%" r={(lensePosX/3)} fill="black" />
+            <circle cx="50%" cy="50%" r={(lenseVariable/3)+"%"} fill="black" />
 
             {/*lense 3*/}
-            <circle cx="50%" cy="50%" r={(lensePosX/4)} fill={cameraLense} />
+            <circle cx="50%" cy="50%" r={(lenseVariable/4)+"%"} fill={cameraLense} />
             </g>
       </svg>
       </g>
@@ -145,20 +157,30 @@ function objectToGen() {
       let randRadiatorHeight = Math.floor(Math.random() * (60 - 10 + 1) + 10);
       let randRadiatorWidth = Math.floor(Math.random() * (100 - 10 + 1) + 10);
 
-      let lightHeight = (Math.floor(Math.random() * (30 - 10 + 1) + 10)) +"%";
+      let lightHeight = (Math.floor(Math.random() * (50 - 10 + 1) + 10)) +"%";
 
       let cabColour = createRandomColor();
+      let bedHeight = (Math.floor(Math.random() * (100 - 30 + 1) + 30));
+      let bedPosX = 100 - (bedHeight) +"%";
+
+      let radiatorPos = 50 - (randRadiatorWidth/2)
+      let radiatorPosY = 50 - Math.floor(Math.random() * (randRadiatorHeight/2 - randRadiatorHeight/3 + 1) + randRadiatorHeight/3);
+
+      let cabHeight = (Math.floor(Math.random() * (80 - 50 + 1) + 50)); 
+      let cabPos = 100 - (cabHeight) +"%";
+
+      let windowPos = (Math.floor(Math.random() * (20 - 5 + 1) + 5)) + "%";
 
       return (
         <>
         {/*truck toy*/}
-        <svg width = "90%" height = "50%" x="10%" y="25%">
+        <svg width = "100%" height = "80%" x="0%" y="0%">
       
       {/*truck bed collection*/}
-      <svg width = "65%" height = "100%" x="20%" y="0%" >
+      <svg width = "65%" height = "100%" x="20%" y={bedPosX} >
 
       {/*truck bed*/}
-      <svg width = "100%" height = "100%" x="0%" y="0%" >
+      <svg width = "100%" height = {(bedHeight)  +"%"} x="0%" y="0%" >
       <g>
       <rect x="0" y= "0" width="100%" height= "100%" fill={bedColour}/>
       <rect x="0" y= "40%" width="100%" height= {Math.floor(Math.random() * (25 - 5 + 1) + 5)} fill={createRandomColor()}/>
@@ -176,10 +198,10 @@ function objectToGen() {
               <g>
 
                 {/*inner guard*/}
-                <rect x="0" y="20%" width="100%" height="80%" fill="black" />
+                <rect x="0" y="20%" width="100%" height="100%" fill="black" />
 
                 {/*tire sidewell*/}
-                <circle cx="45%" cy="50%" r="50%" fill="black" />
+                <circle cx="42%" cy="50%" r="50%" fill="black" />
           
                 {/*rim*/}
                 <circle cx="46%" cy="50%" r="40%" fill={wheelColour} />
@@ -203,16 +225,16 @@ function objectToGen() {
       </svg>
 
       {/*cab parts collection*/}
-      <svg width = "35%" height = "100%" x="0" y="0%">
+      <svg width = "35%" height = "100%" x="0" y={cabPos}>
 
       {/*cab*/}
-      <svg width= "100%" height="80%" x ="0" y="20%">
+      <svg width= "100%" height= {(cabHeight) + "%"} x ="0" y= "0%">
       
       <g>
       <rect x="0" y= "0%" width="100%" height= "100%" fill={cabColour} />
             
       {/*side Window*/}
-      <rect x="55%" y="20%" width="25%" height={randRadiatorHeight} fill={windScreen}/>
+      <rect x="55%" y= {windowPos} width="25%" height={randRadiatorHeight+"%"} fill={windScreen}/>
 
       <svg width= "50%" height="100%" x ="0" y="0%">
           
@@ -220,7 +242,7 @@ function objectToGen() {
         {/*radiator area*/}
         <svg height="50%" width="100%" x ="0" y ="50%">
           <g>
-      <rect  y={(randRadiatorWidth/2)+"%"} width={randRadiatorWidth+"%"} height={(Math.floor(Math.random() * (100 - 10 + 1) + 10))+"%"} x={0+randRadiatorWidth/2} fill="black"/>
+      <rect  y={(randRadiatorWidth/2)+"%"} width={randRadiatorWidth+"%"} height={(radiatorPosY)+"%"} x={(radiatorPos)+"%"} fill="black"/>
 
       {/*bumper*/}
       <rect x="0" y= "80%" width="100%" height= "20%" fill="grey"/>
@@ -238,7 +260,7 @@ function objectToGen() {
       <rect x="0" y="0%" width="100%" height="100%" fill={dayChange()} />
 
       {/*windscreen*/}
-      <rect x="0" y="20%" width="100%" height={randRadiatorHeight} fill={windScreen}/>
+      <rect x="0" y= {windowPos} width="100%" height={randRadiatorHeight+"%"} fill={windScreen}/>
       </g>
       </svg>
 
@@ -252,7 +274,7 @@ function objectToGen() {
                 <rect x="0" y="20%" width="100%" height="80%" fill="black" />
 
                 {/*tire sidewell*/}
-                <circle cx="45%" cy="50%" r="50%" fill="black" />
+                <circle cx="49%" cy="50%" r="50%" fill="black" />
           
                 {/*rim*/}
                 <circle cx="46%" cy="50%" r="40%" fill={wheelColour} />
@@ -277,16 +299,13 @@ function objectToGen() {
   
 const HeroImage = () => {
 
-  //let randRadius = (Math.floor(Math.random() * (50 - 20 + 1) + 20))+"%";
-
 return (
     <>
-      
      <div className='svgContainer'>
-     <svg width = "400px" height = "400px" x ="0" y="0">
-     {/*<circle cx="50%" cy="50%" r={randRadius} fill={createRandomColor()}/>*/}
+     <svg className='svg' width='500px' height='500px'  x ="0" y="0">
      <g>
      {objectToGen()}
+     {dollarSignGen()}
      </g>
      </svg>
      </div>
