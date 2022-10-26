@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { Button, Container, ImageBlock, IntroText} from '../styles/GenericStyles';
+import {Container, Button} from 'react-bootstrap';
 
-import HeroImage from '../components/HeroImage';
+//import HeroImage from '../components/HeroImage';
 
-const randColors = ['#DF3B57', '#0F7173', '#895B1E', '#994636', '#A06B9A', '#2A2B2A']
+//const randColors = ['#DF3B57', '#0F7173', '#895B1E', '#994636', '#A06B9A', '#2A2B2A']
 
-let randColor = randColors[Math.floor(Math.random()*randColors.length)]
+//let randColor = randColors[Math.floor(Math.random()*randColors.length)]
 
 function itemSearch() {
     window.location.replace("/search");
@@ -14,22 +14,12 @@ function itemSearch() {
 
 const Home = () => {
 
-    useEffect(() => {
-        //document.body.style = `background: ${randColor}`;
-    }, [])
-
     return (
         <>
         <Container>
-              <IntroText>
-              <ImageBlock>
-            <HeroImage />
-            </ImageBlock>
-            <div style={{"textAlign": "center"}}> How much is your stuff worth?<br></br>
+            <div className='text-center'> How much is your stuff worth?<br></br>
             <Button onClick={itemSearch}>Find Out</Button>
             </div>
-            
-            </IntroText>
         </Container>
         </>
     );

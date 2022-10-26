@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Form, FormField, Label, FormGroup, FormButton } from '../styles/FormStyle';
-
-import { Button, Container, Image, TextBlock, ResultsContainer, ImageBlock} from '../styles/GenericStyles';
+import { Container, Button, Form} from 'react-bootstrap';
 
 import Auth from '../utils/auth';
 
@@ -27,7 +25,7 @@ function SpinnerContent() {
   }, []);
 
   return (
-    <HeroImage></HeroImage>
+    <HeroImage />
   )
 }
 
@@ -42,13 +40,10 @@ const SearchItemsForm = () => {
     const [loading, setIsLoading] = useState(false);
   
     // Set up our mutation with an option to handle errors, put in parent form function
-    const [saveItem, { error, data } ] = useMutation(SAVE_ITEM);
+    const [saveItem, { data } ] = useMutation(SAVE_ITEM);
   
-    // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
-    /*useEffect(() => {
-      setTimeout(() => 
-        setIsLoading(true), 3000);
-    }, []); // <- add empty brackets here*/
+    // state for messages
+    const [infoMessage, setInfoMessage] = useState('');
 
     //Search form handler
     const handleInputChange = event => {
@@ -70,11 +65,6 @@ const SearchItemsForm = () => {
       return false;
     }
 
-    //searchInput.userPaid can't be zero
-    if (searchInput.userPaid < 0.01) {
-      return ("User paid can't be zero")
-    }
-
     try {
       //show loading after button clicked
       setIsLoading(true)
@@ -82,7 +72,8 @@ const SearchItemsForm = () => {
 
       if (!response.ok) {
         console.log(response);
-        throw new Error('something went wrong!');
+        setInfoMessage("Can't connect right now")
+        throw new Error('something went wrong!', response);
       }
 
     //Has to match the name of one of the arrays in the response or it won't work
@@ -164,54 +155,47 @@ const SearchItemsForm = () => {
       window.location.replace("/saved");
       // if item successfully saves to user's account, save item to state
 
-      //setsavedItemIds([...savedItemIds, itemToSave]);
-      console.log('item successfully saved', itemToSave)
+      console.log('item successfully added', itemToSave)
 
-    } catch (err) {
-      console.error(err);
+      setInfoMessage('item successfully added')
+    } catch (e) {
+      setInfoMessage("Item couldn't be added to account!")
+      console.error("Item couldn't be added to account!",e);
     };
   };
-
-  if (searchedItems.profit <= 0) {
-    <p styled={{"color": 'red'}}></p>
-  } else {
-    <p styled={{"color": 'green'}}></p>
-  }
 
 return (
     <>
     <Container>
-      <TextBlock>
-          <h3>Search Tips...</h3>
+          {/*<h3>Search Tips...</h3>
           <p>Include specific search terms like the item's brand, colour, size and model number instead of more vague search terms like colour and type of item.
           <br/><br/>
-          To search for one word or another, put the words in parentheses divided by commas, e.g. [Volkswagen, VW].</p>
+To search for one word or another, put the words in parentheses divided by commas, e.g. [Volkswagen, VW].</p>*/}
 
           {/*Show create account message if user not logged in*/}
           {Auth.loggedIn() ? (
             null
           ) : (
             <>
-            <h4>Why create an account?</h4>
+            {/*<h4>Why create an account?</h4>
             <p>You can use the site to look up single item values all day long, but what if you have many different items you'd like to keep track of? 
               Creating an account gives you the option to track all your items and gives you a rundown of how much profit you'd make, total item value and how much you've spent on your collection, 
-              price tracking and graphs coming soon.</p>
+          price tracking and graphs coming soon.</p>*/}
             </>
           )}
-          
-      </TextBlock>     
 
+        <h4 className='text-center'>Search For Items</h4>   
       {data ? (
               <div>
                 Searching for item...
               </div>
             ) : (
 
-          <Form validated={validated} onSubmit={handleFormSubmit}>
+          <Form validated={validated} onSubmit={handleFormSubmit} className='mx-auto col-sm-12 col-md-9 col-lg-6'>
 
-              <FormGroup>
-              <Label>Item Name</Label>
-              <FormField
+              <Form.Group>
+              <Form.Label>Item Name</Form.Label>
+              <Form.Control
                 type='text'
                 placeholder='Name of item'
                 name='itemName'
@@ -219,13 +203,12 @@ return (
                 required
                 minLength={1}
                 value={searchInput.itemName}>
-                
-              </FormField>
-              </FormGroup>
+              </Form.Control>
+              </Form.Group>
             
-              <FormGroup>
-              <Label>Cost of Item</Label>
-              <FormField 
+              <Form.Group>
+              <Form.Label>Cost of Item</Form.Label>
+              <Form.Control 
                 type='number'
                 placeholder='Cost of Item'
                 name='userPaid'
@@ -233,75 +216,71 @@ return (
                 required
                 minLength={1}
                 value={searchInput.userPaid}>
-              </FormField>
-              </FormGroup>
+              </Form.Control>
+              </Form.Group>
 
-              <FormGroup>
+              {searchInput.userPaid !== null && searchInput.userPaid < 0.01 ? 
+                  <div className="text-center text-danger">{"Cost of item can't be under $0.01"}</div> : ""}
 
-            <div style={{"textAlign": "center"}}>
-            <FormButton
+              {infoMessage && (
+                  <div className='text-center'>{infoMessage}</div>
+                  )}
+
+            <div className='text-center'>
+            <Button
+              className='btn btn-dark col-sm-12 col-md-8 col-lg-4 mb-2'
               disabled={!(searchInput.itemName || searchInput.userPaid)}
-              type='submit'
-              variant='success'>
-              Submit
-            </FormButton>
+              type='submit'>Submit</Button>
             </div>
-            </FormGroup>
-            
           </Form>
-          )}
-
-          {error && (
-            <div>{error.message}</div>
           )}
 
           {loading? (
             <div>
-              <SpinnerContent></SpinnerContent>
+              <SpinnerContent />
             </div>
             ) : (
       //Display search results
-      <div>
+      <div className='text-center'>
       {searchedItems.itemName
       ? (
         <>
-        <ResultsContainer>
-        <ImageBlock>  
         {searchedItems.itemImages ? (
-                  <Image src={searchedItems.itemImages} alt={`${searchInput.itemName}`} variant='top'></Image>
+                  <img src={searchedItems.itemImages} alt={`${searchInput.itemName}`} variant='top' />
                 ) : null}
-        </ImageBlock>
-        <TextBlock>
       <h2>{searchedItems.itemName}</h2>
 
       <h4>
-          {searchedItems.quantity
-            ? 
+          {searchedItems.quantity ? 
             `${searchedItems.quantity} results`
             : null}
         </h4>
 
         <p>
-          {searchedItems.purchasePrice
-          ?
-          `Purchase Price: ${searchedItems.purchasePrice}`
+          {searchedItems.purchasePrice ?
+          `Purchase Price: $${searchedItems.purchasePrice}`
           : null}
         </p>
 
         <p>
-        {searchedItems.price
-            ? `Estimated Sale Price: $${searchedItems.price}`
+        {searchedItems.price ? 
+        `Estimated Sale Price: $${searchedItems.price}`
             : null}
         </p>
 
-        <p >
-        {searchedItems.profit
-            ? `Profit: ${searchedItems.profit <= 0 ? ' -' : ' +'} $${searchedItems.profit}  `
-            : null}
+        {/*Shows green or red if in profit or loss*/}
+        <p>
+          Profit:
+        {searchedItems.profit ? 
+        <span style={searchedItems.profit <=0 ? {'color': 'red'} : {'color': 'green'}}>
+          {searchedItems.profit <= 0 ? " -" : " +"}
+          </span> : null}  ${searchedItems.profit} 
 
-        {searchedItems.percent
-                  ? `(${searchedItems.percent <= 0 ?  ' ↓' : ' ↑'} ${searchedItems.percent}%)`
-                  : null}</p>
+          {searchedItems.percent ? 
+        <span style={searchedItems.percent <=0 ? {'color': 'red'} : {'color': 'green'}}>
+          {searchedItems.percent <= 0 ? ` ↓ ${searchedItems.percent}%` : ` ↑ ${searchedItems.percent}%`}
+          </span> : null}
+          </p>
 
         {Auth.loggedIn() && (
             <Button
@@ -309,8 +288,6 @@ return (
                 Track Item
             </Button>          
         )}
-      </TextBlock>
-      </ResultsContainer>
       </>
       ) : <h2>We couldn't find any results</h2>}
        </div>
