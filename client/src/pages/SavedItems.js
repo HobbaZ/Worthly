@@ -4,11 +4,9 @@ import { useMutation, useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import { DELETE_ITEM, UPDATE_ITEM } from '../utils/mutations';
 
-import { Button, Container, Image, ResultsContainer, ImageBlock, TextBlock, ListText, ListBlock } from '../styles/GenericStyles';
+import { Container, Button} from 'react-bootstrap';
 
-//import { Form, FormField, Label, FormGroup } from '../styles/FormStyle';
-
-import { line } from 'react-chartjs-2';
+//import { line } from 'react-chartjs-2';
 
 import Auth from '../utils/auth';
 
@@ -167,31 +165,28 @@ const SavedItems = () => {
   }
 
   return (
+    <>
     <Container>
-      <div style={{"textAlign": "center"}}>
+    <div className='main'>
+      <div className='text-center'>
           <h1>Your Saved Stuff!</h1>
       <h2>
-          {userData.savedItems?.length
-            ? `Viewing ${userData.savedItems.length} saved ${userData.savedItems.length === 1 ? 'item' : 'items'}:`
+          {userData.savedItems?.length ? `Viewing ${userData.savedItems.length} saved ${userData.savedItems.length === 1 ? 'item' : 'items'}:`
             : 'You aren\'t tracking anything yet!'}
         </h2>
  
           {userData.savedItems?.map((item) => {
             return (
-
-              <ResultsContainer>
+              <>
               <div key={item._id}></div>
 
-              <ImageBlock> 
-                {item.itemImages ? <Image src={item.itemImages} alt={`Image for ${item.itemName}`} variant='top'></Image> : null}
-                </ImageBlock>
+                {item.itemImages ? (
+                  <img src={item.itemImages} alt={`${item.itemName}`} variant='top'/>
+                  ) : null}
 
-                <TextBlock>
-                  
                   <h2>{item.itemName}</h2>
 
-                  <ListBlock>
-                  <ListText>Purchase Price: ${item.purchasePrice}</ListText>
+                  <p>Purchase Price: ${item.purchasePrice}</p>
 
                   {/*Edit purchase price field here*/}
                   {/*<Form onSubmit={handleFormSubmit}>
@@ -220,22 +215,18 @@ const SavedItems = () => {
                   </Form>*/}
 
                   
-                  <ListText>Average Sale Price: ${item.price}</ListText>
+                  <p>Average Sale Price: ${item.price}</p>
 
-                  <ListText>Profit:
+                  <p>Profit:
 
-                  {item.profit
-                            ? `${item.profit <= 0 ? ' -' : ' +'} $${item.profit}  `
+                  {item.profit ? `$${item.profit}`
                             : null}
 
-                  {item.percent
-                            ? `(${item.percent <= 0 ?  ' ↓' : ' ↑'} ${item.percent}%)`
-                            : null}
-                            
-                            </ListText>
-                  
-                  </ListBlock>
-                  </TextBlock>
+                  {item.percent ? 
+                          <span style={item.percent <=0 ? {'color': 'rgb(252, 122, 0)'} : {'color': 'rgb(115, 255, 0)'}}>
+                            {item.percent <= 0 ? ` ↓ ${item.percent}%` : ` ↑ ${item.percent}%`}
+                            </span> : null}
+                  </p>
 
                   <Button onClick={() => handleDeleteItem(item._id)}>
                     Delete
@@ -244,7 +235,7 @@ const SavedItems = () => {
                   <Button onClick={() => handleUpdateItem(item._id)}>
                     Edit
                   </Button> 
-              </ResultsContainer>
+              </>
             );
           })}
 
@@ -261,7 +252,9 @@ const SavedItems = () => {
 
             </Container>
       </div>
+    </div>
     </Container>
+    </>
   );
 };
 

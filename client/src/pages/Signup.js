@@ -14,26 +14,28 @@ function login() {
   window.location.replace("/login");
 };
 
-const SignupForm = () => {
+function SignupForm () {
 
   // set initial form state
-  const [formInput, setFormInput] = useState({ username: '', email: '', password: '' });
+  const [formInput, setFormInput] = useState({username: '', email: '', password: ''});
   // set state for form validation
   const [validated] = useState(false);
 
+  // set mutation at submit event
   const [addUser, { data } ] = useMutation(ADD_USER);
 
-    // state for messages
-    const [infoMessage, setInfoMessage] = useState('');
+  // state for messages
+  const [infoMessage, setInfoMessage] = useState('');
 
-  const handleInputChange = (event) => {
+  // sets and resets the data variable to whatever you are typing in the textbox
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setFormInput({ ...formInput, [name]: value });
   };
 
-  const handleFormSubmit = async (event) => {
+  //Submits the data from the form to the endpoint
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formInput);
 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -41,93 +43,82 @@ const SignupForm = () => {
       event.stopPropagation();
     }
 
+    //Send data to login endpoint
     try {
       const { data } = await addUser({
         variables: { ...formInput },
       });
 
+      setInfoMessage('Creating your account!')
       Auth.login(data.addUser.token);
+      setFormInput('');
     } catch (e) {
-      setInfoMessage("Error creating your account: ", e.message)
+            
+      setInfoMessage(e.message)
       console.log("Error creating your account: ",e.message);
     }
   };
 
   return (
-    <>
     <Container>
-    <h4 className='text-center'>Sign Up</h4>
-      {data ? (
-              <p>
-                Success! Creating your account...
+      <div className='main'>
+      <h1 className='text-center'>Sign Up</h1>
+      
+        {data ? (
+              <p className='text-center'>
+                Success! Creating your account
               </p>
             ) : (
-      <Form validated={validated} onSubmit={handleFormSubmit} className='mx-auto col-sm-12 col-md-9 col-lg-6'>
 
-        <Form.Group>
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-            placeholder="Your username"
-            name="username"
-            type="text"
-            value={formInput.username}
-            onChange={handleInputChange}>
-            </Form.Control>
-        </Form.Group>
+      <Form validated={validated} onSubmit={handleSubmit} className='mx-auto col-sm-12 col-md-9 col-lg-6'>
 
-        {formInput.password !== "" && formInput.username.length < 2 ? 
-                  <div className="text-center text-danger">{"Username must be minimum 2 characters"}</div> : ''}
+    <Form.Group>
+        <Form.Label>Create a username</Form.Label>
+        <Form.Control className='inputField' type="text" name ="username" value={formInput.username || ''} placeholder="username" onChange={handleChange} required minLength={2} formNoValidate={true}/>
+    </Form.Group>
 
-        <Form.Group>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-            placeholder="Your email"
-            name="email"
-            type="email"
-            value={formInput.email}
-            onChange={handleInputChange}>
-            </Form.Control>
-        </Form.Group>
+    {formInput.username !== "" && formInput.username.length < 2 ? 
+                  <div className="text-center errMessage">{"Username must be minimum 2 characters"}</div> : ''}
+    
+    <Form.Group>
+        <Form.Label>Email address</Form.Label>
+        <Form.Control className='inputField' type="email" name ="email" value={formInput.email || ''} placeholder="Enter email" onChange={handleChange} required minLength={2}/>
+    </Form.Group>
 
-        {!emailRegex.test(formInput.email) && formInput.email !== null ? 
-                  <div className="text-center text-danger">{"Invalid email entered"}</div> : ''}
+    {!emailRegex.test(formInput.email) && formInput.email !== "" ? 
+                  <div className="text-center errMessage">{"Invalid email entered"}</div> : ''}
 
-        <Form.Group>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-            placeholder="Create a password"
-            name="password"
-            type="password"
-            value={formInput.password}
-            onChange={handleInputChange}>
-            </Form.Control>
-        </Form.Group>
+    <Form.Group>
+        <Form.Label>Password</Form.Label>
+        <Form.Control className='inputField' type="password" name="password" value={formInput.password || ''} placeholder="Password" onChange={handleChange} required minLength={8}/>
+    </Form.Group>
 
-        {formInput.password !=="" && formInput.password.length < 8 ? 
-                  <div className="text-center text-danger">{"Password must be minimum 8 characters"}</div> : ''}
+    {formInput.password !== "" && formInput.password.length < 8 ? 
+                  <div className="text-center errMessage">{"Password must be minimum 8 characters"}</div> : ''}
 
-        {infoMessage && (
-                <div className='text-center'>{infoMessage}</div>
-        )}
+    {infoMessage && (
+            <div className='text-center errMessage'>{infoMessage}</div>
+            )}
 
-        <div className='text-center'>
-        <Button
-          className='btn btn-dark col-sm-12 col-md-8 col-lg-4 mb-2'
-          disabled={!(formInput.username && formInput.email && formInput.password)}
-          type="submit">Login</Button>
+    <div className='text-center'>
+        <Button type="submit" 
+        className='btn form-btn col-sm-12 col-md-8 col-lg-4 my-5'
+        disabled={!(formInput.firstname && formInput.lastname && formInput.username && formInput.email && formInput.password)}>
+            Sign Up
+        </Button>
         </div>
 
         <div className='text-center'>
         <Button className='btn form-btn col-sm-12 col-md-8 col-lg-4 mb-2'
         onClick={login}>
-            Sign Up instead
+            login instead
         </Button>
     </div>
-      </Form>
-      )}
+    </Form>
+        )}
 
-      </Container>
-    </>
+    </div>
+    </Container>
   );
 };
 

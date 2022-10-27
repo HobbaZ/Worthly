@@ -13,14 +13,14 @@ const signup = () => {
 
 let emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-const Login = () => {
+function Login() {
 
   const [formInput, setFormInput] = useState({ email: '', password: '' });
   const [login, { data }] = useMutation(LOGIN_USER);
   const [validated] = useState(false);
 
   // update state based on form input changes
-  const handleInputChange = (event) => {
+  function inputChange (event) {
     const { name, value } = event.target;
 
     setFormInput({
@@ -28,11 +28,11 @@ const Login = () => {
     });
   };
 
-    // state for messages
-    const [infoMessage, setInfoMessage] = useState('');
+  // state for messages
+  const [infoMessage, setInfoMessage] = useState('');
 
   // submit form
-  const handleFormSubmit = async (event) => {
+  const submitForm = async (event) => {
     event.preventDefault();
 
     if (!formInput) {
@@ -57,72 +57,56 @@ const Login = () => {
       setInfoMessage("Incorrect password or email address entered!")
       console.error("Incorrect password or email address entered",e);
     }
-
-    // clear form values
-    setFormInput({
-      email: '',
-      password: '',
-    });
   };
 
   return (
     <Container>
-          <h4 className='text-center'>Login</h4>
+      <div className='main'>
+          <h1 className='text-center'>Login</h1>
             {data ? (
-              <p className='text-center'>
+              <p className='text-cennter'>
                 Success! Logging you in
               </p>
             ) : (
-              <Form validated={validated} onSubmit={handleFormSubmit} className='mx-auto col-sm-12 col-md-9 col-lg-6'>
+              <Form validated={validated} onSubmit={submitForm} className='mx-auto col-sm-12 col-md-9 col-lg-6'>
 
-                <Form.Group>
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formInput.email || ""}
-                  required
-                  onChange={handleInputChange}>
-                  </Form.Control>
-                  </Form.Group>
+              <Form.Group>
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control className='inputField' type="email" name ="email" value={formInput.email || ''} placeholder="Enter email" onChange={inputChange} required/>
+              </Form.Group>
 
-                  {!emailRegex.test(formInput.email) && formInput.email !== "" ? 
-                  <div className="text-center text-danger">{"Invalid email entered"}</div> : ''}
+              {!emailRegex.test(formInput.email) && formInput.email !== "" ? 
+                  <div className="text-center errMessage">{"Invalid email entered"}</div> : ''}
 
-                  <Form.Group>
+              <Form.Group>
                   <Form.Label>Password</Form.Label>
-                  <Form.Control
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formInput.password || ""}
-                  required
-                  onChange={handleInputChange}>
-                  </Form.Control>
-                  </Form.Group>
+                  <Form.Control className='inputField' type="password" name="password" value={formInput.password || ''} placeholder="Password" onChange={inputChange} required/>
+              </Form.Group>
 
-                  {formInput.password !== "" && formInput.password.length < 8 ? 
-                  <div className="text-center text-danger">{"Password must be a minimum of 8 characters"}</div> : ''}
+              {formInput.password !== "" && formInput.password.length < 8 ? 
+                  <div className="text-center errMessage">{"Password must be minimum 8 characters"}</div> : ''}
 
-                  {infoMessage && (
-                  <div className='text-center'>{infoMessage}</div>
-                  )}
-                  
-                  <div className='text-center'>
-                  <Button className='btn btn-dark col-sm-12 col-md-8 col-lg-4 mb-2'
-                  disabled={!(formInput.email && formInput.password)}
-                  type="submit">Login</Button>
-                  </div>
+              {infoMessage && (
+            <div className='text-center errMessage'>{infoMessage}</div>
+          )}
 
-                  <div className='text-center'>
-                  <Button className='btn form-btn col-sm-12 col-md-8 col-lg-4 mb-2'
-                  onClick={signup}>
-                      Sign Up instead
+              <div className='text-center'>
+                  <Button type="submit" 
+                  className='btn form-btn col-sm-12 col-md-8 col-lg-4 my-4'
+                  disabled={!(formInput.email && formInput.password)}>
+                      Login
                   </Button>
-                  </div>
+              </div>
+
+              <div className='text-center'>
+              <Button className='btn form-btn col-sm-12 col-md-8 col-lg-4 mb-2'
+              onClick={signup}>
+                  Sign Up instead
+              </Button>
+              </div>
               </Form>
             )}
+    </div>
     </Container>
   );
 };

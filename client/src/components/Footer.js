@@ -12,11 +12,11 @@ const Footer = () => {
     <>
     <Container className='text-center' fluid>
     <footer className=' fixed-bottom text-center'>
-      <p>Worthly {year()}
+      <p>Worthly, {year()}
 
-          <a href="https://www.linkedin.com/in/zachary-hobba-52aaa182/"><i className="fab fa-linkedin"></i></a>
-          <a href="mailto:zachobba@gmail.com"><i className="fas fa-envelope-square"></i></a>
-          <a href="https://github.com/HobbaZ"><i className="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/zachary-hobba-52aaa182/"><i className="fab fa-linkedin icon"></i></a>
+          <a href="mailto:zachobba@gmail.com"><i className="fas fa-envelope-square icon"></i></a>
+          <a href="https://github.com/HobbaZ"><i className="fab fa-github icon"></i></a>
       </p>
   </footer>
   </Container>

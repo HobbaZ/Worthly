@@ -167,6 +167,7 @@ const SearchItemsForm = () => {
 return (
     <>
     <Container>
+    <div className='main'>
           {/*<h3>Search Tips...</h3>
           <p>Include specific search terms like the item's brand, colour, size and model number instead of more vague search terms like colour and type of item.
           <br/><br/>
@@ -184,7 +185,7 @@ To search for one word or another, put the words in parentheses divided by comma
             </>
           )}
 
-        <h4 className='text-center'>Search For Items</h4>   
+        <h1 className='text-center'>Search For Items</h1>   
       {data ? (
               <div>
                 Searching for item...
@@ -196,6 +197,7 @@ To search for one word or another, put the words in parentheses divided by comma
               <Form.Group>
               <Form.Label>Item Name</Form.Label>
               <Form.Control
+                className='inputField'
                 type='text'
                 placeholder='Name of item'
                 name='itemName'
@@ -209,6 +211,7 @@ To search for one word or another, put the words in parentheses divided by comma
               <Form.Group>
               <Form.Label>Cost of Item</Form.Label>
               <Form.Control 
+                className='inputField'
                 type='number'
                 placeholder='Cost of Item'
                 name='userPaid'
@@ -220,28 +223,29 @@ To search for one word or another, put the words in parentheses divided by comma
               </Form.Group>
 
               {searchInput.userPaid !== null && searchInput.userPaid < 0.01 ? 
-                  <div className="text-center text-danger">{"Cost of item can't be under $0.01"}</div> : ""}
+                  <div className="text-center errMessage">{"Cost of item can't be under $0.01"}</div> : ""}
 
               {infoMessage && (
-                  <div className='text-center'>{infoMessage}</div>
+                  <div className='text-center errMessage'>{infoMessage}</div>
                   )}
 
             <div className='text-center'>
             <Button
-              className='btn btn-dark col-sm-12 col-md-8 col-lg-4 mb-2'
-              disabled={!(searchInput.itemName || searchInput.userPaid)}
+              className='btn form-btn col-sm-12 col-md-8 col-lg-4 my-4'
+              disabled={!(searchInput.itemName && searchInput.userPaid)}
               type='submit'>Submit</Button>
             </div>
           </Form>
           )}
 
           {loading? (
-            <div>
-              <SpinnerContent />
+            <div className='text-center'>
+              Loading...
             </div>
             ) : (
       //Display search results
-      <div className='text-center'>
+      <Container>
+      <div className='text-center flexContainer'>
       {searchedItems.itemName
       ? (
         <>
@@ -251,9 +255,8 @@ To search for one word or another, put the words in parentheses divided by comma
       <h2>{searchedItems.itemName}</h2>
 
       <h4>
-          {searchedItems.quantity ? 
-            `${searchedItems.quantity} results`
-            : null}
+          {searchedItems.quantity.length > 0 ? 
+            "We couldn't find any results" : `${searchedItems.quantity} results`}
         </h4>
 
         <p>
@@ -270,30 +273,30 @@ To search for one word or another, put the words in parentheses divided by comma
 
         {/*Shows green or red if in profit or loss*/}
         <p>
-          Profit:
         {searchedItems.profit ? 
-        <span style={searchedItems.profit <=0 ? {'color': 'red'} : {'color': 'green'}}>
-          {searchedItems.profit <= 0 ? " -" : " +"}
-          </span> : null}  ${searchedItems.profit} 
+        `Profit: $${searchedItems.profit}`
+            : null}
 
           {searchedItems.percent ? 
-        <span style={searchedItems.percent <=0 ? {'color': 'red'} : {'color': 'green'}}>
+        <span style={searchedItems.percent <=0 ? {'color': 'rgb(252, 122, 0)'} : {'color': 'rgb(115, 255, 0)'}}>
           {searchedItems.percent <= 0 ? ` ↓ ${searchedItems.percent}%` : ` ↑ ${searchedItems.percent}%`}
           </span> : null}
           </p>
 
         {Auth.loggedIn() && (
             <Button
+            className='btn form-btn col-sm-12 col-md-8 col-lg-4 my-3'
             onClick={() => handleSaveItem()}>
                 Track Item
             </Button>          
         )}
       </>
-      ) : <h2>We couldn't find any results</h2>}
+      ) : null}
        </div>
-
+       </Container>
           )}
 
+        </div>
       </Container> 
     </>
   );

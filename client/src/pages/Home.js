@@ -17,8 +17,9 @@ const Home = () => {
     return (
         <>
         <Container>
-            <div className='text-center'> How much is your stuff worth?<br></br>
-            <Button onClick={itemSearch}>Find Out</Button>
+            <div className='text-center main'> 
+            <h1>How much is your stuff worth?</h1>
+            <Button className='btn form-btn col-sm-12 col-md-8 col-lg-4 my-5' onClick={itemSearch}>Find Out</Button>
             </div>
         </Container>
         </>

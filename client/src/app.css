@@ -23,6 +23,8 @@ body {
     padding-bottom: 85px;
 }
 
+
+
 /*.overlay {
     position: absolute;
     top: 0;
@@ -34,8 +36,7 @@ body {
 }*/
 
 .navbar {
-    border-bottom: 2px var(--light) solid;
-    font-size: large;
+    font-size: 20px;
     color: var(--light);
     font-weight: 500;
 }
@@ -46,14 +47,42 @@ body {
   
 .navLink:hover {
     text-decoration: none;
+    color: yellow;
+}
+
+.main {
+    margin-top: 15vh;
 }
 
 form {
-    background-color: var(--light);
-    color: var(--dark);
+    color: var(--light);
     border-radius: 5px;
     height: 100%;
     padding: 10px;
+}
+
+.inputField {
+    background-color: var(--transparent);
+    color: var(--light);
+    border: 2px var(--light) solid;
+}
+
+.inputField:focus {
+    border: 2px rgb(0, 255, 221) solid;
+}
+
+p {
+    font-size: 20px;
+}
+
+.content {
+    height: auto;
+    margin: auto;
+}
+
+label {
+    font-size: 20px;
+    margin-top: 20px;
 }
 
 .btn-dark {
@@ -67,9 +96,26 @@ form {
 }
 
 .form-btn {
-    border: 2px solid grey;
-    color: var(--dark);
+    border: 2px solid var(--light);
+    color: var(--light);
     background-color: var(--transparent);
+}
+
+.form-btn:disabled {
+    border: 2px solid grey;
+    color: var(--light);
+    background-color: var(--transparent);
+}
+
+.icon {
+    font-size: 25px;
+    color: var(--light);
+    padding-left: 1%;
+  }
+
+.errMessage {
+    color: rgb(0, 255, 221);
+    font-size: 20px;
 }
 
 .form-btn:hover {
