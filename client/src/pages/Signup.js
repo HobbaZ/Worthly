@@ -81,7 +81,7 @@ function SignupForm () {
                   <div className="text-center errMessage">{"Username must be minimum 2 characters"}</div> : ''}
     
     <Form.Group>
-        <Form.Label>Email address</Form.Label>
+        <Form.Label>Enter your Email</Form.Label>
         <Form.Control className='inputField' type="email" name ="email" value={formInput.email || ''} placeholder="Enter email" onChange={handleChange} required minLength={2}/>
     </Form.Group>
 
@@ -89,7 +89,7 @@ function SignupForm () {
                   <div className="text-center errMessage">{"Invalid email entered"}</div> : ''}
 
     <Form.Group>
-        <Form.Label>Password</Form.Label>
+        <Form.Label>Create a Password</Form.Label>
         <Form.Control className='inputField' type="password" name="password" value={formInput.password || ''} placeholder="Password" onChange={handleChange} required minLength={8}/>
     </Form.Group>
 
@@ -103,7 +103,7 @@ function SignupForm () {
     <div className='text-center'>
         <Button type="submit" 
         className='btn form-btn col-sm-12 col-md-8 col-lg-4 my-5'
-        disabled={!(formInput.firstname && formInput.lastname && formInput.username && formInput.email && formInput.password)}>
+        disabled={!(formInput.username && formInput.email && formInput.password)}>
             Sign Up
         </Button>
         </div>

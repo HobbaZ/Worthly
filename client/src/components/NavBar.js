@@ -6,44 +6,48 @@ import Auth from '../utils/auth';
 
 const AppNavbar = () => {
 
+  const activeLink= 'bg-blue-100 text-black';
+  const inactiveLink = '';
+
   return (
-    <Nav className="navbar navbar-expand-lg navbar-light">
     <Container fluid>
-    <Navbar.Brand as={Link} className="text-white ml-3 navLink" to='/'>Worthly</Navbar.Brand>
+
+    <nav className="navbar fixed-top navbar-expand-lg navbar-light">
+    <a className="text-white ml-3 nav-brand navLink" href='/'>Worthly</a>
 
       {/*Navbar collapse and expand */}
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBarResponsive" aria-controls="navBarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
+      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
   </button>
-  <div className="collapse navbar-collapse" id="navBarResponsive">
 
-      <Nav className="navbar-nav ml-auto mb-2 mb-lg-0">
+  <div className="collapse navbar-collapse" id="navbarNav">
 
-        <NavLink as={Link} className="ml-3 my-2 navLink" to='/' style={({ isActive }) => ({ color: isActive ? 'yellow' : 'white'})}>Home</NavLink>
+      <nav className="navbar-nav ml-auto mb-2 mb-lg-0">
 
-        <NavLink as={Link} className="ml-3 my-2 navLink" to='/search' style={({ isActive }) => ({ color: isActive ? 'yellow' : 'white'})}>Search</NavLink>
+        <NavLink className="ml-3 my-2 navLink" to='/search'>Search</NavLink>
 
         {/*Only show if user logged in*/}
         {Auth.loggedIn() ? ( 
             <>
-            <NavLink as={Link} className="ml-3 my-2 navLink" to='/saved' style={({ isActive }) => ({ color: isActive ? 'yellow' : 'white'})}>Saved Searches</NavLink>
+            <NavLink className="ml-3 my-2 navLink" to='/saved'>Saved Searches</NavLink>
 
-            <NavLink as={Link} className="ml-3 my-2 navLink" to='/profile' style={({ isActive }) => ({ color: isActive ? 'yellow' : 'white'})}>Your Profile</NavLink>
+            <NavLink className="ml-3 my-2 navLink" to='/profile'>Your Profile</NavLink>
 
             <Button className ='btn btn-dark ml-3 col-3 col-sm-2 col-lg-auto' onClick={Auth.logout}> Logout</Button>
           </>
            ) : (
              <>
              {/*Show if user not logged in*/}
-            <NavLink className="ml-3 my-2 navLink" as={Link} to='/login' style={({ isActive }) => ({ color: isActive ? 'yellow' : 'white'})}> Login</NavLink>
+            <NavLink className="ml-3 my-2 navLink" to='/login'> Login</NavLink>
 
-            <NavLink className="ml-3 my-2 navLink" as={Link} to='/signup' style={({ isActive }) => ({ color: isActive ? 'yellow' : 'white'})}> Signup</NavLink>
+            <NavLink className="ml-3 my-2 navLink"  to='/signup'> Signup</NavLink>
             </>
           )} 
-        </Nav>
+
+        </nav>
         </div> 
-         </Container>
-    </Nav>
+    </nav>
+    </Container>
 );
 
 };

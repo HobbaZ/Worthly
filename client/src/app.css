@@ -4,6 +4,8 @@
     --dark: rgb(83, 83, 83);
     --light: white;
     --transparent: rgba(255, 255, 255, 0);
+    --accent: rgb(0, 255, 221);
+    --darkAccent: rgb(5, 204, 177);
 }
 
 .App {
@@ -23,8 +25,6 @@ body {
     padding-bottom: 85px;
 }
 
-
-
 /*.overlay {
     position: absolute;
     top: 0;
@@ -37,17 +37,27 @@ body {
 
 .navbar {
     font-size: 20px;
-    color: var(--light);
+    /*color: var(--light);*/
     font-weight: 500;
 }
 
 .navLink {
     text-decoration: none;
+    color: var(--light);
 }
   
 .navLink:hover {
     text-decoration: none;
-    color: yellow;
+    color: var(--darkAccent)
+}
+
+.active {
+    color: var(--accent);
+}
+
+img {
+    width: 50%;
+    height: 50%;
 }
 
 .main {
@@ -68,16 +78,11 @@ form {
 }
 
 .inputField:focus {
-    border: 2px rgb(0, 255, 221) solid;
+    border: 2px var(--accent) solid;
 }
 
 p {
     font-size: 20px;
-}
-
-.content {
-    height: auto;
-    margin: auto;
 }
 
 label {
@@ -85,19 +90,15 @@ label {
     margin-top: 20px;
 }
 
-.btn-dark {
-    border: 2px solid var(--light);
-    background-color: var(--transparent);
-}
-
-.btn-dark:hover {
-    background-color: rgba(255, 255, 255, 0.171);
-    border: 2px solid var(--transparent);
-}
-
 .form-btn {
     border: 2px solid var(--light);
     color: var(--light);
+    background-color: var(--transparent);
+}
+
+.form-btn:hover {
+    border: 2px solid var(--accent);
+    color: var(--accent);
     background-color: var(--transparent);
 }
 
@@ -107,26 +108,21 @@ label {
     background-color: var(--transparent);
 }
 
-.icon {
+/*.icon {
     font-size: 25px;
     color: var(--light);
     padding-left: 1%;
-  }
+  }*/
 
 .errMessage {
-    color: rgb(0, 255, 221);
+    color: var(--accent);
     font-size: 20px;
 }
 
-.form-btn:hover {
-    border: 2px solid var(--transparent);
-    background-color: var(--transparent);
-    color: var(--dark);
-}
-
-.fa {
-    font-size: 40px;
-    padding: 5px;
+footer a {
+    font-size: 30px;
+    padding-left: 1%;
+    color: var(--light);
 }
 
 footer {
@@ -137,7 +133,8 @@ footer {
 }
 
 footer a :hover {
-    color: yellow;
+    color: var(--accent);
+    font-size: 33px;
 }
 
 #svgContainer {

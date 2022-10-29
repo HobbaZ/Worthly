@@ -261,7 +261,7 @@ To search for one word or another, put the words in parentheses divided by comma
 
         <p>
           {searchedItems.purchasePrice ?
-          `Purchase Price: $${searchedItems.purchasePrice}`
+          `Purchase Price: $${searchedItems.purchasePrice.toFixed(2)}`
           : null}
         </p>
 
@@ -274,7 +274,7 @@ To search for one word or another, put the words in parentheses divided by comma
         {/*Shows green or red if in profit or loss*/}
         <p>
         {searchedItems.profit ? 
-        `Profit: $${searchedItems.profit}`
+        `Profit: $${searchedItems.profit.toFixed(2)}`
             : null}
 
           {searchedItems.percent ? 
