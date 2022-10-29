@@ -60,6 +60,11 @@ img {
     height: 50%;
 }
 
+.profileInfo {
+    width:40%;
+    text-align: center;
+}
+
 .main {
     margin-top: 15vh;
 }
@@ -90,10 +95,30 @@ label {
     margin-top: 20px;
 }
 
-.form-btn {
-    border: 2px solid var(--light);
+.formStyle {
+    border: 2px var(--light);
+    border-style: none solid solid solid;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     color: var(--light);
     background-color: var(--transparent);
+}
+
+.form-btn, .profileForm-btn {
+    color: var(--light);
+    background-color: var(--transparent);
+}
+
+.form-btn {
+    border: 2px solid var(--light);
+}
+
+.profileForm-btn {
+    border: 2px var(--light); 
+    border-style: solid solid none solid;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    font-size: 25px;
 }
 
 .form-btn:hover {

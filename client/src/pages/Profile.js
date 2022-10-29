@@ -27,10 +27,8 @@ function Greeting(props) {
     }
     return (
     <>
-    <h1>{currentGreeting}, {props.firstname}</h1>
+    <h1>{currentGreeting}, <span className='active'>{props.username}</span></h1>
     <h4>Your current details are:</h4>
-    <p>First Name: {props.firstname}</p>
-    <p>Last Name: {props.lastname}</p>
     <p>Username: {props.username}</p>
     <p>Email: {props.email}</p>
     </>
@@ -40,6 +38,8 @@ function Greeting(props) {
   const Profile = (props) => {
 
     const { data, loading } = useQuery(QUERY_ME);
+
+    const [isActive, setIsActive] = useState(false);
 
     //set user data to the requested data
     const userData = data?.me || [];
@@ -121,6 +121,10 @@ function Greeting(props) {
       setFormInput({ ...formInput, [name]: value });
     };
 
+    const handleEditFormToggle =() => {
+      setShowEditForm(!showEditForm);
+    }
+
 
     //Update function for form
     const submitForm = async (event, _id) => {
@@ -171,26 +175,24 @@ function Greeting(props) {
             <>
               <h2 className='text-center'>Your Profile</h2>
       
-              <div>{welcome}</div>
+              <div className='mx-auto profileInfo'>{welcome}</div>
 
         {loading && (
-          <p>Loading Content...</p>
+          <p>Loading...</p>
         )}
 
             {/*Click to show or hide edit form*/ }
             <div className='text-center'>
-              <Button className=' btn btn-dark col-sm-12 col-md-8 col-lg-4 mb-2'
-                    onClick={() => setShowEditForm(!showEditForm)}>
+              <Button className= {showEditForm ? 'btn profileForm-btn col-sm-12 col-md-8 col-lg-4 mb-0' : 'btn form-btn col-sm-12 col-md-8 col-lg-4 mb-0'} data-toggle="collapse" data-target="#profileEditForm" aria-expanded="false" aria-controls="profileEditForm"
+                    onClick={handleEditFormToggle}>
                         Edit Details
               </Button>
             </div>
  
               {showEditForm && (
                 <>
-                <Container className='fluid'>
-            <div>
-            <h1 className='text-center'>Update Your Details</h1>
-            <Form onSubmit={submitForm} className='mx-auto'>
+            <div className='collapse' id="profileEditForm">
+            <Form onSubmit={submitForm} className='mx-auto formStyle col-sm-12 col-md-8 col-lg-4 mb-2' >
                 
                 <Form.Group className="mb-3" disabled={submittingForm}>
                     <Form.Label>Update Username</Form.Label>
@@ -231,7 +233,6 @@ function Greeting(props) {
             </Form>
         </div>
 
-    </Container>
                 </>
               )}
 

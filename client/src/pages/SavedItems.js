@@ -119,12 +119,12 @@ const SavedItems = () => {
     }
 
     try {
-      //pass in user data object as argument, pass in _Id variable to deleteitem
+      //pass in item data object as argument, pass in _Id variable to deleteitem
       await deleteItem({
         variables: { _id: _id},
       })
 
-      console.log("item successfully deleted")
+      console.log("item successfully deleted", _id)
       window.location.reload();
 
       //removeItemId(_id);
@@ -169,7 +169,7 @@ const SavedItems = () => {
     <Container>
     <div className='main'>
       <div className='text-center'>
-          <h1>Your Saved Stuff!</h1>
+          <h1>Your Items</h1>
       <h2>
           {userData.savedItems?.length ? `Viewing ${userData.savedItems.length} saved ${userData.savedItems.length === 1 ? 'item' : 'items'}:`
             : 'You aren\'t tracking anything yet!'}
@@ -178,7 +178,7 @@ const SavedItems = () => {
           {userData.savedItems?.map((item) => {
             return (
               <>
-              <div key={item._id}></div>
+              <div className='mb-2' key={item._id}>
 
                 {item.itemImages ? (
                   <img src={item.itemImages} alt={`${item.itemName}`} variant='top'/>
@@ -188,37 +188,9 @@ const SavedItems = () => {
 
                   <p>Purchase Price: ${item.purchasePrice}</p>
 
-                  {/*Edit purchase price field here*/}
-                  {/*<Form onSubmit={handleFormSubmit}>
-
-                  <FormGroup>
-                    <Label>Replace Price</Label>
-                    <FormField
-                      type='text'
-                      placeholder= "Purchase Price"
-                      name='userPaid'
-                      onChange={handleInputChange}
-                      value={itemUpdateInput.userPaid}>
-                    </FormField>
-                  </FormGroup>
-
-                    <FormGroup>
-                    <Label>Replace Item Image</Label>
-                    <FormField
-                      type='text'
-                      placeholder= "Image path"
-                      name='itemImage'
-                      onChange={handleInputChange}
-                      value={itemUpdateInput.itemImage}>
-                    </FormField>
-                  </FormGroup>
-                  </Form>*/}
-
-                  
                   <p>Average Sale Price: ${item.price}</p>
 
                   <p>Profit:
-
                   {item.profit ? `$${item.profit}`
                             : null}
 
@@ -228,29 +200,26 @@ const SavedItems = () => {
                             </span> : null}
                   </p>
 
-                  <Button onClick={() => handleDeleteItem(item._id)}>
+                  <Button className='btn form-btn col-sm-12 col-md-8 col-lg-4 mb-1' onClick={() => handleDeleteItem(item._id)}>
                     Delete
-                  </Button> 
-
-                  <Button onClick={() => handleUpdateItem(item._id)}>
-                    Edit
-                  </Button> 
+                  </Button>
+                  </div> 
               </>
             );
           })}
 
-            {/*Display net profit and loses*/}
-            <Container>
-                <h1 > Stuff Breakdown</h1>
-                <h4>Total Value: ${totalValue()}</h4>
-                <h4>Total Profit: ${netWorth()}</h4>
-                <h4>Total Spent: ${(totalValue()-netWorth()).toFixed(2)}</h4>
-
-                <h4>Highest profit: ${sort()[0]}</h4>
-
-                <h4>Highest loss: ${sort()[1]}</h4>
-
-            </Container>
+            {/*Display net profit and loses if */}
+            {userData.savedItems.length < 1 ? (
+            
+          null ): <Container>
+          <h4 > Your Item Networth</h4>
+          <p>Total Profit: ${netWorth()} <br />
+              Total Spent: ${(totalValue()-netWorth()).toFixed(2)}<br />
+              Highest profit: ${sort()[0]}<br />
+              Highest loss: ${sort()[1]}<br />
+              <span className='font-weight-bold'>Total Value: ${totalValue()}</span>
+          </p>
+      </Container>}
       </div>
     </div>
     </Container>
