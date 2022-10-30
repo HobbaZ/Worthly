@@ -174,50 +174,59 @@ const SavedItems = () => {
           {userData.savedItems?.length ? `Viewing ${userData.savedItems.length} saved ${userData.savedItems.length === 1 ? 'item' : 'items'}:`
             : 'You aren\'t tracking anything yet!'}
         </h2>
- 
+
+        <table className='w-100'>
+        <tr>
+          <th>Image</th>
+          <th className='w-25'>Item Name</th>
+          <th>Purchase $</th>
+          <th>Ave. Sell $</th>
+          <th>Profit $</th>
+          <th>Profit %</th>
+          <th></th>
+        </tr>
+
           {userData.savedItems?.map((item) => {
             return (
-              <>
-              <div className='mb-2' key={item._id}>
 
-                {item.itemImages ? (
-                  <img src={item.itemImages} alt={`${item.itemName}`} variant='top'/>
-                  ) : null}
+              <tr key={item._id}>
+                <td><img src={item.itemImages} alt={`${item.itemName}`} variant='top' className='savedItemImage'/></td>
 
-                  <h2>{item.itemName}</h2>
+                <td>{item.itemName}</td>
 
-                  <p>Purchase Price: ${item.purchasePrice}</p>
+                <td>${item.purchasePrice.toFixed(2)}</td>
 
-                  <p>Average Sale Price: ${item.price}</p>
+                <td>${item.price.toFixed(2)}</td>
 
-                  <p>Profit:
-                  {item.profit ? `$${item.profit}`
-                            : null}
+                <td>${item.profit.toFixed(2)}</td>
 
-                  {item.percent ? 
+                <td>{item.percent && 
                           <span style={item.percent <=0 ? {'color': 'rgb(252, 122, 0)'} : {'color': 'rgb(115, 255, 0)'}}>
                             {item.percent <= 0 ? ` ↓ ${item.percent}%` : ` ↑ ${item.percent}%`}
-                            </span> : null}
-                  </p>
+                            </span>}
+                </td>
 
-                  <Button className='btn form-btn col-sm-12 col-md-8 col-lg-4 mb-1' onClick={() => handleDeleteItem(item._id)}>
+                <td><Button className='btn btn-danger ml-3' onClick={() => handleDeleteItem(item._id)}>
                     Delete
                   </Button>
-                  </div> 
-              </>
-            );
-          })}
+                </td>
+              </tr>
 
-            {/*Display net profit and loses if */}
+              )
+                })}
+              </table>
+
+            {/*Display net profit and loses if length is over 1 */}
             {userData.savedItems.length < 1 ? (
             
           null ): <Container>
           <h4 > Your Item Networth</h4>
-          <p>Total Profit: ${netWorth()} <br />
+          <p> 
               Total Spent: ${(totalValue()-netWorth()).toFixed(2)}<br />
               Highest profit: ${sort()[0]}<br />
               Highest loss: ${sort()[1]}<br />
-              <span className='font-weight-bold'>Total Value: ${totalValue()}</span>
+              Total Value: ${totalValue()} <br />
+              <span className='font-weight-bold'>Total Networth: ${netWorth()}</span>
           </p>
       </Container>}
       </div>

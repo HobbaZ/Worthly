@@ -64,7 +64,7 @@ function Login() {
       <div className='main'>
           <h1 className='text-center'>Login</h1>
             {data ? (
-              <p className='text-cennter'>
+              <p className='text-center'>
                 Success! Logging you in
               </p>
             ) : (

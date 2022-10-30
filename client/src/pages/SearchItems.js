@@ -187,7 +187,7 @@ To search for one word or another, put the words in parentheses divided by comma
 
         <h1 className='text-center'>Search For Items</h1>   
       {data ? (
-              <div>
+              <div className='text-center'>
                 Searching for item...
               </div>
             ) : (
@@ -245,14 +245,19 @@ To search for one word or another, put the words in parentheses divided by comma
             ) : (
       //Display search results
       <Container>
-      <div className='text-center flexContainer'>
+      <div className='text-center flex'>
       {searchedItems.itemName
       ? (
         <>
+        <div className='resultsImage'>
         {searchedItems.itemImages ? (
                   <img src={searchedItems.itemImages} alt={`${searchInput.itemName}`} variant='top' />
                 ) : null}
-      <h2>{searchedItems.itemName}</h2>
+        </div>
+
+        <div className='resultsText'>
+      <h4>{searchedItems.itemName}</h4>
+      <hr />
 
       <h4>
           {searchedItems.quantity.length > 0 ? 
@@ -290,6 +295,7 @@ To search for one word or another, put the words in parentheses divided by comma
                 Track Item
             </Button>          
         )}
+        </div>
       </>
       ) : null}
        </div>

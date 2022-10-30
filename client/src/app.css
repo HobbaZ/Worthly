@@ -55,11 +55,6 @@ body {
     color: var(--accent);
 }
 
-img {
-    width: 50%;
-    height: 50%;
-}
-
 .profileInfo {
     width:40%;
     text-align: center;
@@ -93,6 +88,33 @@ p {
 label {
     font-size: 20px;
     margin-top: 20px;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+}
+
+img {
+    width: 95%;
+    height: 95%;
+}
+
+.savedItemImage {
+    padding-bottom: 5%;
+    border-radius: 5%;
+}
+
+.resultsImage {
+    width: 50%;
+}
+
+.resultsText {
+    width: 50%;
+}
+
+hr {
+    border: 1px solid var(--light);
 }
 
 .formStyle {
@@ -133,12 +155,6 @@ label {
     background-color: var(--transparent);
 }
 
-/*.icon {
-    font-size: 25px;
-    color: var(--light);
-    padding-left: 1%;
-  }*/
-
 .errMessage {
     color: var(--accent);
     font-size: 20px;
@@ -169,5 +185,9 @@ footer a :hover {
     margin: auto;
     justify-content: center;
     padding: 10px;
+}
+
+th {
+    font-size: 20px;
 }
 
