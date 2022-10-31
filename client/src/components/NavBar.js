@@ -13,7 +13,7 @@ const AppNavbar = () => {
     <Container fluid>
 
     <nav className="navbar fixed-top navbar-expand-lg navbar-light">
-    <a className="text-white ml-3 nav-brand navLink" href='/'>Worthly</a>
+    <NavLink className="text-white ml-3 nav-brand navLink" to='/'>Worthly</NavLink>
 
       {/*Navbar collapse and expand */}
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,9 +29,9 @@ const AppNavbar = () => {
         {/*Only show if user logged in*/}
         {Auth.loggedIn() ? ( 
             <>
-            <NavLink className="ml-3 my-2 navLink" to='/saved'>Saved Searches</NavLink>
+            <NavLink className="ml-3 my-2 navLink" to='/saved'>My Collection</NavLink>
 
-            <NavLink className="ml-3 my-2 navLink" to='/profile'>Your Profile</NavLink>
+            <NavLink className="ml-3 my-2 navLink" to='/profile'>My Profile</NavLink>
 
             <Button className ='btn btn-dark ml-3 col-3 col-sm-2 col-lg-auto' onClick={Auth.logout}> Logout</Button>
           </>

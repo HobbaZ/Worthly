@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import { useMutation, useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import { DELETE_ITEM, UPDATE_ITEM } from '../utils/mutations';
 
 import { Container, Button} from 'react-bootstrap';
+
+//import CollectionChart from '../components/CollectionChart'
 
 //import { line } from 'react-chartjs-2';
 
@@ -13,6 +15,8 @@ import Auth from '../utils/auth';
 const SavedItems = () => {
   const { loading, data } = useQuery(QUERY_ME);
   const userData = data?.me || [];
+
+  const [chartData, setChartData] = useState({})
 
   if (!userData) {
     window.location.replace("/")
@@ -23,6 +27,8 @@ const SavedItems = () => {
 
   //Edit mutation
   const [ updateItem ] = useMutation(UPDATE_ITEM)
+
+  
 
  //Form Fields
   //const [itemUpdateInput, setItemUpdateInput] = useState({ itemImage: "", userPaid: 0});
@@ -157,6 +163,28 @@ const SavedItems = () => {
     }
   };
 
+  /* Charts
+  useEffect(() => {
+    setChartData({
+      labels: "prices",
+
+      datasets: [
+        {
+          label: 'item name',
+            data: [0,10,5,15,50,25]
+          //data: userData.savedItems.map((item) => item.price),
+          
+          backgroundColor: [
+            'white',
+            'green',
+            'blue'
+          ],
+        }
+    ]
+});
+  }, []);*/
+
+
   //_____________RENDERING STUFF_____________________
 
   // if data isn't here yet, say so
@@ -169,13 +197,13 @@ const SavedItems = () => {
     <Container>
     <div className='main'>
       <div className='text-center'>
-          <h1>Your Items</h1>
+          <h1>My Collection</h1>
       <h2>
           {userData.savedItems?.length ? `Viewing ${userData.savedItems.length} saved ${userData.savedItems.length === 1 ? 'item' : 'items'}:`
             : 'You aren\'t tracking anything yet!'}
         </h2>
 
-        <table className='w-100'>
+        <table className='w-100 mb-3'>
         <tr>
           <th>Image</th>
           <th className='w-25'>Item Name</th>
@@ -220,7 +248,10 @@ const SavedItems = () => {
             {userData.savedItems.length < 1 ? (
             
           null ): <Container>
-          <h4 > Your Item Networth</h4>
+
+            {/*<CollectionChart chartData= {chartData} />*/}
+
+          <h4 > My Item Networth</h4>
           <p> 
               Total Spent: ${(totalValue()-netWorth()).toFixed(2)}<br />
               Highest profit: ${sort()[0]}<br />
