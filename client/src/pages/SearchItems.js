@@ -8,11 +8,11 @@ import { useMutation } from '@apollo/client';
 
 import { SAVE_ITEM } from '../utils/mutations';
 
-import HeroImage from '../components/HeroImage';
+//import HeroImage from '../components/HeroImage';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
-function SpinnerContent() {
+/*function SpinnerContent() {
 
   const [newSVG, setNewSVG] = useState(0);
 
@@ -27,7 +27,7 @@ function SpinnerContent() {
   return (
     <HeroImage />
   )
-}
+}*/
 
 const SearchItemsForm = () => {
     // create state for holding returned eBay api data
@@ -72,7 +72,7 @@ const SearchItemsForm = () => {
 
       if (!response.ok) {
         console.log(response);
-        setInfoMessage("Can't connect right now")
+        setInfoMessage("Can't connect right now, try again later")
         throw new Error('something went wrong!', response);
       }
 
@@ -171,7 +171,11 @@ return (
           {/*<h3>Search Tips...</h3>
           <p>Include specific search terms like the item's brand, colour, size and model number instead of more vague search terms like colour and type of item.
           <br/><br/>
-To search for one word or another, put the words in parentheses divided by commas, e.g. [Volkswagen, VW].</p>*/}
+          To search for one word or another, put the words in parentheses divided by commas, e.g. [Volkswagen, VW].</p>
+          
+          Put double quotes around searches to search for the exact words in the exact order
+          
+          */}
 
           {/*Show create account message if user not logged in*/}
           {Auth.loggedIn() ? (
@@ -188,7 +192,7 @@ To search for one word or another, put the words in parentheses divided by comma
         <h1 className='text-center'>Search For Items</h1>   
       {data ? (
               <div className='text-center'>
-                Searching for item...
+                Couldn't find anything
               </div>
             ) : (
 
@@ -236,6 +240,7 @@ To search for one word or another, put the words in parentheses divided by comma
               type='submit'>Submit</Button>
             </div>
           </Form>
+          
           )}
 
           {loading? (
@@ -260,32 +265,26 @@ To search for one word or another, put the words in parentheses divided by comma
       <hr />
 
       <h4>
-          {searchedItems.quantity.length > 0 ? 
+          {searchedItems.quantity.length < 1 ? 
             "We couldn't find any results" : `${searchedItems.quantity} results`}
         </h4>
 
         <p>
-          {searchedItems.purchasePrice ?
-          `Purchase Price: $${searchedItems.purchasePrice.toFixed(2)}`
-          : null}
+          {searchedItems.purchasePrice && `Purchase Price: $${searchedItems.purchasePrice.toFixed(2)}`}
         </p>
 
         <p>
-        {searchedItems.price ? 
-        `Estimated Sale Price: $${searchedItems.price}`
-            : null}
+        {searchedItems.price && `Estimated Sale Price: $${searchedItems.price}`}
         </p>
 
         {/*Shows green or red if in profit or loss*/}
         <p>
-        {searchedItems.profit ? 
-        `Profit: $${searchedItems.profit.toFixed(2)}`
-            : null}
+        {searchedItems.profit && `Profit: $${searchedItems.profit.toFixed(2)}`}
 
-          {searchedItems.percent ? 
+          {searchedItems.percent && 
         <span style={searchedItems.percent <=0 ? {'color': 'rgb(252, 122, 0)'} : {'color': 'rgb(115, 255, 0)'}}>
           {searchedItems.percent <= 0 ? ` ↓ ${searchedItems.percent}%` : ` ↑ ${searchedItems.percent}%`}
-          </span> : null}
+          </span>}
           </p>
 
         {Auth.loggedIn() && (
@@ -297,7 +296,7 @@ To search for one word or another, put the words in parentheses divided by comma
         )}
         </div>
       </>
-      ) : null}
+      ) : <p className="text-center text-white">Couldn't find anything</p>}
        </div>
        </Container>
           )}
