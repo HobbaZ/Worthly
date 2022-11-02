@@ -111,7 +111,7 @@ const SearchItemsForm = () => {
       let ave = averagePrice()
       let difference = (ave - searchInput.userPaid).toFixed(2)
       return difference;
-    }
+    };
 
     const searchData = () => ({
       itemName: search_results[0]?.title,
@@ -121,7 +121,7 @@ const SearchItemsForm = () => {
       purchasePrice: parseFloat(searchInput.userPaid),
       percent: parseFloat(percentage()),
       profit: parseFloat(profit()),
-    })
+    });
 
       setSearcheditems(searchData);
 
@@ -173,7 +173,7 @@ return (
           <br/><br/>
           To search for one word or another, put the words in parentheses divided by commas, e.g. [Volkswagen, VW].</p>
           
-          Put double quotes around searches to search for the exact words in the exact order
+          Put double quotes around the search to search for the exact words in the exact order
           
           */}
 
@@ -190,12 +190,8 @@ return (
           )}
 
         <h1 className='text-center'>Search For Items</h1>   
-      {data ? (
-              <div className='text-center'>
-                Couldn't find anything
-              </div>
-            ) : (
-
+    
+          <Container>
           <Form validated={validated} onSubmit={handleFormSubmit} className='mx-auto col-sm-12 col-md-9 col-lg-6'>
 
               <Form.Group>
@@ -227,7 +223,7 @@ return (
               </Form.Group>
 
               {searchInput.userPaid !== null && searchInput.userPaid < 0.01 ? 
-                  <div className="text-center errMessage">{"Cost of item can't be under $0.01"}</div> : ""}
+                  <div className="text-center errMessage">Cost of item can't be under $0.01</div> : ""}
 
               {infoMessage && (
                   <div className='text-center errMessage'>{infoMessage}</div>
@@ -240,71 +236,72 @@ return (
               type='submit'>Submit</Button>
             </div>
           </Form>
-          
-          )}
 
-          {loading? (
-            <div className='text-center'>
-              Loading...
-            </div>
-            ) : (
-      //Display search results
+          {loading ? ( 
+              <div className ="text-center">Loading...</div> ) : (
+                <>
+
+      {/*Display search results*/}
       <Container>
-      <div className='text-center flex'>
-      {searchedItems.itemName
-      ? (
+      {searchedItems.itemName ? (
         <>
+      <div className='text-center flex'>
+      
         <div className='resultsImage'>
         {searchedItems.itemImages ? (
                   <img src={searchedItems.itemImages} alt={`${searchInput.itemName}`} variant='top' />
                 ) : null}
         </div>
 
+
         <div className='resultsText'>
-      <h4>{searchedItems.itemName}</h4>
-      <hr />
 
-      <h4>
-          {searchedItems.quantity.length < 1 ? 
-            "We couldn't find any results" : `${searchedItems.quantity} results`}
-        </h4>
+          <h4 className="itemName">{searchedItems.itemName}</h4>
 
-        <p>
-          {searchedItems.purchasePrice && `Purchase Price: $${searchedItems.purchasePrice.toFixed(2)}`}
-        </p>
+          <h4>{searchedItems.quantity && `${searchedItems.quantity} results`}</h4>
 
-        <p>
-        {searchedItems.price && `Estimated Sale Price: $${searchedItems.price}`}
-        </p>
+          <p>{searchedItems.purchasePrice && `Purchase Price: $${searchedItems.purchasePrice.toFixed(2)}`}</p>
 
-        {/*Shows green or red if in profit or loss*/}
-        <p>
-        {searchedItems.profit && `Profit: $${searchedItems.profit.toFixed(2)}`}
+          <p>{searchedItems.price && `Estimated Sale Price: $${searchedItems.price}`}</p>
 
-          {searchedItems.percent && 
-        <span style={searchedItems.percent <=0 ? {'color': 'rgb(252, 122, 0)'} : {'color': 'rgb(115, 255, 0)'}}>
-          {searchedItems.percent <= 0 ? ` ↓ ${searchedItems.percent}%` : ` ↑ ${searchedItems.percent}%`}
-          </span>}
+          {/*Shows green or red if in profit or loss*/}
+          <p>
+          {searchedItems.profit && `Profit: $${searchedItems.profit.toFixed(2)}`}
+
+          {searchedItems.percent && (
+            <span style={searchedItems.percent <=0 ? {'color': 'rgb(252, 122, 0)'} : {'color': 'rgb(115, 255, 0)'}}>
+              {searchedItems.percent <= 0 ? ` ↓ ${searchedItems.percent}%` : ` ↑ ${searchedItems.percent}%`}
+            </span>)}
           </p>
 
-        {Auth.loggedIn() && (
-            <Button
-            className='btn form-btn col-sm-12 col-md-8 col-lg-4 my-3'
-            onClick={() => handleSaveItem()}>
-                Track Item
-            </Button>          
-        )}
-        </div>
-      </>
-      ) : <p className="text-center text-white">Couldn't find anything</p>}
-       </div>
-       </Container>
+          {Auth.loggedIn() && (
+              <Button
+              className='btn form-btn col-sm-12 col-md-8 col-lg-4 my-3'
+              onClick={() => handleSaveItem()}>
+                  Track Item
+              </Button>          
           )}
 
+          {/*End resultstext div*/}
         </div>
-      </Container> 
-    </>
-  );
-};
+    
+      {/*End display search results div*/}
+      </div>
+      </>
+
+      ) : <p className="text-center mx-auto">We Couldn't find anything for {searchInput.itemName.length > 1 ? `${searchInput.itemName}` : "your search"}</p>}
+        {/*results container*/}
+       </Container>
+       </>
+      )}
+        {/*form container*/}
+       </Container>
+      </div>
+
+      {/*main container*/}
+      </Container>
+      </>
+)};
+
 
 export default SearchItemsForm;

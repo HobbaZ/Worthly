@@ -196,6 +196,11 @@ th {
     font-size: 20px;
 }
 
+.itemName {
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
+}
+
 .landingPageText {
     font-size: 50px;
 }

@@ -10,7 +10,7 @@ function WordAnimation() {
 
     let itemList = ['old toy', 'playing card', 'car', 'boat', 'vintage book', 'furniture', 'comic book', 'painting']
 
-    const [newWord, setNewWord] = useState(0);
+    const [newWord, setNewWord] = useState(itemList[0]);
 
     useEffect(() => {
         const interval = setInterval(() => {
