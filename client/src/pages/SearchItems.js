@@ -71,7 +71,6 @@ const SearchItemsForm = () => {
       const response = await fetch(`https://api.countdownapi.com/request?api_key=${apiKey}&type=search&ebay_domain=ebay.com.au&search_term=${searchInput.itemName}&sold_items=true&completed_items=true&sort_by=price_high_to_low`)
 
       if (!response.ok) {
-        console.log(response);
         setInfoMessage("Can't connect right now, try again later")
         throw new Error('something went wrong!', response);
       }
@@ -159,6 +158,7 @@ const SearchItemsForm = () => {
 
       setInfoMessage('item successfully added')
     } catch (e) {
+      setIsLoading(false)
       setInfoMessage("Item couldn't be added to account!")
       console.error("Item couldn't be added to account!",e);
     };
@@ -233,45 +233,39 @@ return (
             <Button
               className='btn form-btn col-sm-12 col-md-8 col-lg-4 my-4'
               disabled={!(searchInput.itemName && searchInput.userPaid)}
-              type='submit'>Submit</Button>
+              type='submit'>{loading ? <>Loading...</>: <>submit</> }</Button>
             </div>
           </Form>
-
-          {loading ? ( 
-              <div className ="text-center">Loading...</div> ) : (
-                <>
+        </Container>
 
       {/*Display search results*/}
       <Container>
-      {searchedItems.itemName ? (
+      {searchedItems.quantity !== 0 ? (
         <>
       <div className='text-center flex'>
       
         <div className='resultsImage'>
-        {searchedItems.itemImages ? (
-                  <img src={searchedItems.itemImages} alt={`${searchInput.itemName}`} variant='top' />
-                ) : null}
+        {searchedItems.itemImages ? <img src={searchedItems.itemImages} alt={`${searchInput.itemName}`} variant='top' /> : null}
         </div>
 
 
         <div className='resultsText'>
 
-          <h4 className="itemName">{searchedItems.itemName}</h4>
+          <h4>{searchedItems.itemName ? <div>{searchedItems.itemName}<hr /></div> : null}</h4>
 
-          <h4>{searchedItems.quantity && `${searchedItems.quantity} results`}</h4>
+          <h4>{searchedItems.quantity ? `${searchedItems.quantity} results` : null}</h4>
 
-          <p>{searchedItems.purchasePrice && `Purchase Price: $${searchedItems.purchasePrice.toFixed(2)}`}</p>
+          <p>{searchedItems.purchasePrice ? `Purchase Price: $${searchedItems.purchasePrice.toFixed(2)}` : null}</p>
 
-          <p>{searchedItems.price && `Estimated Sale Price: $${searchedItems.price}`}</p>
+          <p>{searchedItems.price ? `Estimated Sale Price: $${searchedItems.price}` : null}</p>
 
           {/*Shows green or red if in profit or loss*/}
           <p>
-          {searchedItems.profit && `Profit: $${searchedItems.profit.toFixed(2)}`}
+          {searchedItems.profit ? `Profit: $${searchedItems.profit.toFixed(2)}` : null}
 
-          {searchedItems.percent && (
-            <span style={searchedItems.percent <=0 ? {'color': 'rgb(252, 122, 0)'} : {'color': 'rgb(115, 255, 0)'}}>
+          {searchedItems.percent ? <span style={searchedItems.percent <=0 ? {'color': 'rgb(252, 122, 0)'} : {'color': 'rgb(115, 255, 0)'}}>
               {searchedItems.percent <= 0 ? ` ↓ ${searchedItems.percent}%` : ` ↑ ${searchedItems.percent}%`}
-            </span>)}
+            </span> : null}
           </p>
 
           {Auth.loggedIn() && (
@@ -289,15 +283,10 @@ return (
       </div>
       </>
 
-      ) : <p className="text-center mx-auto">We Couldn't find anything for {searchInput.itemName.length > 1 ? `${searchInput.itemName}` : "your search"}</p>}
+      ) : <p className="text-center mx-auto">We couldn't find anything for {searchInput.itemName !=="" ? `${searchInput.itemName}` : "your search"}</p>}
         {/*results container*/}
        </Container>
-       </>
-      )}
-        {/*form container*/}
-       </Container>
       </div>
-
       {/*main container*/}
       </Container>
       </>
