@@ -2,6 +2,7 @@
 
 :root {
     --dark: rgb(83, 83, 83);
+    --semiTransparent: rgba(83, 83, 83, 0.8);
     --light: white;
     --transparent: rgba(255, 255, 255, 0);
     --accent: rgb(0, 255, 221);
@@ -43,15 +44,16 @@ tr {
 
 .navbar {
     font-size: 20px;
-    /*color: var(--light);*/
     font-weight: 500;
+    background-color: var(--semiTransparent);
 }
 
 .navLink {
     text-decoration: none;
     color: var(--light);
+
 }
-  
+
 .navLink:hover {
     text-decoration: none;
     color: var(--darkAccent)
@@ -107,8 +109,8 @@ img {
 }
 
 .savedItemImage {
-    width: 50%;
-    height: 50%;
+    /*width: 50%;
+    height: 50%;*/
     padding-bottom: 5%;
     padding-top: 5%;
     border-radius: 5%;
@@ -116,10 +118,15 @@ img {
 
 .resultsImage {
     width: 50%;
+    height: 50%;
 }
 
 .resultsText {
     width: 50%;
+}
+
+.flexContainer {
+    display: flex;
 }
 
 hr {
@@ -150,6 +157,11 @@ hr {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     font-size: 25px;
+}
+
+.navbarToggler {
+    color: var(--light);
+    font-size: 40px;
 }
 
 .form-btn:hover {

@@ -204,6 +204,7 @@ const SavedItems = () => {
         </h2>
 
         {userData.savedItems?.length !==0 ? (
+          <div className='flexContainer'>
           <table className='w-100 mb-3'>
           <tbody>
             <tr>
@@ -219,12 +220,11 @@ const SavedItems = () => {
           {userData.savedItems?.map((item) => {
             console.log("An item", item._id)
             return (
-            
               <tr key={item._id}>
                 <td><img src={item.itemImages} alt={`${item.itemName}`} variant='top' className='savedItemImage'/></td>
 
                 <td>{item.itemName}</td>
-
+  
                 <td>${item.purchasePrice.toFixed(2)}</td>
 
                 <td>${item.price.toFixed(2)}</td>
@@ -238,7 +238,7 @@ const SavedItems = () => {
                 </td>
 
                 <td><Button className='btn btn-danger ml-3' onClick={() => handleDeleteItem(item._id)}>
-                    Delete
+                    X
                   </Button>
                 </td>
               </tr>
@@ -247,6 +247,7 @@ const SavedItems = () => {
                 })}
                 </tbody>
               </table>
+              </div>
 
         ) : (null)}
         

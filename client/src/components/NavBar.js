@@ -17,13 +17,12 @@ const AppNavbar = () => {
 
       {/*Navbar collapse and expand */}
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span className="navbar-toggler-icon"></span>
+    <span className="navbarToggler"><i class="fas fa-bars"></i></span>
   </button>
 
   <div className="collapse navbar-collapse" id="navbarNav">
-
       <nav className="navbar-nav ml-auto mb-2 mb-lg-0">
-
+        
         <NavLink className="ml-3 my-2 navLink" to='/search'>Search</NavLink>
 
         {/*Only show if user logged in*/}
@@ -33,7 +32,7 @@ const AppNavbar = () => {
 
             <NavLink className="ml-3 my-2 navLink" to='/profile'>My Profile</NavLink>
 
-            <Button className ='btn btn-dark ml-3 col-3 col-sm-2 col-lg-auto' onClick={Auth.logout}> Logout</Button>
+            <Button className ='btn form-btn navBtn ml-3 col-3 col-sm-2 col-lg-auto' onClick={Auth.logout}> Logout</Button>
           </>
            ) : (
              <>
@@ -43,7 +42,7 @@ const AppNavbar = () => {
             <NavLink className="ml-3 my-2 navLink"  to='/signup'> Signup</NavLink>
             </>
           )} 
-
+          
         </nav>
         </div> 
     </nav>
