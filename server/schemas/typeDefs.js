@@ -25,7 +25,7 @@ const typeDefs = gql`
   }
 
   type Item {
-    _id: ID!
+    _id: ID
     itemImages: String!
     itemName: String!
     purchasePrice: Float!
@@ -36,13 +36,14 @@ const typeDefs = gql`
   }
 
   input itemInput {
+    _id: ID
     itemImages: String
     itemName: String
     purchasePrice: Float
     price: Float
-    percent: Float
     profit: Float
     quantity: Int
+    percent: Float
   }
 
   type Mutation {
@@ -50,15 +51,19 @@ const typeDefs = gql`
 
     updateUser(username: String, email: String): User
 
-    login(email: String!, password: String!): Auth
-
-    saveItem(item: itemInput): User
-
-    deleteItem(_id: ID!): User 
-
     deleteUser: User 
 
-    updateItem(_id: ID, item: updateItem): User 
+    login(email: String!, password: String!): Auth
+
+    #saveItem(item: itemInput): User
+
+    deleteItem(_id: ID): Item 
+
+    updateItem(_id: ID, itemName: String!, itemImages: String!): Item 
+
+    saveItem(purchasePrice: Float!, price: Float!, itemName: String!, percent: Float!, profit: Float!, quantity: Int!, itemImages: String!): Item
+
+    
   }
 `;
 

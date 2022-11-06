@@ -1,11 +1,12 @@
 const { AuthenticationError } = require('apollo-server-express');
+const { Mongoose, isValidObjectId } = require('mongoose');
 const { User} = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
 
-    user: async (parent, { username }) => {
+    user: async (_, { username }) => {
       return User.findOne({ username }).populate("savedItems");
     },
 
@@ -18,7 +19,7 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (parent, { username, email, password }) => {
+    addUser: async (_, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
       return { token, user };
@@ -67,37 +68,15 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    //Update item if logged in
-    updateItem: async (parent, itemToUpdate, fieldUpdated, context) => {
-
-      if (context.user) {
-        const user = await User.findOneAndUpdate(
-            {_id: context.user._id}
-        ),
-            itemToUpdate = userData.savedItems._id,
-            fieldUpdated = { purchasePrice, itemImages }
-            itemToUpdate.set(fieldUpdated)
-
-            return user
-            .then (result => {
-                return{result}
-            })
-            .catch (err => {
-                console.error(err)
-            })
-    }
-    throw new AuthenticationError('Please login to update an item!');
-    },
-
     //Save item if logged in
-    saveItem: async (parent, args, context) => {
-
+    saveItem: async (_, args, context) => {
+        try {
         if (context.user) {
 
           console.log("These are the arguments passed \n", args)
         return await User.findOneAndUpdate(
             {_id: context.user._id},
-            {$push: { savedItems: args.item }},
+            {$push: { savedItems: args }},
             { new: true})
             .then (result => {
               console.log("This is the result", result)
@@ -107,19 +86,35 @@ const resolvers = {
           })   
         }
     throw new AuthenticationError('Please login to add an item!');
-},
+  }
+  catch (err) {
+      console.log(err)
+  }},
 
     // Delete item if logged in
-    deleteItem: async (parent, itemId, context) => {
+    deleteItem: async (_, args, context) => {
+      try {
+
       if (context.user) {
-      return await User.findOneAndUpdate(
-          { _id: context.user._id},
-          {$pull: { savedItems: {_id: itemId}}},
-          { new: true});   
-  }
-  throw new AuthenticationError('Please login to delete a item!');
- },  
+        return await User.findOneAndUpdate(
+            { _id: context.user._id},
+            {$pull: { savedItems: { _id: args._id}}},
+            { new: true})
+            .then (result => {
+              console.log("Trying to delete by id", result)
+              console.log("ID clicked on is", result)
+          })
+          .catch (err => {
+              console.error("Something went wrong deleting item", err, args)
+          })   
+        }
+    throw new AuthenticationError('Please login to delete an item!');
+    }
+    catch (err) {
+      console.log("Something went wrong deleting item", err)
+  }}
 },
-};
+
+}
 
 module.exports = resolvers;

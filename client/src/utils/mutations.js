@@ -52,6 +52,7 @@ export const DELETE_ME = gql`
         username
         email
         savedItems{ 
+                    _id
                     purchasePrice
                     price
                     itemName
@@ -66,22 +67,25 @@ export const DELETE_ME = gql`
 }
 `;
 
+export const DELETE_ITEM = gql`
+  mutation deleteItem($_id: ID) {
+    deleteItem(_id: $_id) {
+        _id
+    }
+}
+`;
+
 export const SAVE_ITEM = gql`
-mutation saveItem($item: itemInput!) {
-  saveItem(item: $item) {
-      _id
-      username
-      email
-      savedItems{ 
+mutation saveItem($purchasePrice: Float!, $price: Float!, $itemName: String!, $percent: Float!, $profit: Float!, $quantity: Int!, $itemImages: String!) {
+  saveItem(purchasePrice: $purchasePrice, price: $price, itemName: $itemName, percent: $percent, profit: $profit, quantity: $quantity, itemImages: $itemImages) {
+                  _id
                   purchasePrice
                   price
                   itemName
                   percent
                   profit
-                  quantity
                   itemImages
                   quantity
-                }
   }
 }
 `;
@@ -93,6 +97,7 @@ mutation updateItem($item: updateItem) {
       username
       email
       savedItems{ 
+                  _id
                   purchasePrice
                   price
                   itemName
@@ -103,26 +108,5 @@ mutation updateItem($item: updateItem) {
                   quantity
                 }
   }
-}
-`;
-
-export const DELETE_ITEM = gql`
-  mutation deleteItem($_id: ID) {
-    deleteItem(_id: $_id) {
-        _id
-        username
-        email
-        savedItems{ 
-                    purchasePrice
-                    price
-                    itemName
-                    percent
-                    profit
-                    quantity
-                    itemImages
-                    purchasePrice
-                    quantity
-                  }
-    }
 }
 `;

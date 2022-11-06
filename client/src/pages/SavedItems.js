@@ -117,7 +117,7 @@ const SavedItems = () => {
   //_____________DELETE FUNCTION FOR DELETE BUTTON_____________________
 
   // Item's id value deletes from the database
-  const handleDeleteItem = async (_id) => {
+  const handleDeleteItem = async (itemId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -127,10 +127,10 @@ const SavedItems = () => {
     try {
       //pass in item data object as argument, pass in _Id variable to deleteitem
       await deleteItem({
-        variables: { _id: _id},
+        variables: { _id: itemId},
       })
 
-      console.log("item successfully deleted", _id)
+      console.log("item successfully deleted")
       window.location.reload();
 
       //removeItemId(_id);
@@ -200,23 +200,26 @@ const SavedItems = () => {
           <h1>My Collection</h1>
       <h2>
           {userData.savedItems?.length ? `Viewing ${userData.savedItems.length} saved ${userData.savedItems.length === 1 ? 'item' : 'items'}:`
-            : 'You aren\'t tracking anything yet!'}
+            : 'Nothing here yet'}
         </h2>
 
-        <table className='w-100 mb-3'>
-        <tr>
-          <th>Image</th>
-          <th className='w-25'>Item Name</th>
-          <th>Purchase $</th>
-          <th>Ave. Sell $</th>
-          <th>Profit $</th>
-          <th>Profit %</th>
-          <th></th>
-        </tr>
+        {userData.savedItems?.length !==0 ? (
+          <table className='w-100 mb-3'>
+          <tbody>
+            <tr>
+              <th>Image</th>
+              <th className='w-25'>Item Name</th>
+              <th>Purchase $</th>
+              <th>Ave. Sell $</th>
+              <th>Profit $</th>
+              <th>Profit %</th>
+              <th></th>
+            </tr>
 
           {userData.savedItems?.map((item) => {
+            console.log("An item", item._id)
             return (
-
+            
               <tr key={item._id}>
                 <td><img src={item.itemImages} alt={`${item.itemName}`} variant='top' className='savedItemImage'/></td>
 
@@ -242,8 +245,11 @@ const SavedItems = () => {
 
               )
                 })}
+                </tbody>
               </table>
 
+        ) : (null)}
+        
             {/*Display net profit and loses if length is over 1 */}
             {userData.savedItems.length < 1 ? (
             

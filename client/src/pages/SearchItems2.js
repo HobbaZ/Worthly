@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Container, Button, Form} from 'react-bootstrap';
 
@@ -6,13 +6,13 @@ import Auth from '../utils/auth';
 
 import { useMutation } from '@apollo/client';
 
-import { SAVE_ITEM } from '../utils/mutations';
+import { SAVE_ITEM } from '../utils/mutations2';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
 const SearchItemsForm = () => {
     // create state for holding returned eBay api data
-    const [searchedItems, setSearcheditems] = useState({purchasePrice: '', price: '', itemName: '', percent: '', profit: '', quantity: '', itemImages: ''});
+    const [searchedItems, setSearcheditems] = useState([]);
     // create state for holding our search field data
     const [searchInput, setSearchInput] = useState({ itemName: '', userPaid: 0.01});
 
@@ -21,7 +21,10 @@ const SearchItemsForm = () => {
     const [loading, setIsLoading] = useState(false);
   
     // Set up our mutation with an option to handle errors, put in parent form function
-    const [saveItem] = useMutation(SAVE_ITEM);
+    const [saveItem ] = useMutation(SAVE_ITEM);
+
+    // create state for holding our search field data
+    const [itemToSave, setItemToSave] = useState({purchasePrice: '', price: '', itemName: '', percent: '', profit: '', quantity: '', itemImages: ''});
   
     // state for messages
     const [infoMessage, setInfoMessage] = useState('');
@@ -30,6 +33,7 @@ const SearchItemsForm = () => {
     const handleInputChange = event => {
         const { name, value } = event.target;
         setSearchInput({ ...searchInput, [name]: value });
+        setItemToSave({ ...itemToSave, [name]: value });
       };
 
     // create method to search for items and set state on form submit
@@ -47,13 +51,13 @@ const SearchItemsForm = () => {
     }
 
     try {
-      //show loading after button clicked
+      //show loading after button clicked and get response
       setIsLoading(true)
       const response = await fetch(`https://api.countdownapi.com/request?api_key=${apiKey}&type=search&ebay_domain=ebay.com.au&search_term=${searchInput.itemName}&sold_items=true&completed_items=true&sort_by=price_high_to_low`)
 
       if (!response.ok) {
         setInfoMessage("Can't connect right now, try again later")
-        throw new Error('something went wrong!', response);
+        throw new Error("Can't connect right now", response);
       }
 
     //Has to match the name of one of the arrays in the response or it won't work
@@ -96,19 +100,24 @@ const SearchItemsForm = () => {
     const searchData = () => ({
       itemName: search_results[0]?.title,
       quantity: search_results.length,
-      itemImages: search_results[0]?.image || '',
+      itemImages: search_results[0]?.image || [],
       price: parseFloat(averagePrice()),
       purchasePrice: parseFloat(searchInput.userPaid),
       percent: parseFloat(percentage()),
       profit: parseFloat(profit()),
     });
 
-    setSearcheditems(searchData);
+      setSearchInput(searchData);
 
-      /*setSearcheditems({
-        itemName: searchData.itemName, quantity: searchData.quantity, itemImages: searchData.itemImages, 
-        price: searchData.price, purchasePrice: searchData.price, percent: searchData.percent, profit: searchData.profit
-      });*/
+      setItemToSave({ ...itemToSave, 
+        itemName: searchData.itemName, 
+        quantity: searchData.quantity, 
+        purchasePrice: searchData.purchasePrice, 
+        price: searchData.price,
+        itemImages: searchData.itemImages,
+        percent: searchData.percent,
+        profit: searchedItems.profit
+      })
 
       setSearchInput({
       //Persist searchterms until cleared by user
@@ -123,7 +132,7 @@ const SearchItemsForm = () => {
 
   const handleSaveItem = async () => {
 
-    const itemToSave = {...searchedItems};
+    const saveItem = {...itemToSave};
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -134,13 +143,13 @@ const SearchItemsForm = () => {
 
     try {
       await saveItem({
-        variables: {...searchedItems },
+        variables: {saveItem },
         
       });
       window.location.replace("/saved");
       // if item successfully saves to user's account, save item to state
 
-      console.log('item successfully added', ...searchedItems)
+      console.log('item successfully added', itemToSave)
 
       setInfoMessage('item successfully added')
     } catch (e) {
