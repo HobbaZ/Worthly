@@ -123,8 +123,6 @@ const SearchItemsForm = () => {
 
   const handleSaveItem = async () => {
 
-    const itemToSave = {...searchedItems};
-
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -228,14 +226,12 @@ return (
       <Container>
       {searchedItems.quantity !== 0 ? (
         <>
-      <div className='text-center flex'>
-      
-        <div className='resultsImage'>
-        {searchedItems.itemImages ? <img src={searchedItems.itemImages} alt={`${searchInput.itemName}`} variant='top' /> : null}
+      <div className='row'>
+        <div className='col-md text-center'>
+        {searchedItems.itemImages ? <img src={searchedItems.itemImages} alt={`${searchInput.itemName}`} variant='top' className='flex-md-shrink-0'/> : null}
         </div>
 
-
-        <div className='resultsText'>
+        <div className='col-md text-center'>
 
           <h4>{searchedItems.itemName ? <div>{searchedItems.itemName}<hr /></div> : null}</h4>
 

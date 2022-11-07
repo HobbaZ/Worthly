@@ -1,51 +1,166 @@
 @import url('https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap');
 
 :root {
-    --dark: rgb(83, 83, 83);
-    --semiTransparent: rgba(83, 83, 83, 0.8);
-    --light: white;
-    --transparent: rgba(255, 255, 255, 0);
     --accent: rgb(0, 255, 221);
+    --dark: rgb(83, 83, 83);
     --darkAccent: rgb(5, 204, 177);
+    --light: white;
+    --semiTransparent: rgba(83, 83, 83, 0.8);
+    --transparent: rgba(255, 255, 255, 0);
+}
+
+/* A */
+
+.active {
+    color: var(--accent);
 }
 
 .App {
     text-align: center;
 }
 
-html, body {
-    height: 100%;
-    width: 100%;
-    margin: 0%;
-    overflow-x: hidden;
-    /*background-image: linear-gradient( 90deg, rgb(201, 126, 92), rgb(93, 140, 150));*/
-    background-color: var(--dark);
-    color: var(--light);
-}
+/* B */
 
 body {
     padding-bottom: 85px;
 }
 
-/*.overlay {
-    position: absolute;
-    top: 0;
-    width: 100%;
+body, html {
+    background-color: var(--dark);
+    color: var(--light);
     height: 100%;
-    background-image:linear-gradient(var(--transparent), var(--dark));
-    opacity: 1;
-    z-index: 1;
-}*/
-
-tr {
-    border: 1px var(--light);
-    border-style: solid none;
+    margin: 0%;
+    overflow-x: hidden;
+    width: 100%;
 }
 
+/* E */
+
+.errMessage {
+    color: var(--accent);
+    font-size: 20px;
+}
+
+/* F */
+
+.flex {
+    display: flex;
+    flex-direction: row;
+}
+
+footer {
+    align-items: center;
+    background-color: var(--semiTransparent);
+    margin-top: 10px;
+    padding-top: 1px;
+    width: 100vw;
+}
+
+footer a {
+    color: var(--light);
+    font-size: 30px;
+    padding-left: 1%;
+}
+
+footer a :hover {
+    color: var(--accent);
+    font-size: 33px;
+}
+
+form {
+    border-radius: 5px;
+    color: var(--light);
+    height: 100%;
+    padding: 10px;
+}
+
+.form-btn, .profileForm-btn {
+    background-color: var(--transparent);
+    color: var(--light);
+}
+
+.form-btn {
+    border: 2px solid var(--light);
+}
+
+.form-btn:disabled {
+    background-color: var(--transparent);
+    border: 2px solid grey;
+    color: var(--light);
+}
+
+.form-btn:hover {
+    background-color: var(--transparent);
+    border: 2px solid var(--accent);
+    color: var(--accent);
+}
+
+.formStyle {
+    background-color: var(--transparent);
+    border-style: none solid solid solid;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: 2px var(--light);
+    color: var(--light);
+}
+
+/* H */
+
+hr {
+    border: 1px solid var(--light);
+}
+
+/* I */
+
+img {
+    height: auto;
+    width: 80%;
+    object-fit: cover;
+    padding-bottom: 2%;
+}
+
+.inputField {
+    background-color: var(--transparent);
+    border: 2px var(--light) solid;
+    color: var(--light);
+}
+
+.inputField:focus {
+    border: 2px var(--accent) solid;
+}
+
+/* L */
+
+label {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.landingPageBtn {
+    font-size: 30px;
+}
+
+.landingPageText {
+    font-size: 50px;
+}
+
+/* M */
+
+.main {
+    margin-top: 15vh;
+}
+
+/* N */
+
 .navbar {
+    background-color: var(--semiTransparent);
     font-size: 20px;
     font-weight: 500;
-    background-color: var(--semiTransparent);
+}
+
+.navbarToggler {
+    color: var(--light);
+    font-size: 40px;
 }
 
 .navLink {
@@ -55,172 +170,95 @@ tr {
 }
 
 .navLink:hover {
+    color: var(--darkAccent);
     text-decoration: none;
-    color: var(--darkAccent)
 }
 
-.active {
-    color: var(--accent);
-}
-
-.profileInfo {
-    width:40%;
-    text-align: center;
-}
-
-.main {
-    margin-top: 15vh;
-}
-
-form {
-    color: var(--light);
-    border-radius: 5px;
-    height: 100%;
-    padding: 10px;
-}
-
-.inputField {
-    background-color: var(--transparent);
-    color: var(--light);
-    border: 2px var(--light) solid;
-}
-
-.inputField:focus {
-    border: 2px var(--accent) solid;
-}
+/* P */
 
 p {
     font-size: 20px;
 }
 
-label {
-    font-size: 20px;
-    margin-top: 20px;
-}
-
-.flex {
-    display: flex;
-    flex-direction: row;
-}
-
-img {
-    width: 95%;
-    height: 95%;
-}
-
-.savedItemImage {
-    /*width: 50%;
-    height: 50%;*/
-    padding-bottom: 5%;
-    padding-top: 5%;
-    border-radius: 5%;
-}
-
-.resultsImage {
-    width: 50%;
-    height: 50%;
-}
-
-.resultsText {
-    width: 50%;
-}
-
-.flexContainer {
-    display: flex;
-}
-
-hr {
-    border: 1px solid var(--light);
-}
-
-.formStyle {
-    border: 2px var(--light);
-    border-style: none solid solid solid;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    color: var(--light);
-    background-color: var(--transparent);
-}
-
-.form-btn, .profileForm-btn {
-    color: var(--light);
-    background-color: var(--transparent);
-}
-
-.form-btn {
-    border: 2px solid var(--light);
-}
-
 .profileForm-btn {
-    border: 2px var(--light); 
-    border-style: solid solid none solid;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    border-style: solid solid none solid;
+    border: 2px var(--light);
     font-size: 25px;
 }
 
-.navbarToggler {
-    color: var(--light);
-    font-size: 40px;
+.profileInfo {
+    text-align: center;
+    width: 40%;
 }
 
-.form-btn:hover {
-    border: 2px solid var(--accent);
-    color: var(--accent);
-    background-color: var(--transparent);
+/* T */
+
+.tableContainer {
+    overflow-x: auto;
 }
 
-.form-btn:disabled {
-    border: 2px solid grey;
-    color: var(--light);
-    background-color: var(--transparent);
+.tableImage {
+    object-fit: contain;
+    width: 50%;
+    height: auto;
 }
 
-.errMessage {
-    color: var(--accent);
-    font-size: 20px;
+td {
+    height: 100px;
 }
 
-footer a {
-    font-size: 30px;
-    padding-left: 1%;
-    color: var(--light);
-}
-
-footer {
-    margin-top: 20px;
-    align-items: center;
-    width: 100vw;
-    padding-top: 10px;
-}
-
-footer a :hover {
-    color: var(--accent);
-    font-size: 33px;
-}
-
-#svgContainer {
-    max-width: 1000px;
-    display: flex;
-    max-height: 1000px;
-    margin: auto;
-    justify-content: center;
-    padding: 10px;
+td, .tableItemName {
+    font-size: 15px;
 }
 
 th {
-    font-size: 20px;
+    font-size: 16px;
+    margin: auto;
 }
 
-.itemName {
-    border-bottom: 1px solid white;
-    padding-bottom: 10px;
+tr {
+    border: 1px var(--light);
+    border-style: solid none;
 }
 
-.landingPageText {
-    font-size: 50px;
+.truncate {
+    -ms-text-overflow: ellipsis;
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.landingPageBtn {
-    font-size: 30px;
+.truncate:hover {
+    overflow:visible;
+    background-color: var(--dark);
+    white-space: wrap;
+}
+
+/* Media Queries*/
+
+@media screen and(max-width: 700px) {
+
+    .tableImage {
+        object-fit: fill;
+    }
+
+    th {
+        font-size: 16px;
+        margin: auto;
+    }
+
+    /*.truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 250px;
+    }
+
+    .truncate:hover {
+        overflow:visible;
+        white-space: wrap;
+    }*/
 }

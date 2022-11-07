@@ -1,13 +1,10 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { Navbar, Nav, Container, Button} from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+import { Container, Button} from 'react-bootstrap';
 
 import Auth from '../utils/auth';
 
 const AppNavbar = () => {
-
-  const activeLink= 'bg-blue-100 text-black';
-  const inactiveLink = '';
 
   return (
     <Container fluid>
@@ -17,7 +14,7 @@ const AppNavbar = () => {
 
       {/*Navbar collapse and expand */}
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span className="navbarToggler"><i class="fas fa-bars"></i></span>
+    <span className="navbarToggler"><i className="fas fa-bars"></i></span>
   </button>
 
   <div className="collapse navbar-collapse" id="navbarNav">

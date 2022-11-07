@@ -204,12 +204,13 @@ const SavedItems = () => {
         </h2>
 
         {userData.savedItems?.length !==0 ? (
-          <div className='flexContainer'>
-          <table className='w-100 mb-3'>
+          <div className= "tableContainer">
+
+          <table className='w-100'>
           <tbody>
             <tr>
               <th>Image</th>
-              <th className='w-25'>Item Name</th>
+              <th>Item Name</th>
               <th>Purchase $</th>
               <th>Ave. Sell $</th>
               <th>Profit $</th>
@@ -218,12 +219,11 @@ const SavedItems = () => {
             </tr>
 
           {userData.savedItems?.map((item) => {
-            console.log("An item", item._id)
             return (
               <tr key={item._id}>
-                <td><img src={item.itemImages} alt={`${item.itemName}`} variant='top' className='savedItemImage'/></td>
+                <td className='imageCell'><img src={item.itemImages} alt={`${item.itemName}`} variant='top' className='tableImage'/></td>
 
-                <td>{item.itemName}</td>
+                <td><p className='truncate tableItemName'>{item.itemName}</p></td>
   
                 <td>${item.purchasePrice.toFixed(2)}</td>
 
