@@ -211,6 +211,7 @@ const SavedItems = () => {
             <tr>
               <th>Image</th>
               <th>Item Name</th>
+              <th>Purchase Date</th>
               <th>Purchase $</th>
               <th>Ave. Sell $</th>
               <th>Profit $</th>

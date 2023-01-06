@@ -12,13 +12,15 @@ const apiKey = process.env.REACT_APP_API_KEY;
 
 const SearchItemsForm = () => {
     // create state for holding returned eBay api data
-    const [searchedItems, setSearcheditems] = useState({purchasePrice: '', price: '', itemName: '', percent: '', profit: '', quantity: '', itemImages: ''});
+    const [searchedItems, setSearcheditems] = useState({purchasePrice: '', price: '', itemName: '', percent: '', profit: '', quantity: '', itemImages: '', purchaseDate: ''});
     // create state for holding our search field data
     const [searchInput, setSearchInput] = useState({ itemName: '', userPaid: 0.01});
 
     const [validated] = useState(false);
 
     const [loading, setIsLoading] = useState(false);
+
+    const today = new Date();
   
     // Set up our mutation with an option to handle errors, put in parent form function
     const [saveItem] = useMutation(SAVE_ITEM);
@@ -93,6 +95,13 @@ const SearchItemsForm = () => {
       return difference;
     };
 
+    const dateDiff = () => {
+      let todayDate = new Date();
+      let dateDifference = todayDate.getTime() - searchInput.purchaseDate.getTime();
+      let dayDifference = dateDifference / (1000 * 60 * 60 * 24)
+      return dayDifference + " days";
+    };
+
     const searchData = () => ({
       itemName: search_results[0]?.title,
       quantity: search_results.length,
@@ -101,6 +110,7 @@ const SearchItemsForm = () => {
       purchasePrice: parseFloat(searchInput.userPaid),
       percent: parseFloat(percentage()),
       profit: parseFloat(profit()),
+      purchaseDate: searchInput.purchaseDate,
     });
 
     setSearcheditems(searchData);
@@ -208,6 +218,24 @@ return (
 
               {searchInput.userPaid !== null && searchInput.userPaid < 0.01 ? 
                   <div className="text-center errMessage">Cost of item can't be under $0.01</div> : ""}
+
+              {Auth.loggedIn() ? (
+                <Form.Group>
+                <Form.Label>Purchase Date</Form.Label>
+                <Form.Control 
+                  className='inputField'
+                  type='date'
+                  placeholder='dd/mm/yyyy'
+                  name='purchaseDate'
+                  onChange={handleInputChange}
+                  value={searchInput.purchaseDate || ""}>
+                </Form.Control>
+                </Form.Group>
+              ) : (null)
+              }
+
+              {searchInput.purchaseDate > today ? 
+                  <div className="text-center errMessage">${searchInput.purchaseDate} Date can't be in the future</div> : ""}
 
               {infoMessage && (
                   <div className='text-center errMessage'>{infoMessage}</div>

@@ -38,6 +38,11 @@ const itemSchema = new Schema({
         required: true,
       },
 
+      purchaseDate: {
+        type: Date,
+        required: true,
+      }
+
     });
 
     module.exports = itemSchema;

@@ -2,8 +2,12 @@ const { AuthenticationError } = require('apollo-server-express');
 const { Mongoose, isValidObjectId } = require('mongoose');
 const { User} = require('../models');
 const { signToken } = require('../utils/auth');
+const { DateResolver } = require('graphql-scalars')
 
 const resolvers = {
+
+  Date:DateResolver,
+
   Query: {
 
     user: async (_, { username }) => {
@@ -102,7 +106,6 @@ const resolvers = {
             { new: true})
             .then (result => {
               console.log("Trying to delete by id", result)
-              console.log("ID clicked on is", result)
           })
           .catch (err => {
               console.error("Something went wrong deleting item", err, args)
