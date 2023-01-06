@@ -95,13 +95,6 @@ const SearchItemsForm = () => {
       return difference;
     };
 
-    const dateDiff = () => {
-      let todayDate = new Date();
-      let dateDifference = todayDate.getTime() - searchInput.purchaseDate.getTime();
-      let dayDifference = dateDifference / (1000 * 60 * 60 * 24)
-      return dayDifference + " days";
-    };
-
     const searchData = () => ({
       itemName: search_results[0]?.title,
       quantity: search_results.length,
@@ -114,11 +107,6 @@ const SearchItemsForm = () => {
     });
 
     setSearcheditems(searchData);
-
-      /*setSearcheditems({
-        itemName: searchData.itemName, quantity: searchData.quantity, itemImages: searchData.itemImages, 
-        price: searchData.price, purchasePrice: searchData.price, percent: searchData.percent, profit: searchData.profit
-      });*/
 
       setSearchInput({
       //Persist searchterms until cleared by user
@@ -158,10 +146,29 @@ const SearchItemsForm = () => {
     };
   };
 
+  const dateDiff = () => {
+    let todayDate = new Date();
+    let chosenDate = searchInput.purchaseDate;
+    let storedDate = new Date(chosenDate);
+    let dateDifference = todayDate.getTime() - storedDate.getTime();
+    let dayDifference = dateDifference / (1000 * 60 * 60 * 24)
+    //if day difference divided by 365 is more than 1 print years, else print year
+    let years = (dayDifference/ 365).toFixed(0)
+    let yearFormat = years > 1 ? (" years") : (" year");
+    //Take remainder of days
+    let daysRemaining = (dayDifference - (365 * years)).toFixed(0) + " days";
+
+    if(dayDifference > 365) {
+      return ((dayDifference/ 365).toFixed(0)) + yearFormat +" "+ daysRemaining;
+    }
+    return dayDifference.toFixed(0) + " days";
+  };
+
 return (
     <>
     <Container>
     <div className='main'>
+      <p>You've had this item for {dateDiff}</p>
           {/*<h3>Search Tips...</h3>
           <p>Include specific search terms like the item's brand, colour, size and model number instead of more vague search terms like colour and type of item.
           <br/><br/>
@@ -183,6 +190,8 @@ return (
             </>
           )}
 
+        <p>{dateDiff()}</p>
+
         <h1 className='text-center'>Search For Items</h1>   
     
           <Container>
@@ -198,7 +207,7 @@ return (
                 onChange={handleInputChange}
                 required
                 minLength={1}
-                value={searchInput.itemName}>
+                value={searchInput.itemName || ""}>
               </Form.Control>
               </Form.Group>
             
@@ -212,7 +221,7 @@ return (
                 onChange={handleInputChange}
                 required
                 minLength={1}
-                value={searchInput.userPaid}>
+                value={searchInput.userPaid || ""}>
               </Form.Control>
               </Form.Group>
 
