@@ -4,10 +4,6 @@ const typeDefs = gql`
 
 scalar Date
 
-  type userDate {
-    date: Date!
-  }
-
   type User {
     _id: ID!
     username: String!
@@ -18,7 +14,7 @@ scalar Date
   input updateItem {
     itemImages: String
     purchasePrice: Float
-    purchaseDate: Date
+    purchaseDate: Int
   }
 
   type Auth {
@@ -41,7 +37,7 @@ scalar Date
     profit: Float!
     quantity: Int!
     percent: Float!
-    purchaseDate: Date!
+    purchaseDate: Int
   }
 
   input itemInput {
@@ -53,7 +49,7 @@ scalar Date
     profit: Float
     quantity: Int
     percent: Float
-    purchaseDate: Date
+    purchaseDate: Int
   }
 
   type Mutation {
@@ -69,9 +65,9 @@ scalar Date
 
     deleteItem(_id: ID): Item 
 
-    updateItem(_id: ID, itemName: String!, itemImages: String!, purchaseDate: Date!): Item 
+    updateItem(_id: ID, itemName: String!, itemImages: String!, purchaseDate: Int): Item 
 
-    saveItem(purchasePrice: Float!, price: Float!, itemName: String!, percent: Float!, profit: Float!, quantity: Int!, purchaseDate: Date!, itemImages: String!): Item
+    saveItem(purchasePrice: Float!, price: Float!, itemName: String!, percent: Float!, profit: Float!, quantity: Int!, purchaseDate: Int, itemImages: String!): Item
   }
 `;
 

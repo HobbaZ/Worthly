@@ -7,21 +7,23 @@ import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 
 import { SAVE_ITEM } from '../utils/mutations';
+import auth from '../utils/auth';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
 const SearchItemsForm = () => {
     // create state for holding returned eBay api data
-    const [searchedItems, setSearcheditems] = useState({purchasePrice: '', price: '', itemName: '', percent: '', profit: '', quantity: '', itemImages: '', purchaseDate: ''});
+    const [searchedItems, setSearcheditems] = useState({purchasePrice: '', price: '', itemName: '', percent: '', profit: '', quantity: '', itemImages: '', purchaseDate: undefined});
     // create state for holding our search field data
     const [searchInput, setSearchInput] = useState({ itemName: '', userPaid: 0.01});
+    let [dateInput, setDateInput] = useState();
 
     const [validated] = useState(false);
 
     const [loading, setIsLoading] = useState(false);
 
     const today = new Date();
-  
+
     // Set up our mutation with an option to handle errors, put in parent form function
     const [saveItem] = useMutation(SAVE_ITEM);
   
@@ -103,11 +105,11 @@ const SearchItemsForm = () => {
       purchasePrice: parseFloat(searchInput.userPaid),
       percent: parseFloat(percentage()),
       profit: parseFloat(profit()),
-      purchaseDate: searchInput.purchaseDate,
+      purchaseDate: new Date(dateInput).toDateString(),
     });
 
     setSearcheditems(searchData);
-
+      console.log(searchData)
       setSearchInput({
       //Persist searchterms until cleared by user
 
@@ -147,19 +149,16 @@ const SearchItemsForm = () => {
   };
 
   const dateDiff = () => {
-    let todayDate = new Date();
-    let chosenDate = searchInput.purchaseDate;
-    let storedDate = new Date(chosenDate);
-    let dateDifference = todayDate.getTime() - storedDate.getTime();
+    let dateDifference = today.getTime() - (new Date(dateInput)).getTime();
     let dayDifference = dateDifference / (1000 * 60 * 60 * 24)
     //if day difference divided by 365 is more than 1 print years, else print year
-    let years = (dayDifference/ 365).toFixed(0)
+    let years = (dayDifference/ 365).toFixed(1)
     let yearFormat = years > 1 ? (" years") : (" year");
     //Take remainder of days
     let daysRemaining = (dayDifference - (365 * years)).toFixed(0) + " days";
 
     if(dayDifference > 365) {
-      return ((dayDifference/ 365).toFixed(0)) + yearFormat +" "+ daysRemaining;
+      return (years + yearFormat)
     }
     return dayDifference.toFixed(0) + " days";
   };
@@ -168,7 +167,7 @@ return (
     <>
     <Container>
     <div className='main'>
-      <p>You've had this item for {dateDiff}</p>
+      
           {/*<h3>Search Tips...</h3>
           <p>Include specific search terms like the item's brand, colour, size and model number instead of more vague search terms like colour and type of item.
           <br/><br/>
@@ -189,8 +188,6 @@ return (
           price tracking and graphs coming soon.</p>*/}
             </>
           )}
-
-        <p>{dateDiff()}</p>
 
         <h1 className='text-center'>Search For Items</h1>   
     
@@ -236,15 +233,20 @@ return (
                   type='date'
                   placeholder='dd/mm/yyyy'
                   name='purchaseDate'
-                  onChange={handleInputChange}
-                  value={searchInput.purchaseDate || ""}>
+                  onChange={(e) => {setDateInput(e.target.value)}}
+                  value={dateInput || ''}>
                 </Form.Control>
                 </Form.Group>
               ) : (null)
               }
 
-              {searchInput.purchaseDate > today ? 
-                  <div className="text-center errMessage">${searchInput.purchaseDate} Date can't be in the future</div> : ""}
+              {console.log(dateInput)}
+
+              {/*check if purchaseDate isn't null and show date difference, else don't show*/} 
+              {dateInput ? (<p className='text-center'>You've had this item for {dateDiff()}</p>) : (null)}
+
+              {/*dateInput > today ? 
+              <div className="text-center errMessage">{dateInput} Date can't be in the future</div> : null*/}
 
               {infoMessage && (
                   <div className='text-center errMessage'>{infoMessage}</div>
@@ -287,6 +289,8 @@ return (
             </span> : null}
           </p>
 
+          {auth.loggedIn() && searchInput.chosenDate ? (<p>Purchase Date: {searchInput.chosenDate.value}</p>) : (null)}
+
           {searchedItems.itemName && Auth.loggedIn() && (
               <Button
               className='btn form-btn col-sm-12 col-md-8 col-lg-4 my-3'
@@ -302,7 +306,7 @@ return (
       </div>
       </>
 
-      ) : <p className="text-center mx-auto">We couldn't find anything for {searchInput.itemName !=="" ? `${searchInput.itemName}` : "your search"}</p>}
+      ) : <p className="text-center">We couldn't find anything for {searchInput.itemName !=="" ? `${searchInput.itemName}` : "your search"}</p>}
         {/*results container*/}
        </Container>
       </div>

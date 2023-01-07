@@ -225,7 +225,9 @@ const SavedItems = () => {
                 <td className='imageCell'><img src={item.itemImages} alt={`${item.itemName}`} variant='top' className='tableImage'/></td>
 
                 <td><p className='truncate tableItemName'>{item.itemName}</p></td>
-  
+
+                <td>{item.purchaseDate}</td>
+
                 <td>${item.purchasePrice.toFixed(2)}</td>
 
                 <td>${item.price.toFixed(2)}</td>
