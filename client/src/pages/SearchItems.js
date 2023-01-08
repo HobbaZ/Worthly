@@ -13,7 +13,7 @@ const apiKey = process.env.REACT_APP_API_KEY;
 
 const SearchItemsForm = () => {
     // create state for holding returned eBay api data
-    const [searchedItems, setSearcheditems] = useState({purchasePrice: '', price: '', itemName: '', percent: '', profit: '', quantity: '', itemImages: '', purchaseDate: undefined});
+    const [searchedItems, setSearcheditems] = useState({purchasePrice: '', price: '', itemName: '', percent: '', profit: '', quantity: '', itemImages: '', purchaseDate: ''});
     // create state for holding our search field data
     const [searchInput, setSearchInput] = useState({ itemName: '', userPaid: 0.01});
     let [dateInput, setDateInput] = useState();
@@ -23,6 +23,7 @@ const SearchItemsForm = () => {
     const [loading, setIsLoading] = useState(false);
 
     const today = new Date();
+    const dateInputFormat = new Date(dateInput);
 
     // Set up our mutation with an option to handle errors, put in parent form function
     const [saveItem] = useMutation(SAVE_ITEM);
@@ -105,11 +106,10 @@ const SearchItemsForm = () => {
       purchasePrice: parseFloat(searchInput.userPaid),
       percent: parseFloat(percentage()),
       profit: parseFloat(profit()),
-      purchaseDate: new Date(dateInput).toDateString(),
+      purchaseDate: dateInput,
     });
 
     setSearcheditems(searchData);
-      console.log(searchData)
       setSearchInput({
       //Persist searchterms until cleared by user
 
@@ -138,8 +138,6 @@ const SearchItemsForm = () => {
       window.location.replace("/saved");
       // if item successfully saves to user's account, save item to state
 
-      console.log('item successfully added', ...searchedItems)
-
       setInfoMessage('item successfully added')
     } catch (e) {
       setIsLoading(false)
@@ -149,7 +147,7 @@ const SearchItemsForm = () => {
   };
 
   const dateDiff = () => {
-    let dateDifference = today.getTime() - (new Date(dateInput)).getTime();
+    let dateDifference = today.getTime() - dateInputFormat.getTime();
     let dayDifference = dateDifference / (1000 * 60 * 60 * 24)
     //if day difference divided by 365 is more than 1 print years, else print year
     let years = (dayDifference/ 365).toFixed(1)
@@ -240,13 +238,12 @@ return (
               ) : (null)
               }
 
-              {console.log(dateInput)}
-
               {/*check if purchaseDate isn't null and show date difference, else don't show*/} 
-              {dateInput ? (<p className='text-center'>You've had this item for {dateDiff()}</p>) : (null)}
+              {dateInput && (dateInputFormat.getTime()) <= today.getTime() ? (<p className='text-center'>You've had this item for {dateDiff()}</p>) : (null)}
 
-              {/*dateInput > today ? 
-              <div className="text-center errMessage">{dateInput} Date can't be in the future</div> : null*/}
+              {/*Use UTC value for ease of comparison*/}
+              {(dateInputFormat.getTime()) > today.getTime() ? 
+              <div className="text-center errMessage">Date can't be in the future</div> : null}
 
               {infoMessage && (
                   <div className='text-center errMessage'>{infoMessage}</div>
@@ -289,7 +286,7 @@ return (
             </span> : null}
           </p>
 
-          {auth.loggedIn() && searchInput.chosenDate ? (<p>Purchase Date: {searchInput.chosenDate.value}</p>) : (null)}
+          {auth.loggedIn() && searchedItems.itemName ? (<p className='text-center'>Purchase Date: {dateInputFormat.toLocaleDateString()}</p>) : (null)}
 
           {searchedItems.itemName && Auth.loggedIn() && (
               <Button

@@ -28,7 +28,12 @@ const SavedItems = () => {
   //Edit mutation
   const [ updateItem ] = useMutation(UPDATE_ITEM)
 
+  const [showEditForm, setShowEditForm] = useState(false);
   
+  function handleEditFormToggle (itemId, item) {
+    setShowEditForm(!showEditForm);
+  }
+
 
  //Form Fields
   //const [itemUpdateInput, setItemUpdateInput] = useState({ itemImage: "", userPaid: 0});
@@ -58,6 +63,8 @@ const SavedItems = () => {
         console.error(err);
       }
     };*/
+
+    
 
   //_____________NETWORTH CALCULATION_____________________
 
@@ -142,26 +149,34 @@ const SavedItems = () => {
   //_____________UPDATE FUNCTION FOR EDIT BUTTON_____________________
 
   // Item's id value and updates from the database
-  const handleUpdateItem = async (_id, item) => {
+  const handleUpdateItem = async (itemId, item) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
       return false;
     }
 
+    
+
     try {
       //pass in user data object as argument, pass in _Id variable to updateitem
-      await updateItem({
+      /*await updateItem({
         variables: { _id: _id, item: item},
-      })
+      })*/
 
-      console.log("item successfully updated", _id, item)
-      window.location.reload();
+      console.log("item successfully updated", itemId, item)
+      //window.location.reload();
 
     } catch (err) {
       console.error("Error updating item", err);
     }
   };
+
+  // formats stored date to users location date format
+  const dateFormatter = (itemDate) => {
+    let date = new Date(itemDate)
+    return date.toLocaleDateString();
+  }
 
   /* Charts
   useEffect(() => {
@@ -183,7 +198,6 @@ const SavedItems = () => {
     ]
 });
   }, []);*/
-
 
   //_____________RENDERING STUFF_____________________
 
@@ -221,12 +235,13 @@ const SavedItems = () => {
 
           {userData.savedItems?.map((item) => {
             return (
+              <>
               <tr key={item._id}>
                 <td className='imageCell'><img src={item.itemImages} alt={`${item.itemName}`} variant='top' className='tableImage'/></td>
 
                 <td><p className='truncate tableItemName'>{item.itemName}</p></td>
 
-                <td>{item.purchaseDate}</td>
+                <td><p className='text-left '>{dateFormatter(item.purchaseDate)}</p></td>
 
                 <td>${item.purchasePrice.toFixed(2)}</td>
 
@@ -240,16 +255,26 @@ const SavedItems = () => {
                             </span>}
                 </td>
 
-                <td><Button className='btn btn-danger ml-3' onClick={() => handleDeleteItem(item._id)}>
-                    X
-                  </Button>
-                </td>
-              </tr>
+                <td><Button className='btn btn-danger ml-3' onClick={() => handleDeleteItem(item._id)}>X</Button></td>
 
+                {/*<td><Button className='btn btn-primary ml-3' onClick={() => editForm(item._id, setEditForm)}>Edit</Button></td>*/}
+
+                <td><Button className='btn btn-primary ml-3' onClick={() => handleEditFormToggle(item._id, item)}>Edit 2</Button></td>
+              </tr>
+              
+              </>
               )
                 })}
                 </tbody>
               </table>
+
+              {showEditForm && (
+              <Container>
+                {console.log(showEditForm)}
+                <p>Edit item</p>
+              </Container>
+              )}
+
               </div>
 
         ) : (null)}

@@ -1,12 +1,8 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { Mongoose, isValidObjectId } = require('mongoose');
 const { User} = require('../models');
 const { signToken } = require('../utils/auth');
-const { DateResolver } = require('graphql-scalars')
 
 const resolvers = {
-
-  Date:DateResolver,
 
   Query: {
 
@@ -83,7 +79,7 @@ const resolvers = {
             {$push: { savedItems: args }},
             { new: true})
             .then (result => {
-              console.log("This is the result", result)
+              console.log("Saved Items", result)
           })
           .catch (err => {
               console.error(err)

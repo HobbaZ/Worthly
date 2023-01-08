@@ -39,7 +39,8 @@ const itemSchema = new Schema({
       },
 
       purchaseDate: {
-        type: Number,
+        type: String,
+        required: true,
       }
 
     });

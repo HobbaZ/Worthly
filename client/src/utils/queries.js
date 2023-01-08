@@ -9,6 +9,7 @@ export const QUERY_ME = gql`
       savedItems{ 
                   _id
                   purchasePrice
+                  purchaseDate
                   price
                   itemName
                   percent

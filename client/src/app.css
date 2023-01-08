@@ -36,6 +36,13 @@ body, html {
 
 /* E */
 
+.editForm {
+    width:100%;
+    height: fit-content;
+    background-color: white;
+    color: black;
+}
+
 .errMessage {
     color: var(--accent);
     font-size: 20px;
