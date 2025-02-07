@@ -1,11 +1,9 @@
-const { AuthenticationError } = require('apollo-server-express');
-const { User} = require('../models');
-const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require("apollo-server-express");
+const { User } = require("../models");
+const { signToken } = require("../utils/auth");
 
 const resolvers = {
-
   Query: {
-
     user: async (_, { username }) => {
       return User.findOne({ username }).populate("savedItems");
     },
@@ -14,7 +12,7 @@ const resolvers = {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate("savedItems");
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
 
@@ -28,14 +26,17 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('Incorrect password or email address entered');
+        throw new AuthenticationError(
+          "Incorrect password or email address entered"
+        );
       }
 
       const correctPw = await user.isCorrectPassword(password);
-      
 
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect password or email address entered');
+        throw new AuthenticationError(
+          "Incorrect password or email address entered"
+        );
       }
 
       const token = signToken(user);
@@ -44,76 +45,108 @@ const resolvers = {
     },
 
     //edit user info if logged in
-    updateUser: async (_, {username, email} , context) => {
+    updateUser: async (_, { username, email }, context) => {
       if (context.user) {
-        return await User.findOneAndUpdate(
-            {_id: context.user._id},
-            {$set: {username: username, email: email} },
-            { new: true})
-            .then (result => {
-              console.log("This is the result", result)
+        return await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $set: { username: username, email: email } },
+          { new: true }
+        )
+          .then((result) => {
+            console.log("This is the result", result);
           })
-          .catch (err => {
-              console.error(err)
-          })   
-        }
-    throw new AuthenticationError('Please login to update an item!');
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+      throw new AuthenticationError("Please login to update an item!");
     },
 
     // Delete user if logged in
     deleteUser: async (_, args, context) => {
       if (context.user) {
-        return User.findOneAndDelete({ _id: context.user._id });
+        return User.findByIdAndDelete({ _id: context.user._id });
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
 
     //Save item if logged in
     saveItem: async (_, args, context) => {
-        try {
+      try {
         if (context.user) {
-
-          console.log("These are the arguments passed \n", args)
-        return await User.findOneAndUpdate(
-            {_id: context.user._id},
-            {$push: { savedItems: args }},
-            { new: true})
-            .then (result => {
-              console.log("Saved Items", result)
-          })
-          .catch (err => {
-              console.error(err)
-          })   
+          console.log("These are the arguments passed \n", args);
+          return await User.findByIdAndUpdate(
+            { _id: context.user._id },
+            { $push: { savedItems: args } },
+            { new: true }
+          )
+            .then((result) => {
+              console.log("Saving Item", result);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
         }
-    throw new AuthenticationError('Please login to add an item!');
-  }
-  catch (err) {
-      console.log(err)
-  }},
+        throw new AuthenticationError("Please login to add an item!");
+      } catch (err) {
+        console.log(err);
+      }
+    },
 
     // Delete item if logged in
     deleteItem: async (_, args, context) => {
       try {
-
-      if (context.user) {
-        return await User.findOneAndUpdate(
-            { _id: context.user._id},
-            {$pull: { savedItems: { _id: args._id}}},
-            { new: true})
-            .then (result => {
-              console.log("Trying to delete by id", result)
-          })
-          .catch (err => {
-              console.error("Something went wrong deleting item", err, args)
-          })   
+        if (context.user) {
+          console.log("These are the arguments passed \n", args);
+          return await User.findByIdAndUpdate(
+            { _id: context.user._id },
+            { $pull: { savedItems: { _id: args._id } } },
+            { new: true }
+          )
+            .then((result) => {
+              console.log("Delete item by id", result);
+            })
+            .catch((err) => {
+              console.error("Something went wrong deleting item", err, args);
+            });
         }
-    throw new AuthenticationError('Please login to delete an item!');
-    }
-    catch (err) {
-      console.log("Something went wrong deleting item", err)
-  }}
-},
+        throw new AuthenticationError("Login to delete an item!");
+      } catch (err) {
+        console.log("Something went wrong deleting item", err);
+      }
+    },
 
-}
-
+    // Update item if logged in
+    updateItem: async (_, args, context) => {
+      try {
+        if (context.user) {
+          console.log("These are the arguments passed \n", args);
+          return await User.findByIdAndUpdate(
+            { _id: context.user._id },
+            {
+              $set: {
+                savedItems: {
+                  _id: args._id,
+                  itemName: args.itemName,
+                  purchasePrice: args.purchasePrice,
+                  purchaseDate: args.purchaseDate,
+                },
+              },
+            },
+            { new: true }
+          )
+            .then((result) => {
+              console.log("Update item by id", result);
+            })
+            .catch((err) => {
+              console.error("Something went wrong updating item", err, args);
+            });
+        }
+        throw new AuthenticationError("Please login to update an item!");
+      } catch (err) {
+        console.log("Something went wrong updating item", err);
+      }
+    },
+  },
+};
 module.exports = resolvers;

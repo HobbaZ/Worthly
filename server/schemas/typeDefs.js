@@ -1,7 +1,6 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-
   type User {
     _id: ID!
     username: String!
@@ -36,7 +35,6 @@ const typeDefs = gql`
     profit: Float!
     quantity: Int!
     percent: Float!
-    
   }
 
   input itemInput {
@@ -49,7 +47,6 @@ const typeDefs = gql`
     profit: Float
     quantity: Int
     percent: Float
-    
   }
 
   type Mutation {
@@ -57,17 +54,29 @@ const typeDefs = gql`
 
     updateUser(username: String, email: String): User
 
-    deleteUser: User 
+    deleteUser: User
 
     login(email: String!, password: String!): Auth
 
-    #saveItem(item: itemInput): User
+    deleteItem(_id: ID): Item
 
-    deleteItem(_id: ID): Item 
+    updateItem(
+      _id: ID
+      itemName: String
+      purchasePrice: Float
+      purchaseDate: String
+    ): Item
 
-    updateItem(_id: ID, itemName: String!, itemImages: String!, purchaseDate: String!): Item 
-
-    saveItem(purchasePrice: Float!, price: Float!, itemName: String!, percent: Float!, profit: Float!, quantity: Int!, itemImages: String!, purchaseDate: String!): Item
+    saveItem(
+      purchasePrice: Float!
+      price: Float!
+      itemName: String!
+      percent: Float!
+      profit: Float!
+      quantity: Int!
+      itemImages: String!
+      purchaseDate: String!
+    ): Item
   }
 `;
 

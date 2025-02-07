@@ -1,263 +1,279 @@
-@import url('https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap");
 
 :root {
-    --accent: rgb(0, 255, 221);
-    --dark: rgb(83, 83, 83);
-    --darkAccent: rgb(5, 204, 177);
-    --light: white;
-    --semiTransparent: rgba(83, 83, 83, 0.8);
-    --transparent: rgba(255, 255, 255, 0);
+  --accent: rgb(0, 255, 221);
+  --dark: rgb(0, 0, 0);
+  --darkAccent: rgb(5, 204, 177);
+  --light: white;
+  --semiTransparent: rgba(0, 0, 0, 0.8);
+  --transparent: rgba(255, 255, 255, 0);
 }
 
 /* A */
 
 .active {
-    color: var(--accent);
+  color: var(--accent);
 }
 
 .App {
-    text-align: center;
+  text-align: center;
 }
 
 /* B */
 
 body {
-    padding-bottom: 85px;
+  padding-bottom: 85px;
 }
 
-body, html {
-    background-color: var(--dark);
-    color: var(--light);
-    height: 100%;
-    margin: 0%;
-    overflow-x: hidden;
-    width: 100%;
+body,
+html,
+.modal-content,
+.modal-body,
+.modal-header,
+.modal-footer {
+  background-color: var(--dark);
+}
+
+body,
+html {
+  background-color: var(--dark);
+  color: var(--light);
+  height: 100%;
+  margin: 0%;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.modal-footer > .button {
+  color: var(--light);
 }
 
 /* E */
 
 .editForm {
-    width:100%;
-    height: fit-content;
-    background-color: white;
-    color: black;
+  position: relative;
+  width: fit-content;
+  margin: auto;
+  height: fit-content;
+  background-color: white;
+  color: black;
 }
 
 .errMessage {
-    color: var(--accent);
-    font-size: 20px;
+  color: var(--accent);
+  font-size: 20px;
 }
 
 /* F */
 
 .flex {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 footer {
-    align-items: center;
-    background-color: var(--semiTransparent);
-    margin-top: 10px;
-    padding-top: 1px;
-    width: 100vw;
+  align-items: center;
+  background-color: var(--semiTransparent);
+  margin-top: 10px;
+  padding-top: 1px;
+  width: 100vw;
 }
 
 footer a {
-    color: var(--light);
-    font-size: 30px;
-    padding-left: 1%;
+  color: var(--light);
+  font-size: 30px;
+  padding-left: 1%;
 }
 
 footer a :hover {
-    color: var(--accent);
-    font-size: 33px;
+  color: var(--accent);
+  font-size: 33px;
 }
 
 form {
-    border-radius: 5px;
-    color: var(--light);
-    height: 100%;
-    padding: 10px;
+  border-radius: 5px;
+  color: var(--light);
+  height: 100%;
+  padding: 10px;
 }
 
-.form-btn, .profileForm-btn {
-    background-color: var(--transparent);
-    color: var(--light);
+.form-btn,
+.profileForm-btn {
+  background-color: var(--transparent);
+  color: var(--light);
 }
 
 .form-btn {
-    border: 2px solid var(--light);
+  border: 2px solid var(--light);
 }
 
 .form-btn:disabled {
-    background-color: var(--transparent);
-    border: 2px solid grey;
-    color: var(--light);
+  background-color: var(--transparent);
+  border: 2px solid grey;
+  color: var(--light);
 }
 
 .form-btn:hover {
-    background-color: var(--transparent);
-    border: 2px solid var(--accent);
-    color: var(--accent);
+  background-color: var(--transparent);
+  border: 2px solid var(--accent);
+  color: var(--accent);
 }
 
 .formStyle {
-    background-color: var(--transparent);
-    border-style: none solid solid solid;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border: 2px var(--light);
-    color: var(--light);
+  background-color: var(--transparent);
+  border-style: none solid solid solid;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border: 2px var(--light);
+  color: var(--light);
 }
 
 /* H */
 
 hr {
-    border: 1px solid var(--light);
+  border: 1px solid var(--light);
 }
 
 /* I */
 
 img {
-    height: auto;
-    width: 80%;
-    object-fit: cover;
-    padding-bottom: 2%;
+  height: auto;
+  width: 80%;
+  object-fit: cover;
+  padding-bottom: 2%;
 }
 
 .inputField {
-    background-color: var(--transparent);
-    border: 2px var(--light) solid;
-    color: var(--light);
+  background-color: var(--transparent);
+  border: 2px var(--light) solid;
+  color: var(--light);
 }
 
 .inputField:focus {
-    border: 2px var(--accent) solid;
+  border: 2px var(--accent) solid;
 }
 
 /* L */
 
 label {
-    font-size: 20px;
-    margin-top: 20px;
+  font-size: 20px;
+  margin-top: 20px;
 }
 
 .landingPageBtn {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .landingPageText {
-    font-size: 50px;
+  font-size: 50px;
 }
 
 /* M */
 
 .main {
-    margin-top: 15vh;
+  margin-top: 15vh;
 }
 
 /* N */
 
 .navbar {
-    background-color: var(--semiTransparent);
-    font-size: 20px;
-    font-weight: 500;
+  background-color: var(--semiTransparent);
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .navbarToggler {
-    color: var(--light);
-    font-size: 40px;
+  color: var(--light);
+  font-size: 40px;
 }
 
 .navLink {
-    text-decoration: none;
-    color: var(--light);
-
+  text-decoration: none;
+  color: var(--light);
 }
 
 .navLink:hover {
-    color: var(--darkAccent);
-    text-decoration: none;
+  color: var(--darkAccent);
+  text-decoration: none;
 }
 
 /* P */
 
 p {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .profileForm-btn {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-style: solid solid none solid;
-    border: 2px var(--light);
-    font-size: 25px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-style: solid solid none solid;
+  border: 2px var(--light);
+  font-size: 25px;
 }
 
 .profileInfo {
-    text-align: center;
-    width: 40%;
+  text-align: center;
+  width: 40%;
 }
 
 /* T */
 
 .tableContainer {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 
 .tableImage {
-    object-fit: contain;
-    width: 50%;
-    height: auto;
+  object-fit: contain;
+  width: 50%;
+  height: auto;
 }
 
 td {
-    height: 100px;
+  height: 100px;
 }
 
-td, .tableItemName {
-    font-size: 15px;
+td,
+.tableItemName {
+  font-size: 15px;
 }
 
 th {
-    font-size: 16px;
-    margin: auto;
+  font-size: 16px;
+  margin: auto;
 }
 
 tr {
-    border: 1px var(--light);
-    border-style: solid none;
+  border: 1px var(--light);
+  border-style: solid none;
 }
 
 .truncate {
-    -ms-text-overflow: ellipsis;
-    max-width: 250px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  -ms-text-overflow: ellipsis;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .truncate:hover {
-    overflow:visible;
-    background-color: var(--dark);
-    white-space: wrap;
+  overflow: visible;
+  background-color: var(--dark);
+  white-space: wrap;
 }
 
 /* Media Queries*/
 
 @media screen and(max-width: 700px) {
+  .tableImage {
+    object-fit: fill;
+  }
 
-    .tableImage {
-        object-fit: fill;
-    }
+  th {
+    font-size: 16px;
+    margin: auto;
+  }
 
-    th {
-        font-size: 16px;
-        margin: auto;
-    }
-
-    /*.truncate {
+  /*.truncate {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

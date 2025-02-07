@@ -1,31 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { useMutation } from '@apollo/client';
+import { useMutation } from "@apollo/client";
 
-import { ADD_USER } from '../utils/mutations'
+import { ADD_USER } from "../utils/mutations";
 
-import Auth from '../utils/auth';
+import Auth from "../utils/auth";
 
-import { Container, Button, Form} from 'react-bootstrap';
+import { Container, Button, Form } from "react-bootstrap";
 
-let emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+import { EmailRegex } from "../components/EmailRegex";
 
 function login() {
   window.location.replace("/login");
-};
+}
 
-function SignupForm () {
-
+function SignupForm() {
   // set initial form state
-  const [formInput, setFormInput] = useState({username: '', email: '', password: ''});
+  const [formInput, setFormInput] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   // set state for form validation
   const [validated] = useState(false);
 
   // set mutation at submit event
-  const [addUser, { data } ] = useMutation(ADD_USER);
+  const [addUser, { data }] = useMutation(ADD_USER);
 
   // state for messages
-  const [infoMessage, setInfoMessage] = useState('');
+  const [infoMessage, setInfoMessage] = useState("");
 
   // sets and resets the data variable to whatever you are typing in the textbox
   const handleChange = (event) => {
@@ -49,77 +52,124 @@ function SignupForm () {
         variables: { ...formInput },
       });
 
-      setInfoMessage('Creating your account!')
+      setInfoMessage("Creating your account!");
       Auth.login(data.addUser.token);
-      setFormInput('');
+      setFormInput("");
     } catch (e) {
-            
-      setInfoMessage(e.message)
-      console.log("Error creating your account: ",e.message);
+      setInfoMessage(e.message);
+      console.log("Error creating your account: ", e.message);
     }
   };
 
   return (
     <Container>
-      <div className='main'>
-      <h1 className='text-center'>Sign Up</h1>
-      
+      <div className="main">
+        <h1 className="text-center">Sign Up</h1>
+
         {data ? (
-              <p className='text-center'>
-                Success! Creating your account
-              </p>
+          <p className="text-center">Success! Creating your account</p>
+        ) : (
+          <Form
+            validated={validated}
+            onSubmit={handleSubmit}
+            className="mx-auto col-sm-12 col-md-9 col-lg-6"
+          >
+            <Form.Group>
+              <Form.Label>Create a username</Form.Label>
+              <Form.Control
+                className="inputField"
+                type="text"
+                name="username"
+                value={formInput.username || ""}
+                placeholder="username"
+                onChange={handleChange}
+                required
+                minLength={2}
+                formNoValidate={true}
+              />
+            </Form.Group>
+
+            {formInput.username !== "" && formInput.username.length < 2 ? (
+              <div className="text-center errMessage">
+                {"Username must be minimum 2 characters"}
+              </div>
             ) : (
-
-      <Form validated={validated} onSubmit={handleSubmit} className='mx-auto col-sm-12 col-md-9 col-lg-6'>
-
-    <Form.Group>
-        <Form.Label>Create a username</Form.Label>
-        <Form.Control className='inputField' type="text" name ="username" value={formInput.username || ''} placeholder="username" onChange={handleChange} required minLength={2} formNoValidate={true}/>
-    </Form.Group>
-
-    {formInput.username !== "" && formInput.username.length < 2 ? 
-                  <div className="text-center errMessage">{"Username must be minimum 2 characters"}</div> : ''}
-    
-    <Form.Group>
-        <Form.Label>Enter your Email</Form.Label>
-        <Form.Control className='inputField' type="email" name ="email" value={formInput.email || ''} placeholder="Enter email" onChange={handleChange} required minLength={2}/>
-    </Form.Group>
-
-    {!emailRegex.test(formInput.email) && formInput.email !== "" ? 
-                  <div className="text-center errMessage">{"Invalid email entered"}</div> : ''}
-
-    <Form.Group>
-        <Form.Label>Create a Password</Form.Label>
-        <Form.Control className='inputField' type="password" name="password" value={formInput.password || ''} placeholder="Password" onChange={handleChange} required minLength={8}/>
-    </Form.Group>
-
-    {formInput.password !== "" && formInput.password.length < 8 ? 
-                  <div className="text-center errMessage">{"Password must be minimum 8 characters"}</div> : ''}
-
-    {infoMessage && (
-            <div className='text-center errMessage'>{infoMessage}</div>
+              ""
             )}
 
-    <div className='text-center'>
-        <Button type="submit" 
-        className='btn form-btn col-sm-12 col-md-8 col-lg-4 my-5'
-        disabled={!(formInput.username && formInput.email && formInput.password)}>
-            Sign Up
-        </Button>
-        </div>
+            <Form.Group>
+              <Form.Label>Enter your Email</Form.Label>
+              <Form.Control
+                className="inputField"
+                type="email"
+                name="email"
+                value={formInput.email || ""}
+                placeholder="Enter email"
+                onChange={handleChange}
+                required
+                minLength={2}
+              />
+            </Form.Group>
 
-        <div className='text-center'>
-        <Button className='btn form-btn col-sm-12 col-md-8 col-lg-4 mb-2'
-        onClick={login}>
-            login instead
-        </Button>
-    </div>
-    </Form>
+            {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
+              <div className="text-center errMessage">
+                {"Invalid email entered"}
+              </div>
+            ) : (
+              ""
+            )}
+
+            <Form.Group>
+              <Form.Label>Create a Password</Form.Label>
+              <Form.Control
+                className="inputField"
+                type="password"
+                name="password"
+                value={formInput.password || ""}
+                placeholder="Password"
+                onChange={handleChange}
+                required
+                minLength={8}
+              />
+            </Form.Group>
+
+            {formInput.password !== "" && formInput.password.length < 8 ? (
+              <div className="text-center errMessage">
+                {"Password must be minimum 8 characters"}
+              </div>
+            ) : (
+              ""
+            )}
+
+            {infoMessage && (
+              <div className="text-center errMessage">{infoMessage}</div>
+            )}
+
+            <div className="text-center">
+              <Button
+                type="submit"
+                className="btn form-btn col-sm-12 col-md-8 col-lg-4 my-3"
+                disabled={
+                  !(formInput.username && formInput.email && formInput.password)
+                }
+              >
+                Sign Up
+              </Button>
+            </div>
+
+            <div className="text-center">
+              <Button
+                className="btn form-btn col-sm-12 col-md-8 col-lg-4 mb-2"
+                onClick={login}
+              >
+                login instead
+              </Button>
+            </div>
+          </Form>
         )}
-
-    </div>
+      </div>
     </Container>
   );
-};
+}
 
 export default SignupForm;

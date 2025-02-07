@@ -80,10 +80,9 @@ Desktop version
 Saved Stuff page
 ![Desktop version of site homepage](client/src/assets/images/saved-stuff.png)
 
-Semi dynamic created SVGs
-![colourful toy truck](client/src/assets/images/examplesvg.png)
 
 ## Installation
+First start your local MongoDB server by downloading [MongoDB community server](https://www.mongodb.com/try/download/community), follow the [setup guide](https://www.prisma.io/dataguide/mongodb/setting-up-a-local-mongodb-database) here to setup and run the local MongoDB server on your computer before running MongggoDB Compass and finally, running the development server
 
 1. Clone the repo to your computer by clicking the green code button and copying the SSH version.
 

@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
@@ -26,90 +26,106 @@ export const ADD_USER = gql`
 `;
 
 export const UPDATE_ME = gql`
-mutation updateUser($username: String, $email: String) {
-  updateUser(username: $username, email: $email) {
-    _id
-    username
-    email
+  mutation updateUser($username: String, $email: String) {
+    updateUser(username: $username, email: $email) {
+      _id
+      username
+      email
+    }
   }
-}
 `;
 
 export const RESET_PASSWORD = gql`
-mutation resetPassword($password: String!) {
-  resetPassword(password: $password) {
-    _id
-    username
-    email
+  mutation resetPassword($password: String!) {
+    resetPassword(password: $password) {
+      _id
+      username
+      email
+    }
   }
-}
 `;
 
 export const DELETE_ME = gql`
   mutation deleteUser {
     deleteUser {
+      _id
+      username
+      email
+      savedItems {
         _id
-        username
-        email
-        savedItems{ 
-                    _id
-                    purchasePrice
-                    purchaseDate
-                    price
-                    itemName
-                    percent
-                    profit
-                    quantity
-                    itemImages
-                    quantity
-                  }
+        purchasePrice
+        purchaseDate
+        price
+        itemName
+        percent
+        profit
+        quantity
+        itemImages
+        quantity
+      }
     }
-}
+  }
 `;
 
 export const DELETE_ITEM = gql`
   mutation deleteItem($_id: ID) {
     deleteItem(_id: $_id) {
-        _id
+      _id
     }
-}
+  }
 `;
 
 export const SAVE_ITEM = gql`
-mutation saveItem($purchasePrice: Float!, $price: Float!, $itemName: String!, $percent: Float!, $profit: Float!, $quantity: Int!, $itemImages: String!, $purchaseDate: String!) {
-  saveItem(purchasePrice: $purchasePrice, price: $price, itemName: $itemName, percent: $percent, profit: $profit, quantity: $quantity, itemImages: $itemImages, purchaseDate: $purchaseDate) {
-                  _id
-                  purchasePrice
-                  purchaseDate
-                  price
-                  itemName
-                  percent
-                  profit
-                  itemImages
-                  quantity
+  mutation saveItem(
+    $purchasePrice: Float!
+    $price: Float!
+    $itemName: String!
+    $percent: Float!
+    $profit: Float!
+    $quantity: Int!
+    $itemImages: String!
+    $purchaseDate: String!
+  ) {
+    saveItem(
+      purchasePrice: $purchasePrice
+      price: $price
+      itemName: $itemName
+      percent: $percent
+      profit: $profit
+      quantity: $quantity
+      itemImages: $itemImages
+      purchaseDate: $purchaseDate
+    ) {
+      _id
+      purchasePrice
+      purchaseDate
+      price
+      itemName
+      percent
+      profit
+      itemImages
+      quantity
+    }
   }
-}
 `;
 
 export const UPDATE_ITEM = gql`
-mutation updateItem($item: updateItem) {
-  updateItem(item: $item) {
+  mutation updateItem(
+    $_id: ID
+    $purchasePrice: Float
+    $itemName: String
+    $purchaseDate: String
+  ) {
+    updateItem(
+      _id: $_id
+      purchasePrice: $purchasePrice
+      itemName: $itemName
+      purchaseDate: $purchaseDate
+    ) {
       _id
-      username
-      email
-      savedItems{ 
-                  _id
-                  purchasePrice
-                  purchaseDate
-                  price
-                  itemName
-                  percent
-                  profit
-                  quantity
-                  itemImages
-                  quantity
-                  
-                }
+      purchasePrice
+      purchaseDate
+      itemName
+    }
   }
-}
 `;
