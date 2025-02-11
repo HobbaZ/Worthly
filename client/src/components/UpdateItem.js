@@ -5,9 +5,8 @@ export default async function UpdateItem(
   setFormInput,
   updateItem
 ) {
-  //Send data to update endpoint
   try {
-    await updateItem({
+    const { data } = await updateItem({
       variables: {
         _id: itemId,
         itemName: formInput.itemName,
@@ -16,17 +15,21 @@ export default async function UpdateItem(
       },
     });
 
-    setInfoMessage("Item updated!");
+    console.log(itemId);
 
-    setFormInput({
-      itemName: "",
-      purchaseDate: "",
-      purchasePrice: 0,
-    });
-
-    window.location.replace("/saved");
+    if (data) {
+      setInfoMessage("Item details updated!");
+      setFormInput({
+        itemName: "",
+        purchaseDate: "",
+        purchasePrice: 0,
+      });
+      window.location.replace("/saved");
+    } else {
+      throw new Error("No response from server.");
+    }
   } catch (err) {
-    setInfoMessage("Error updating item!");
-    console.error("Error updating item: ", err);
+    console.error("Error updating details:", err);
+    setInfoMessage("Error updating item details!", err.message);
   }
 }

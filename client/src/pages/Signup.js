@@ -98,28 +98,6 @@ function SignupForm() {
             )}
 
             <Form.Group>
-              <Form.Label>Enter your Email</Form.Label>
-              <Form.Control
-                className="inputField"
-                type="email"
-                name="email"
-                value={formInput.email || ""}
-                placeholder="Enter email"
-                onChange={handleChange}
-                required
-                minLength={2}
-              />
-            </Form.Group>
-
-            {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
-              <div className="text-center errMessage">
-                {"Invalid email entered"}
-              </div>
-            ) : (
-              ""
-            )}
-
-            <Form.Group>
               <Form.Label>Create a Password</Form.Label>
               <Form.Control
                 className="inputField"
@@ -136,6 +114,28 @@ function SignupForm() {
             {formInput.password !== "" && formInput.password.length < 8 ? (
               <div className="text-center errMessage">
                 {"Password must be minimum 8 characters"}
+              </div>
+            ) : (
+              ""
+            )}
+
+            <Form.Group>
+              <Form.Label>Enter your Email</Form.Label>
+              <Form.Control
+                className="inputField"
+                type="email"
+                name="email"
+                value={formInput.email || ""}
+                placeholder="Enter email"
+                onChange={handleChange}
+                required
+                minLength={2}
+              />
+            </Form.Group>
+
+            {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
+              <div className="text-center errMessage">
+                {"Invalid email entered"}
               </div>
             ) : (
               ""

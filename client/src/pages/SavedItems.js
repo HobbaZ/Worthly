@@ -1,5 +1,3 @@
-//How to use Apollo GraphQL to update an individual item name, price and purchase date
-
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
@@ -9,6 +7,8 @@ import Auth from "../utils/auth";
 import Networth from "../components/Networth";
 import EditItemModal from "../components/EditItemModal";
 import DeleteItem from "../components/DeleteItem";
+import { Percentage } from "../components/Percentage";
+import { Profit } from "../components/Profit";
 
 const SavedItems = () => {
   const [deleteItem] = useMutation(DELETE_ITEM);
@@ -77,6 +77,11 @@ const SavedItems = () => {
                     </tr>
 
                     {userData.savedItems?.map((item) => {
+                      let profit = Profit(
+                        item.price.toFixed(2),
+                        item.purchasePrice.toFixed(2)
+                      );
+
                       return (
                         <>
                           <tr key={item._id}>
@@ -96,31 +101,37 @@ const SavedItems = () => {
                             </td>
 
                             <td>
-                              <p className="text-left ">
+                              <p className="text-left">
                                 {dateFormatter(item.purchaseDate)}
                               </p>
                             </td>
 
-                            <td>${item.purchasePrice.toFixed(2)}</td>
-
-                            <td>${item.price.toFixed(2)}</td>
-
-                            <td>${item.profit.toFixed(2)}</td>
+                            <td>
+                              <p className="text-left">
+                                ${item.purchasePrice.toFixed(2)}
+                              </p>
+                            </td>
 
                             <td>
-                              {item.percent && (
-                                <span
-                                  style={
-                                    item.percent <= 0
-                                      ? { color: "rgb(252, 122, 0)" }
-                                      : { color: "rgb(115, 255, 0)" }
-                                  }
-                                >
-                                  {item.percent <= 0
-                                    ? ` ↓ ${item.percent}%`
-                                    : ` ↑ ${item.percent}%`}
-                                </span>
+                              <p className="text-left">
+                                ${item.price.toFixed(2)}
+                              </p>
+                            </td>
+
+                            <td>
+                              {item.price && (
+                                <p className="text-left">${profit}</p>
                               )}
+                            </td>
+
+                            <td>
+                              <p>
+                                {item.price &&
+                                  Percentage(
+                                    profit,
+                                    item.purchasePrice.toFixed(2)
+                                  )}
+                              </p>
                             </td>
 
                             <td>
@@ -128,15 +139,16 @@ const SavedItems = () => {
                                 className="btn btn-danger ml-3"
                                 onClick={() => handleDeleteItem(item._id)}
                               >
-                                X
+                                <i className="fas fa-trash"></i>
                               </Button>
                             </td>
 
                             <td>
                               <Button
+                                className="btn form-btn ml-3"
                                 onClick={() => handleEditFormToggle(item._id)}
                               >
-                                Edit
+                                <i className="fas fa-pen-to-square"></i>
                               </Button>
                             </td>
 

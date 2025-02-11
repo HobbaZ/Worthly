@@ -6,6 +6,7 @@ export default function EditItemModal({ show, onClose, item, updateItem }) {
     <Modal show={show} onHide={onClose} centered>
       <Modal.Header>
         <Modal.Title>Editing Item</Modal.Title>
+        {console.log(item._id)}
 
         <Button
           variant="danger"

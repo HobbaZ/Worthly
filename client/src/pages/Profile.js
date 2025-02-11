@@ -38,9 +38,9 @@ const Profile = () => {
             <div className="text-center">
               <Button
                 onClick={() => handleEditFormToggle(userData._id)}
-                className="btn btn-primary col-sm-12 col-md-8 col-lg-4 my-3"
+                className="btn form-btn col-sm-12 col-md-6 col-lg-3 my-3"
               >
-                Edit
+                Edit <i className="fas fa-pen-to-square"></i>
               </Button>
             </div>
 
@@ -58,12 +58,12 @@ const Profile = () => {
             {/* Delete Profile Button */}
             <div className="text-center">
               <Button
-                className="btn btn-danger col-sm-12 col-md-8 col-lg-4 my-3"
+                className="btn btn-danger col-sm-12 col-md-6 col-lg-3 my-3"
                 onClick={() =>
                   DeleteUser(userData._id, setInfoMessage, deleteUser)
                 }
               >
-                Delete Account
+                Delete Account <i className="fas fa-trash"></i>
               </Button>
             </div>
           </>

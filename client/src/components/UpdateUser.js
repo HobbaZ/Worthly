@@ -5,15 +5,17 @@ export default async function UpdateUser(
   updateUser
 ) {
   try {
-    await updateUser({
-      variables: { ...formInput },
-    });
+    const { data } = await updateUser({ variables: { ...formInput } });
 
-    setInfoMessage("Details updated!");
-    onClose();
-    window.location.replace("/profile");
+    if (data) {
+      setInfoMessage("Details updated!");
+      onClose();
+      window.location.replace("/profile");
+    } else {
+      throw new Error("No response from server.");
+    }
   } catch (err) {
-    setInfoMessage("Error updating details!");
     console.error("Error updating details:", err);
+    setInfoMessage("Error updating user details!", err.message);
   }
 }

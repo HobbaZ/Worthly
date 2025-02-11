@@ -7,7 +7,11 @@ import Auth from "../utils/auth";
 import { useMutation } from "@apollo/client";
 
 import { SAVE_ITEM } from "../utils/mutations";
-import auth from "../utils/auth";
+
+import SearchResults from "../components/SearchResults";
+import { AvePrice } from "../components/AvePrice";
+import { Percentage } from "../components/Percentage";
+import { Profit } from "../components/Profit";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -17,7 +21,6 @@ const SearchItemsForm = () => {
     purchasePrice: 0,
     price: "",
     itemName: "",
-    percent: "",
     profit: "",
     quantity: "",
     itemImages: "",
@@ -82,51 +85,25 @@ const SearchItemsForm = () => {
       //set loading state back to false after response received
       setIsLoading(false);
 
-      //find total price by adding all prices from the found records
-      const averagePrice = () => {
-        let total = 0;
-        let average = 0;
+      const ave = AvePrice(search_results);
 
-        for (let index = 0; index < search_results.length; index++) {
-          let priceMinusPostage = search_results[index]?.price.value; //Don't need shipping cost as only getting initial sold amount
-          total = total + parseFloat(priceMinusPostage);
-        }
-        average = (total / search_results.length).toFixed(2);
-        return average;
-      };
+      Percentage(ave, search_results, searchInput);
 
-      //Percentage function
-      const percentage = () => {
-        let ave = averagePrice();
-
-        let percent = 0;
-
-        let difference = ave - searchInput.userPaid;
-        percent = ((difference / searchInput.userPaid) * 100).toFixed(1);
-        return percent;
-      };
-
-      const profit = () => {
-        let ave = averagePrice();
-        let difference = (ave - searchInput.userPaid).toFixed(2);
-        return difference;
-      };
+      const profit = Profit(ave, searchInput.userPaid);
 
       const searchData = () => ({
         itemName: search_results[0]?.title,
         quantity: search_results.length,
         itemImages: search_results[0]?.image || "",
-        price: parseFloat(averagePrice()),
+        price: parseFloat(ave),
         purchasePrice: parseFloat(searchInput.userPaid),
-        percent: parseFloat(percentage()),
-        profit: parseFloat(profit()),
+        profit: parseFloat(profit),
         purchaseDate: dateInput,
       });
 
       setSearcheditems(searchData);
       setSearchInput({
         //Persist searchterms until cleared by user
-
         itemName: searchInput.itemName,
         userPaid: searchInput.userPaid,
       });
@@ -148,7 +125,6 @@ const SearchItemsForm = () => {
         variables: { ...searchedItems },
       });
       window.location.replace("/saved");
-      // if item successfully saves to user's account, save item to state
 
       setItemMessage("item successfully added");
     } catch (e) {
@@ -258,111 +234,20 @@ const SearchItemsForm = () => {
                   disabled={!(searchInput.itemName && searchInput.userPaid)}
                   type="submit"
                 >
-                  {loading ? <>Loading...</> : <>submit</>}
+                  {loading ? <>Loading...</> : <>Search</>}
                 </Button>
               </div>
             </Form>
           </Container>
 
           {/*Display search results*/}
-          <Container>
-            {searchedItems.quantity !== 0 ? (
-              <>
-                <div className="row">
-                  <div className="col-md text-center">
-                    {searchedItems.itemImages ? (
-                      <img
-                        src={searchedItems.itemImages}
-                        alt={`${searchInput.itemName}`}
-                        variant="top"
-                        className="flex-md-shrink-0"
-                      />
-                    ) : null}
-                  </div>
-
-                  <div className="col-md text-center">
-                    <h4>
-                      {searchedItems.itemName ? (
-                        <div>
-                          {searchedItems.itemName}
-                          <hr />
-                        </div>
-                      ) : null}
-                    </h4>
-
-                    <h4>
-                      {searchedItems.quantity
-                        ? `${searchedItems.quantity} results`
-                        : null}
-                    </h4>
-
-                    <p>
-                      {searchedItems.purchasePrice
-                        ? `Purchase Price: $${searchedItems.purchasePrice.toFixed(
-                            2
-                          )}`
-                        : null}
-                    </p>
-
-                    <p>
-                      {searchedItems.price
-                        ? `Estimated Sale Price: $${searchedItems.price.toFixed(
-                            2
-                          )}`
-                        : null}
-                    </p>
-
-                    {/*Shows green or red if in profit or loss*/}
-                    <p>
-                      {searchedItems.profit
-                        ? `Profit: $${searchedItems.profit.toFixed(2)}`
-                        : null}
-
-                      {searchedItems.percent ? (
-                        <span
-                          style={
-                            searchedItems.percent <= 0
-                              ? { color: "rgb(252, 122, 0)" }
-                              : { color: "rgb(115, 255, 0)" }
-                          }
-                        >
-                          {searchedItems.percent <= 0
-                            ? ` ↓ ${searchedItems.percent}%`
-                            : ` ↑ ${searchedItems.percent}%`}
-                        </span>
-                      ) : null}
-                    </p>
-
-                    {auth.loggedIn() && searchedItems.itemName ? (
-                      <p className="text-center">
-                        Purchase Date: {dateInputFormat.toLocaleDateString()}
-                      </p>
-                    ) : null}
-
-                    {searchedItems.itemName && Auth.loggedIn() && (
-                      <>
-                        <Button
-                          className="btn form-btn col-sm-12 col-md-8 col-lg-4 my-3"
-                          onClick={() => handleSaveItem()}
-                        >
-                          Add to Collection
-                        </Button>
-
-                        <p className="errMessage">{itemMessage}</p>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </>
-            ) : (
-              <p className="text-center">
-                We couldn't find anything for{" "}
-                {searchInput.itemName !== ""
-                  ? `${searchInput.itemName}`
-                  : "your search"}
-              </p>
-            )}
-          </Container>
+          <SearchResults
+            searchedItems={searchedItems}
+            searchInput={searchInput}
+            dateInputFormat={dateInputFormat}
+            handleSaveItem={handleSaveItem}
+            itemMessage={itemMessage}
+          />
         </div>
       </Container>
     </>

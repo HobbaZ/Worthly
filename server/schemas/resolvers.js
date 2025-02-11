@@ -118,22 +118,29 @@ const resolvers = {
 
     // Update item if logged in
     updateItem: async (_, args, context) => {
+      console.log("Args object:", args);
       try {
         if (context.user) {
-          console.log("These are the arguments passed \n", args);
+          console.log(
+            "These are the arguments passed \n",
+            args._id,
+            args.itemName,
+            args.purchasePrice,
+            args.purchaseDate
+          );
           return await User.findByIdAndUpdate(
             { _id: context.user._id },
             {
               $set: {
-                savedItems: {
-                  _id: args._id,
-                  itemName: args.itemName,
-                  purchasePrice: args.purchasePrice,
-                  purchaseDate: args.purchaseDate,
-                },
+                "savedItems.$[elem].itemName": args.itemName,
+                "savedItems.$[elem].purchasePrice": args.purchasePrice,
+                "savedItems.$[elem].purchaseDate": args.purchaseDate,
               },
             },
-            { new: true }
+            {
+              new: true, // Return the updated document
+              arrayFilters: [{ "elem._id": args._id }], // Filter for the specific item
+            }
           )
             .then((result) => {
               console.log("Update item by id", result);

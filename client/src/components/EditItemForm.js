@@ -15,6 +15,10 @@ export default function EditItemForm({ item, onClose, updateItem }) {
   const today = new Date();
   const dateInputFormat = new Date(dateInput);
 
+  {
+    console.log(item._id);
+  }
+
   useEffect(() => {
     if (item) {
       setFormInput({

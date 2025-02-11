@@ -34,7 +34,6 @@ const typeDefs = gql`
     price: Float!
     profit: Float!
     quantity: Int!
-    percent: Float!
   }
 
   input itemInput {
@@ -46,7 +45,6 @@ const typeDefs = gql`
     price: Float
     profit: Float
     quantity: Int
-    percent: Float
   }
 
   type Mutation {
@@ -71,7 +69,6 @@ const typeDefs = gql`
       purchasePrice: Float!
       price: Float!
       itemName: String!
-      percent: Float!
       profit: Float!
       quantity: Int!
       itemImages: String!
