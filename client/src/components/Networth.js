@@ -1,73 +1,57 @@
-import { Container } from "react-bootstrap";
+import { TotalProfit } from "./TotalProfit";
+import { Profit } from "./Profit";
 
-//Calculate total average value of all items
+// Calculate total average sell value of all items
 const totalValue = (userData) => {
-  let total = 0;
-
-  for (let index = 0; index < userData.savedItems?.length; index++) {
-    let calcPrice = userData.savedItems[index].price;
-    total = total + parseFloat(calcPrice);
-  }
-
-  return total.toFixed(2);
-};
-
-//Calculate networth by adding all profits from the individual items listed
-const netWorth = (userData) => {
-  let total = 0;
-  const netWorthArray = [];
-
-  for (let index = 0; index < userData.savedItems?.length; index++) {
-    let calcProfit = userData.savedItems[index].profit;
-    total = total + parseFloat(calcProfit);
-    netWorthArray.push(total.toFixed(2));
-  }
-
-  return total.toFixed(2);
+  return userData.savedItems
+    ?.reduce((total, item) => total + parseFloat(item.price || 0), 0)
+    .toFixed(2);
 };
 
 //Find highest and lowest profits in array
 const sort = (userData) => {
-  const sortArray = [];
+  if (!userData.savedItems?.length) return [0, 0]; // Handle empty case
 
-  let loss = 0;
-  let most = 0;
+  const profits = userData.savedItems.map((item) =>
+    Profit(item.price, item.purchasePrice)
+  );
 
-  for (let index = 0; index < userData.savedItems?.length; index++) {
-    let calcProfit = userData.savedItems[index].profit;
-    sortArray.push(calcProfit);
-    sortArray.sort(function (a, b) {
-      return a - b;
-    });
+  const most = Math.max(...profits);
+  const loss = Math.min(...profits);
 
-    most = Math.max(...sortArray);
-
-    if (Math.min(...sortArray) <= 0) {
-      loss = Math.min(...sortArray);
-    } else {
-      loss = 0;
-    }
-  }
   return [most, loss];
 };
 
 export default function Networth({ userData }) {
+  let totalProfit = TotalProfit(userData.savedItems);
+
+  userData.savedItems?.map((item) => {
+    let total = 0;
+
+    /* Calculate Profit */
+    let profit = Profit(item.price.toFixed(2), item.purchasePrice.toFixed(2));
+
+    total += profit;
+    return total;
+  });
+
   return (
-    <Container>
+    <>
       <br />
       <h4> My Item Networth</h4>
       <p>
-        Total Spent: ${(totalValue(userData) - netWorth(userData)).toFixed(2)}
+        Total Paid: $
+        {(parseFloat(totalValue(userData)) - parseFloat(totalProfit)).toFixed(
+          2
+        )}
         <br />
         Highest profit: ${sort(userData)[0]}
         <br />
         Highest loss: ${sort(userData)[1]}
         <br />
         Total Value: ${totalValue(userData)} <br />
-        <span className="font-weight-bold">
-          Total Networth: ${netWorth(userData)}
-        </span>
+        <span className="font-weight-bold">Total Profit: ${totalProfit}</span>
       </p>
-    </Container>
+    </>
   );
 }

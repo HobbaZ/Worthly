@@ -3,6 +3,7 @@ import { EmailRegex } from "../components/EmailRegex.js";
 import Auth from "../utils/auth";
 import { useState, useEffect } from "react";
 import UpdateUser from "./UpdateUser.js";
+import AuthLogin from "./AuthLogin.js";
 
 export default function EditProfileForm({ user, onClose, updateUser }) {
   const [submittingForm, setSubmittingForm] = useState(false);
@@ -30,11 +31,7 @@ export default function EditProfileForm({ user, onClose, updateUser }) {
     event.preventDefault();
     setSubmittingForm(true);
 
-    if (!Auth.loggedIn()) {
-      setInfoMessage("Need to be logged in to do this");
-      window.location.replace("/login");
-      return;
-    }
+    AuthLogin(setInfoMessage);
 
     UpdateUser(formInput, setInfoMessage, onClose, updateUser);
   };

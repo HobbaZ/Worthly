@@ -2,6 +2,7 @@ import { Form, Container, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import Auth from "../utils/auth";
 import UpdateItem from "./UpdateItem";
+import AuthLogin from "./AuthLogin";
 
 export default function EditItemForm({ item, onClose, updateItem }) {
   const [validated] = useState(false);
@@ -14,10 +15,6 @@ export default function EditItemForm({ item, onClose, updateItem }) {
   let [dateInput, setDateInput] = useState();
   const today = new Date();
   const dateInputFormat = new Date(dateInput);
-
-  {
-    console.log(item._id);
-  }
 
   useEffect(() => {
     if (item) {
@@ -57,13 +54,7 @@ export default function EditItemForm({ item, onClose, updateItem }) {
     }
 
     //Send data to update user endpoint
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    if (!token) {
-      setInfoMessage("Need to be logged in to do this");
-      window.location.replace("/login");
-      return false;
-    }
+    AuthLogin();
 
     const editedProperties = () => ({
       _id: item._id,
@@ -85,8 +76,6 @@ export default function EditItemForm({ item, onClose, updateItem }) {
         onSubmit={handleFormSubmit}
         className="editform mx-auto col-12"
       >
-        {console.log(item._id)}
-
         <Form.Group>
           <Form.Label>Update Item Name</Form.Label>
           <Form.Control
@@ -97,9 +86,7 @@ export default function EditItemForm({ item, onClose, updateItem }) {
             onChange={handleInputChange}
             required
             minLength={1}
-            value={
-              formInput.itemName !== "" ? formInput.itemName : item.itemName
-            }
+            value={formInput.itemName !== "" ? formInput.itemName : ""}
           ></Form.Control>
         </Form.Group>
 
@@ -114,18 +101,16 @@ export default function EditItemForm({ item, onClose, updateItem }) {
             required
             minLength={1}
             value={
-              formInput.purchasePrice !== ""
-                ? formInput.purchasePrice
-                : item.purchasePrice
+              formInput.purchasePrice !== "" ? formInput.purchasePrice : ""
             }
           ></Form.Control>
         </Form.Group>
 
-        {formInput.purchasePrice !== null && formInput.purchasePrice < 0.01 ? (
+        {formInput.purchasePrice !== null && formInput.purchasePrice < 0.01 && (
           <div className="text-center errMessage">
             Cost of item can't be under $0.01
           </div>
-        ) : null}
+        )}
 
         <Form.Group>
           <Form.Label>Update Purchase Date</Form.Label>
@@ -137,11 +122,7 @@ export default function EditItemForm({ item, onClose, updateItem }) {
             onChange={(e) => {
               setDateInput(e.target.value);
             }}
-            value={
-              formInput.purchaseDate !== ""
-                ? formInput.purchaseDate
-                : item.purchaseDate
-            }
+            value={formInput.purchaseDate !== "" ? formInput.purchaseDate : ""}
           ></Form.Control>
         </Form.Group>
 

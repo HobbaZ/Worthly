@@ -71,7 +71,7 @@ function Login() {
             className="mx-auto col-sm-12 col-md-9 col-lg-6"
           >
             <Form.Group>
-              <Form.Label>Email address</Form.Label>
+              <Form.Label className="text-left"> Email address</Form.Label>
               <Form.Control
                 className="inputField"
                 type="email"

@@ -69,7 +69,7 @@ const SavedItems = () => {
                       <th>Image</th>
                       <th>Item Name</th>
                       <th>Purchase Date</th>
-                      <th>Purchase $</th>
+                      <th>Paid $</th>
                       <th>Ave. Sell $</th>
                       <th>Profit $</th>
                       <th>Profit %</th>
@@ -77,6 +77,7 @@ const SavedItems = () => {
                     </tr>
 
                     {userData.savedItems?.map((item) => {
+                      /* Calculate Profit */
                       let profit = Profit(
                         item.price.toFixed(2),
                         item.purchasePrice.toFixed(2)
@@ -136,7 +137,7 @@ const SavedItems = () => {
 
                             <td>
                               <Button
-                                className="btn btn-danger ml-3"
+                                className="btn btn-danger ml-3 item-btn"
                                 onClick={() => handleDeleteItem(item._id)}
                               >
                                 <i className="fas fa-trash"></i>
@@ -145,7 +146,7 @@ const SavedItems = () => {
 
                             <td>
                               <Button
-                                className="btn form-btn ml-3"
+                                className="btn form-btn ml-3 item-btn"
                                 onClick={() => handleEditFormToggle(item._id)}
                               >
                                 <i className="fas fa-pen-to-square"></i>

@@ -57,6 +57,13 @@ html {
   color: var(--light);
 }
 
+/* C */
+.container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+}
+
 /* E */
 
 .editForm {
@@ -128,6 +135,15 @@ form {
   font-weight: 900;
 }
 
+.item-btn,
+.footer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
 .form-btn:disabled {
   background-color: var(--darkAccent);
   outline: 2px solid var(--transparent);
@@ -195,7 +211,11 @@ label {
 /* M */
 
 .main {
-  margin-top: 15vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
 }
 
 /* N */

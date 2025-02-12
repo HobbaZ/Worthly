@@ -15,8 +15,6 @@ export default async function UpdateItem(
       },
     });
 
-    console.log(itemId);
-
     if (data) {
       setInfoMessage("Item details updated!");
       setFormInput({
