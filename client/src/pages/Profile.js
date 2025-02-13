@@ -7,6 +7,7 @@ import EditProfileModal from "../components/EditProfileModal";
 import Greeting from "../components/Greeting";
 import Auth from "../utils/auth";
 import DeleteUser from "../components/DeleteUser";
+import AuthLogin from "../components/AuthLogin";
 
 const Profile = () => {
   const { data, loading } = useQuery(QUERY_ME);
@@ -24,7 +25,7 @@ const Profile = () => {
   return (
     <Container>
       <div className="main">
-        {Auth.loggedIn() && (
+        {Auth.loggedIn() ? (
           <>
             <h2 className="text-center">Your Profile</h2>
             {loading && <p>Loading...</p>}
@@ -51,6 +52,7 @@ const Profile = () => {
                   show={showEditForm !== null}
                   onClose={() => setShowEditForm(null)}
                   updateUser={updateUser}
+                  Auth={Auth}
                 />
               </>
             )}
@@ -67,6 +69,8 @@ const Profile = () => {
               </Button>
             </div>
           </>
+        ) : (
+          window.location.replace("./login")
         )}
       </div>
     </Container>

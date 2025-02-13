@@ -12,8 +12,6 @@ export const QUERY_ME = gql`
         purchaseDate
         price
         itemName
-
-        profit
         quantity
         itemImages
         purchasePrice

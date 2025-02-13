@@ -57,8 +57,6 @@ export const DELETE_ME = gql`
         purchaseDate
         price
         itemName
-
-        profit
         quantity
         itemImages
         quantity
@@ -80,7 +78,6 @@ export const SAVE_ITEM = gql`
     $purchasePrice: Float!
     $price: Float!
     $itemName: String!
-    $profit: Float!
     $quantity: Int!
     $itemImages: String!
     $purchaseDate: String!
@@ -89,8 +86,6 @@ export const SAVE_ITEM = gql`
       purchasePrice: $purchasePrice
       price: $price
       itemName: $itemName
-
-      profit: $profit
       quantity: $quantity
       itemImages: $itemImages
       purchaseDate: $purchaseDate
@@ -100,8 +95,6 @@ export const SAVE_ITEM = gql`
       purchaseDate
       price
       itemName
-
-      profit
       itemImages
       quantity
     }

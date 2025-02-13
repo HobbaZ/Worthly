@@ -1,6 +1,7 @@
-import { Container, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Auth from "../utils/auth";
 import { Percentage } from "./Percentage.js";
+import { Profit } from "./Profit.js";
 
 export default function SearchResults({
   searchedItems,
@@ -9,18 +10,12 @@ export default function SearchResults({
   handleSaveItem,
   itemMessage,
 }) {
-  if (!searchedItems || searchedItems.quantity <= 0) {
-    return (
-      <p className="text-center">
-        We couldn't find anything for {searchInput?.itemName || "your search"}.
-      </p>
-    );
-  }
-
-  const { itemName, itemImages, quantity, purchasePrice, price, profit } =
+  const { itemName, itemImages, quantity, purchasePrice, price } =
     searchedItems;
 
-  return (
+  const profit = Profit(price, purchasePrice);
+
+  return searchedItems && itemName ? (
     <div className="row">
       {/* Item Image */}
       <div className="col-md text-center">
@@ -28,7 +23,7 @@ export default function SearchResults({
           <img
             src={itemImages}
             alt={itemName || "Item"}
-            className="flex-md-shrink-0"
+            className="flex-md-shrink-0 resultPhoto"
           />
         )}
       </div>
@@ -44,19 +39,15 @@ export default function SearchResults({
         {/* Quantity */}
         {quantity > 0 && <h4>{quantity} results</h4>}
         {/* Purchase Price */}
-        {typeof purchasePrice === "number" && (
-          <p>Purchase Price: ${purchasePrice.toFixed(2)}</p>
-        )}
+
+        <p>Purchase Price: ${purchasePrice.toFixed(2)}</p>
+
         {/* Average Sale Price */}
-        {typeof price === "number" && (
-          <>
-            <p>
-              Average Sale Price: ${price.toFixed(2)}{" "}
-              {Percentage(profit, purchasePrice)}
-            </p>
-            <p>Profit: ${profit.toFixed(2)} </p>
-          </>
-        )}
+
+        <p>
+          Average Sale Price: ${price} {Percentage(profit, purchasePrice)}
+        </p>
+        <p>Profit: ${profit} </p>
 
         {/* Purchase Date (if logged in) */}
         {Auth.loggedIn() && itemName && dateInputFormat && (
@@ -78,5 +69,7 @@ export default function SearchResults({
         )}
       </div>
     </div>
+  ) : (
+    <p className="text-center">No results for {searchInput.itemName}</p>
   );
 }

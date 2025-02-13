@@ -1,6 +1,5 @@
 import { Button, Container, Form } from "react-bootstrap";
 import { EmailRegex } from "../components/EmailRegex.js";
-import Auth from "../utils/auth";
 import { useState, useEffect } from "react";
 import UpdateUser from "./UpdateUser.js";
 import AuthLogin from "./AuthLogin.js";

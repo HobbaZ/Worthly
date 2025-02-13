@@ -9,6 +9,7 @@ import EditItemModal from "../components/EditItemModal";
 import DeleteItem from "../components/DeleteItem";
 import { Percentage } from "../components/Percentage";
 import { Profit } from "../components/Profit";
+import AuthLogin from "../components/AuthLogin";
 
 const SavedItems = () => {
   const [deleteItem] = useMutation(DELETE_ITEM);
@@ -24,16 +25,13 @@ const SavedItems = () => {
 
   //Open and close edit form
   function handleEditFormToggle(itemId) {
+    AuthLogin(setInfoMessage);
     setShowEditForm(itemId === showEditForm ? null : itemId);
   }
 
   // Item's id value deletes from the database
   const handleDeleteItem = async (itemId) => {
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    if (!token) {
-      return false;
-    }
+    AuthLogin(setInfoMessage);
     DeleteItem(itemId, setInfoMessage, deleteItem);
   };
 
@@ -51,40 +49,40 @@ const SavedItems = () => {
     <>
       <Container>
         <div className="main">
-          <div className="text-center">
-            <h1>My Collection</h1>
-            <h3>
-              {userData.savedItems?.length
-                ? `Viewing ${userData.savedItems?.length} saved ${
-                    userData.savedItems?.length === 1 ? "item" : "items"
-                  }:`
-                : "There's nothing here yet."}
-            </h3>
+          {Auth.loggedIn() ? (
+            <div className="text-center">
+              <h1>My Collection</h1>
+              <h3>
+                {userData.savedItems?.length
+                  ? `Viewing ${userData.savedItems?.length} saved ${
+                      userData.savedItems?.length === 1 ? "item" : "items"
+                    }:`
+                  : "There's nothing here yet."}
+              </h3>
 
-            {userData.savedItems?.length !== 0 ? (
-              <div className="tableContainer">
-                <table className="w-100">
-                  <tbody>
-                    <tr>
-                      <th>Image</th>
-                      <th>Item Name</th>
-                      <th>Purchase Date</th>
-                      <th>Paid $</th>
-                      <th>Ave. Sell $</th>
-                      <th>Profit $</th>
-                      <th>Profit %</th>
-                      <th></th>
-                    </tr>
+              {userData.savedItems?.length !== 0 ? (
+                <div className="tableContainer">
+                  <table className="w-100">
+                    <tbody>
+                      <tr>
+                        <th>Image</th>
+                        <th>Item Name</th>
+                        <th>Purchase Date</th>
+                        <th>Paid $</th>
+                        <th>Ave. Sell $</th>
+                        <th>Profit $</th>
+                        <th>Profit %</th>
+                        <th></th>
+                      </tr>
 
-                    {userData.savedItems?.map((item) => {
-                      /* Calculate Profit */
-                      let profit = Profit(
-                        item.price.toFixed(2),
-                        item.purchasePrice.toFixed(2)
-                      );
+                      {userData.savedItems?.map((item) => {
+                        /* Calculate Profit */
+                        let profit = Profit(
+                          item.price.toFixed(2),
+                          item.purchasePrice.toFixed(2)
+                        );
 
-                      return (
-                        <>
+                        return (
                           <tr key={item._id}>
                             <td className="imageCell">
                               <img
@@ -162,23 +160,26 @@ const SavedItems = () => {
                                   updateItem={updateItem}
                                   show={showEditForm !== null}
                                   onClose={() => setShowEditForm(null)}
+                                  Auth={Auth}
                                 />
                               </>
                             )}
                           </tr>
-                        </>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            ) : null}
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              ) : null}
 
-            {/*Display net profit and loses if length is over 1 */}
-            {userData.savedItems?.length < 1 ? null : (
-              <Networth userData={userData} />
-            )}
-          </div>
+              {/*Display net profit and loses if length is over 1 */}
+              {userData.savedItems?.length >= 1 ? (
+                <Networth userData={userData} />
+              ) : null}
+            </div>
+          ) : (
+            window.location.replace("./login")
+          )}
         </div>
       </Container>
     </>

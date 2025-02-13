@@ -8,16 +8,21 @@ const totalValue = (userData) => {
     .toFixed(2);
 };
 
-//Find highest and lowest profits in array
 const sort = (userData) => {
-  if (!userData.savedItems?.length) return [0, 0]; // Handle empty case
+  if (!userData.savedItems?.length) return [0, 0];
 
   const profits = userData.savedItems.map((item) =>
     Profit(item.price, item.purchasePrice)
   );
 
-  const most = Math.max(...profits);
-  const loss = Math.min(...profits);
+  let most = Math.max(...profits);
+  let loss = Math.min(...profits);
+
+  // If there's only one item, adjust values accordingly
+  if (profits.length === 1) {
+    if (most > 0) loss = 0;
+    if (loss < 0) most = 0;
+  }
 
   return [most, loss];
 };
@@ -25,33 +30,26 @@ const sort = (userData) => {
 export default function Networth({ userData }) {
   let totalProfit = TotalProfit(userData.savedItems);
 
-  userData.savedItems?.map((item) => {
-    let total = 0;
-
-    /* Calculate Profit */
-    let profit = Profit(item.price.toFixed(2), item.purchasePrice.toFixed(2));
-
-    total += profit;
-    return total;
-  });
-
   return (
     <>
       <br />
-      <h4> My Item Networth</h4>
-      <p>
-        Total Paid: $
-        {(parseFloat(totalValue(userData)) - parseFloat(totalProfit)).toFixed(
-          2
-        )}
-        <br />
-        Highest profit: ${sort(userData)[0]}
-        <br />
-        Highest loss: ${sort(userData)[1]}
-        <br />
-        Total Value: ${totalValue(userData)} <br />
-        <span className="font-weight-bold">Total Profit: ${totalProfit}</span>
-      </p>
+      <div className="w-25 mx-auto">
+        <h4 className="font-weight-bold"> My Item Networth</h4>
+        <p>
+          Total Paid: $
+          {(parseFloat(totalValue(userData)) - parseFloat(totalProfit)).toFixed(
+            2
+          )}
+          <br />
+          Highest profit: ${sort(userData)[0]}
+          <br />
+          Highest loss: ${sort(userData)[1]}
+          <br />
+          Total Value: ${totalValue(userData)}{" "}
+        </p>
+        <hr />
+        <p>Total Profit: ${totalProfit}</p>
+      </div>
     </>
   );
 }

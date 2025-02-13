@@ -27,11 +27,6 @@ const itemSchema = new Schema({
     required: true,
   },
 
-  profit: {
-    type: Number,
-    required: true,
-  },
-
   purchaseDate: {
     type: String,
     required: true,

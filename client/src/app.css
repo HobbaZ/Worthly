@@ -44,13 +44,20 @@ html {
   width: 100%;
 }
 
+.btn-danger,
+.form-btn,
+.btn-danger,
+.noEffect {
+  font-size: 20px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+}
+
 .btn-danger {
   background-color: red;
   outline: 2px solid var(--transparent);
-  border: none;
   color: var(--light);
-  font-size: 20px;
-  font-weight: 900;
 }
 
 .modal-footer > .button {
@@ -131,8 +138,6 @@ form {
   outline: 2px solid var(--transparent);
   border: none;
   color: var(--dark);
-  font-size: 20px;
-  font-weight: 900;
 }
 
 .item-btn,
@@ -249,11 +254,7 @@ label {
 }
 
 .noEffect {
-  border: none;
-  outline: none;
   background-color: var(--transparent);
-  font-size: 20px;
-  font-weight: 500;
   padding: 0;
   margin: 0;
 }
@@ -267,6 +268,12 @@ p {
 .profileInfo {
   text-align: center;
   width: 40%;
+}
+
+/* R */
+.resultPhoto {
+  width: 50%;
+  height: auto;
 }
 
 /* T */

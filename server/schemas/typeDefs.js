@@ -32,7 +32,6 @@ const typeDefs = gql`
     purchasePrice: Float!
     purchaseDate: String!
     price: Float!
-    profit: Float!
     quantity: Int!
   }
 
@@ -43,7 +42,6 @@ const typeDefs = gql`
     purchasePrice: Float
     purchaseDate: String
     price: Float
-    profit: Float
     quantity: Int
   }
 
@@ -69,7 +67,6 @@ const typeDefs = gql`
       purchasePrice: Float!
       price: Float!
       itemName: String!
-      profit: Float!
       quantity: Int!
       itemImages: String!
       purchaseDate: String!

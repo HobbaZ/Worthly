@@ -1,17 +1,12 @@
 import React, { useState } from "react";
-
 import { Container, Button, Form } from "react-bootstrap";
-
 import Auth from "../utils/auth";
-
 import { useMutation } from "@apollo/client";
-
 import { SAVE_ITEM } from "../utils/mutations";
-
 import SearchResults from "../components/SearchResults";
 import { AvePrice } from "../components/AvePrice";
 import { Percentage } from "../components/Percentage";
-import { Profit } from "../components/Profit";
+import AuthLogin from "../components/AuthLogin";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -21,7 +16,6 @@ const SearchItemsForm = () => {
     purchasePrice: 0,
     price: "",
     itemName: "",
-    profit: "",
     quantity: "",
     itemImages: "",
     purchaseDate: "",
@@ -40,36 +34,37 @@ const SearchItemsForm = () => {
   const today = new Date();
   const dateInputFormat = new Date(dateInput);
 
-  // Set up our mutation with an option to handle errors, put in parent form function
   const [saveItem] = useMutation(SAVE_ITEM);
+
+  const [searchClicked, setSearchClicked] = useState(false);
 
   // state for messages
   const [infoMessage, setInfoMessage] = useState("");
   const [itemMessage, setItemMessage] = useState("");
 
-  //Search form handler
+  //Input change handler
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setSearchInput({ ...searchInput, [name]: value });
+    setSearchClicked(false);
   };
 
-  // create method to search for items and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    setSearchClicked(false); // Reset searchClicked before a new search starts
+
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
+      return;
     }
 
-    if (!searchInput) {
-      return false;
-    }
+    if (!searchInput) return false;
 
     try {
-      //show loading after button clicked
       setIsLoading(true);
+
       const response = await fetch(
         `https://api.countdownapi.com/request?api_key=${apiKey}&type=search&ebay_domain=ebay.com.au&search_term=${searchInput.itemName}&sold_items=true&completed_items=true&sort_by=price_high_to_low`
       );
@@ -79,17 +74,11 @@ const SearchItemsForm = () => {
         throw new Error("Can't connect right now, try again later:", response);
       }
 
-      //Has to match the name of one of the arrays in the response or it won't work
       const { search_results } = await response.json();
-
-      //set loading state back to false after response received
       setIsLoading(false);
 
       const ave = AvePrice(search_results);
-
       Percentage(ave, search_results, searchInput);
-
-      const profit = Profit(ave, searchInput.userPaid);
 
       const searchData = () => ({
         itemName: search_results[0]?.title,
@@ -97,28 +86,19 @@ const SearchItemsForm = () => {
         itemImages: search_results[0]?.image || "",
         price: parseFloat(ave),
         purchasePrice: parseFloat(searchInput.userPaid),
-        profit: parseFloat(profit),
         purchaseDate: dateInput,
       });
 
       setSearcheditems(searchData);
-      setSearchInput({
-        //Persist searchterms until cleared by user
-        itemName: searchInput.itemName,
-        userPaid: searchInput.userPaid,
-      });
+      setSearchClicked(true); // Set searchClicked to true after search completes
     } catch (err) {
       console.error(err);
+      setIsLoading(false);
     }
   };
 
   const handleSaveItem = async () => {
-    // get token
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    if (!token) {
-      return false;
-    }
+    AuthLogin(setInfoMessage);
 
     try {
       await saveItem({
@@ -138,27 +118,24 @@ const SearchItemsForm = () => {
     <>
       <Container>
         <div className="main">
-          {/*<h3>Search Tips...</h3>
-          <p>Include specific search terms like the item's brand, colour, size and model number instead of more vague search terms like colour and type of item.
-          <br/><br/>
-          To search for one word or another, put the words in parentheses divided by commas, e.g. [Volkswagen, VW].</p>
-          
-          Put double quotes around the search to search for the exact words in the exact order
-          
-          */}
-
-          {/*Show create account message if user not logged in*/}
-          {Auth.loggedIn() ? null : (
-            <>
-              {/*<h4>Why create an account?</h4>
-            <p>You can use the site to look up single item values all day long, but what if you have many different items you'd like to keep track of? 
-              Creating an account gives you the option to track all your items and gives you a rundown of how much profit you'd make, total item value and how much you've spent on your collection, 
-          price tracking and graphs coming soon.</p>*/}
-            </>
-          )}
+          {/*<div className="w-50 mx-auto">
+            <h3>Search Tips...</h3>
+            <p>
+              Include specific search terms like the item's brand, colour, size
+              and model number instead of more vague search terms like colour
+              and type of item.
+              <br />
+              <br />
+              To search for one word or another, put the words in parentheses
+              divided by commas, e.g. [Volkswagen, VW].
+              <br />
+              <br />
+              Put double quotes around the search to search for the exact words
+              in the exact order.
+            </p>
+          </div>*/}
 
           <h1 className="text-center">Search For Items</h1>
-
           <Form
             validated={validated}
             onSubmit={handleFormSubmit}
@@ -237,15 +214,15 @@ const SearchItemsForm = () => {
               </Button>
             </div>
           </Form>
-
-          {/*Display search results*/}
-          <SearchResults
-            searchedItems={searchedItems}
-            searchInput={searchInput}
-            dateInputFormat={dateInputFormat}
-            handleSaveItem={handleSaveItem}
-            itemMessage={itemMessage}
-          />
+          {searchClicked === true ? (
+            <SearchResults
+              searchedItems={searchedItems}
+              searchInput={searchInput}
+              dateInputFormat={dateInputFormat}
+              handleSaveItem={handleSaveItem}
+              itemMessage={itemMessage}
+            />
+          ) : null}
         </div>
       </Container>
     </>

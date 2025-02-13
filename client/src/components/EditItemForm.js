@@ -54,7 +54,7 @@ export default function EditItemForm({ item, onClose, updateItem }) {
     }
 
     //Send data to update user endpoint
-    AuthLogin();
+    AuthLogin(setInfoMessage);
 
     const editedProperties = () => ({
       _id: item._id,
