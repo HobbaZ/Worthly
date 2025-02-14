@@ -35,22 +35,24 @@ const Home = () => {
   return (
     <>
       <Container>
-        <div className="text-center main">
-          <h1 className="landingPageText">
-            How much is my <WordAnimation /> worth?
-          </h1>
+        <div className="main">
+          <div className="text-center">
+            <h1 className="">
+              How much is my <WordAnimation /> worth?
+            </h1>
 
-          <p className="mx-auto col-lg-6">
-            Worthly is a tool you can use to get the real sale price of almost
-            anything, click the find out button to start searching.{" "}
-          </p>
+            <p className="mx-auto col-xs-12 col-sm-8 col-md-6">
+              Worthly is a tool you can use to get the real sale price of almost
+              anything, click the find out button to start searching.{" "}
+            </p>
 
-          <Button
-            className="btn form-btn landingPageBtn col-sm-12 col-md-8 col-lg-4 my-5"
-            onClick={itemSearch}
-          >
-            Find Out
-          </Button>
+            <Button
+              className="btn form-btn col-xs-12 col-sm-6 col-md-4 col-lg-3 my-5 mx-auto"
+              onClick={itemSearch}
+            >
+              Find Out
+            </Button>
+          </div>
         </div>
       </Container>
     </>

@@ -61,8 +61,8 @@ const SavedItems = () => {
               </h3>
 
               {userData.savedItems?.length !== 0 ? (
-                <div className="tableContainer">
-                  <table className="w-100">
+                <div className="table-responsive">
+                  <table>
                     <tbody>
                       <tr>
                         <th>Image</th>
@@ -84,7 +84,7 @@ const SavedItems = () => {
 
                         return (
                           <tr key={item._id}>
-                            <td className="imageCell">
+                            <td data-label="Image" className="imgContainer">
                               <img
                                 src={item.itemImages}
                                 alt={`${item.itemName}`}
@@ -93,63 +93,51 @@ const SavedItems = () => {
                               />
                             </td>
 
-                            <td>
-                              <p className="truncate tableItemName">
-                                {item.itemName}
-                              </p>
+                            <td data-label="Item Name">
+                              <span className="truncate">{item.itemName}</span>
                             </td>
 
-                            <td>
-                              <p className="text-left">
-                                {dateFormatter(item.purchaseDate)}
-                              </p>
+                            <td data-label="Purchase Date">
+                              {dateFormatter(item.purchaseDate)}
                             </td>
 
-                            <td>
-                              <p className="text-left">
-                                ${item.purchasePrice.toFixed(2)}
-                              </p>
+                            <td data-label="Paid $">
+                              ${item.purchasePrice.toFixed(2)}
                             </td>
 
-                            <td>
-                              <p className="text-left">
-                                ${item.price.toFixed(2)}
-                              </p>
+                            <td data-label="Ave. Sell $">
+                              ${item.price.toFixed(2)}
                             </td>
 
-                            <td>
-                              {item.price && (
-                                <p className="text-left">${profit}</p>
-                              )}
+                            <td data-label="Profit $">${profit}</td>
+
+                            <td data-label="Profit %">
+                              {item.price &&
+                                Percentage(
+                                  profit,
+                                  item.purchasePrice.toFixed(2)
+                                )}
                             </td>
 
-                            <td>
-                              <p>
-                                {item.price &&
-                                  Percentage(
-                                    profit,
-                                    item.purchasePrice.toFixed(2)
-                                  )}
-                              </p>
-                            </td>
+                            <div>
+                              <td>
+                                <Button
+                                  className="btn btn-danger item-btn"
+                                  onClick={() => handleDeleteItem(item._id)}
+                                >
+                                  <i className="fas fa-trash"></i>
+                                </Button>
+                              </td>
 
-                            <td>
-                              <Button
-                                className="btn btn-danger ml-3 item-btn"
-                                onClick={() => handleDeleteItem(item._id)}
-                              >
-                                <i className="fas fa-trash"></i>
-                              </Button>
-                            </td>
-
-                            <td>
-                              <Button
-                                className="btn form-btn ml-3 item-btn"
-                                onClick={() => handleEditFormToggle(item._id)}
-                              >
-                                <i className="fas fa-pen-to-square"></i>
-                              </Button>
-                            </td>
+                              <td>
+                                <Button
+                                  className="btn form-btn item-btn"
+                                  onClick={() => handleEditFormToggle(item._id)}
+                                >
+                                  <i className="fas fa-pen-to-square"></i>
+                                </Button>
+                              </td>
+                            </div>
 
                             {showEditForm === item._id && (
                               <>

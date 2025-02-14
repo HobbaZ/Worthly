@@ -16,7 +16,7 @@ export default function SearchResults({
   const profit = Profit(price, purchasePrice);
 
   return searchedItems && itemName ? (
-    <div className="row">
+    <div className="row p-4">
       {/* Item Image */}
       <div className="col-md text-center">
         {itemImages && (

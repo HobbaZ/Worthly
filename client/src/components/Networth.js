@@ -33,7 +33,7 @@ export default function Networth({ userData }) {
   return (
     <>
       <br />
-      <div className="w-25 mx-auto">
+      <div className="mx-auto col-sm-12 col-md-8 col-lg-4">
         <h4 className="font-weight-bold"> My Item Networth</h4>
         <p>
           Total Paid: $

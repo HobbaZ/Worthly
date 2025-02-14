@@ -29,24 +29,40 @@ const AppNavbar = () => {
 
         <div className="collapse navbar-collapse" id="navbarNav">
           <nav className="navbar-nav ml-auto mb-2 mb-lg-0">
-            <NavLink className="ml-3 my-2 navLink" to="/search">
+            <NavLink
+              className="ml-3 my-2 navLink"
+              to="/search"
+              data-toggle="collapse"
+              data-target="#navbarNav"
+            >
               Search
             </NavLink>
 
             {/*Only show if user logged in*/}
             {Auth.loggedIn() ? (
               <>
-                <NavLink className="ml-3 my-2 navLink" to="/saved">
+                <NavLink
+                  className="ml-3 my-2 navLink"
+                  to="/saved"
+                  data-toggle="collapse"
+                  data-target="#navbarNav"
+                >
                   My Collection
                 </NavLink>
-
-                <NavLink className="ml-3 my-2 navLink" to="/profile">
+                <NavLink
+                  className="ml-3 my-2 navLink"
+                  to="/profile"
+                  data-toggle="collapse"
+                  data-target="#navbarNav"
+                >
                   My Profile
                 </NavLink>
 
                 <Button
-                  className="btn noEffect navLink ml-3 col-3 col-sm-2 col-lg-auto"
+                  className="btn noEffect ml-3 navLink col-3"
                   onClick={Auth.logout}
+                  data-toggle="collapse"
+                  data-target="#navbarNav"
                 >
                   {" "}
                   Logout

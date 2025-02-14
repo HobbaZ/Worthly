@@ -10,9 +10,9 @@ export default function Greeting({ email, username }) {
 
   return (
     <>
-      <h1>
+      <h4>
         {currentGreeting}, <span className="active">{username}</span>
-      </h1>
+      </h4>
       <h4>Your current details are:</h4>
       <p>Username: {username}</p>
       <p>Email: {email}</p>

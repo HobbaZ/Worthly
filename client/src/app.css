@@ -38,9 +38,10 @@ body,
 html {
   background-color: var(--dark);
   color: var(--light);
-  height: 100%;
   margin: 0%;
   overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
   width: 100%;
 }
 
@@ -65,10 +66,18 @@ html {
 }
 
 /* C */
+.card {
+  width: 100%; /* Ensures the card takes full width */
+  max-width: 350px; /* Prevents it from getting too wide */
+  margin: auto; /* Centers the card */
+  max-height: 500px; /* Adjust based on content */
+}
+
 .container {
   position: relative;
   height: 100vh;
-  width: 100%;
+  max-width: 100%;
+  padding: 10px;
 }
 
 /* E */
@@ -129,7 +138,7 @@ footer {
 form {
   border-radius: 5px;
   color: var(--light);
-  height: 100%;
+  height: fit-content;
   padding: 10px;
 }
 
@@ -170,17 +179,11 @@ form {
   color: var(--light);
 }
 
-/* H */
-
-hr {
-  border: 1px solid var(--light);
-}
-
 /* I */
 
 img {
   height: auto;
-  width: 80%;
+  width: 50%;
   object-fit: cover;
   padding-bottom: 2%;
 }
@@ -205,22 +208,17 @@ label {
   margin-top: 20px;
 }
 
-.landingPageBtn {
-  font-size: 20px;
-}
-
 .landingPageText {
-  font-size: 50px;
+  font-size: 30px;
 }
 
 /* M */
 
 .main {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
+  width: 100vw;
+  padding: 0;
+  margin: 100px 0 0 0;
+  height: 100vh;
 }
 
 /* N */
@@ -237,12 +235,13 @@ label {
 
 .navbarToggler {
   color: var(--darkAccent);
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .navLink {
   text-decoration: none;
   color: var(--light);
+  text-wrap: nowrap;
 }
 
 .navLink:hover,
@@ -257,6 +256,7 @@ label {
   background-color: var(--transparent);
   padding: 0;
   margin: 0;
+  text-align: left;
 }
 
 /* P */
@@ -266,8 +266,8 @@ p {
 }
 
 .profileInfo {
-  text-align: center;
-  width: 40%;
+  margin: auto;
+  max-width: 75%;
 }
 
 /* R */
@@ -278,28 +278,31 @@ p {
 
 /* T */
 
-.tableContainer {
+.table-responsive {
   overflow-x: auto;
+  width: 100%;
 }
 
-.tableImage {
-  object-fit: contain;
-  width: 50%;
-  height: auto;
+.table {
+  width: 100%;
+  min-width: 600px;
+  text-align: left;
 }
 
-td {
-  height: 100px;
-  margin: 0;
-  padding: 10px;
-}
-
-td {
-  font-size: 15px;
+td,
+th {
+  white-space: nowrap;
+  text-align: left; /* Ensures left alignment */
 }
 
 th {
-  font-size: 16px;
+  text-wrap: nowrap;
+}
+
+.tableImage {
+  max-width: 200px;
+  height: auto;
+  display: block;
   margin: auto;
 }
 
@@ -323,26 +326,76 @@ tr {
 }
 
 /* Media Queries*/
-
-@media screen and(max-width: 700px) {
-  .tableImage {
-    object-fit: fill;
+@media screen and (max-width: 425px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+    width: 100%;
   }
 
   th {
-    font-size: 16px;
-    margin: auto;
+    display: none;
   }
 
-  /*.truncate {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 250px;
-    }
+  tr {
+    border: none;
+    margin-bottom: 0px;
+    padding: 5px;
+  }
 
-    .truncate:hover {
-        overflow:visible;
-        white-space: wrap;
-    }*/
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    text-wrap: wrap;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    flex: 1;
+  }
+
+  .item-btn {
+    width: 50px;
+    height: 50px;
+  }
+
+  .truncate {
+    width: 250px;
+  }
+}
+
+@media screen and (width: 768px) {
+  img {
+    width: 50%;
+    height: auto;
+  }
+
+  table {
+    padding: 10px;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .truncate {
+    width: 200px;
+  }
+
+  td,
+  th {
+    word-break: break-word;
+    min-width: 100px;
+    padding: 5px;
+    flex: 1;
+  }
+
+  td {
+    text-wrap: nowrap;
+  }
 }
