@@ -41,14 +41,13 @@ export default function Networth({ userData }) {
             2
           )}
           <br />
-          Highest profit: ${sort(userData)[0]}
+          Biggest Profit: ${sort(userData)[0]}
           <br />
-          Highest loss: ${sort(userData)[1]}
+          Biggest Loss: ${sort(userData)[1]}
           <br />
-          Total Value: ${totalValue(userData)}{" "}
+          Total Value: ${totalValue(userData)} <br />
+          Total Profit: ${totalProfit}
         </p>
-        <hr />
-        <p>Total Profit: ${totalProfit}</p>
       </div>
     </>
   );

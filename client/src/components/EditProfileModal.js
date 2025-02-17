@@ -8,7 +8,9 @@ export default function EditProfileModal({ user, show, onClose, updateUser }) {
       {Auth.loggedIn() ? (
         <Modal show={show} onHide={onClose} centered>
           <Modal.Header>
-            <Modal.Title>Editing Profile</Modal.Title>
+            <Modal.Title className="font-weight-bold">
+              Editing Profile
+            </Modal.Title>
 
             <Button
               variant="danger"

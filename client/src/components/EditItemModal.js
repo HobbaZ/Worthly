@@ -8,7 +8,7 @@ export default function EditItemModal({ show, onClose, item, updateItem }) {
       {Auth.loggedIn() ? (
         <Modal show={show} onHide={onClose} centered>
           <Modal.Header>
-            <Modal.Title>Editing Item</Modal.Title>
+            <Modal.Title className="font-weight-bold">Editing Item</Modal.Title>
 
             <Button
               variant="danger"

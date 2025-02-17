@@ -1,6 +1,5 @@
-import { Form, Container, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import Auth from "../utils/auth";
 import UpdateItem from "./UpdateItem";
 import AuthLogin from "./AuthLogin";
 
@@ -70,7 +69,11 @@ export default function EditItemForm({ item, onClose, updateItem }) {
   };
 
   return (
-    <Form validated={validated} onSubmit={handleFormSubmit} className="mx-auto">
+    <Form
+      validated={validated}
+      onSubmit={handleFormSubmit}
+      className="editform mx-auto col-12"
+    >
       <Form.Group>
         <Form.Label>Update Item Name</Form.Label>
         <Form.Control

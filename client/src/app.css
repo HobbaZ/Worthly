@@ -73,6 +73,11 @@ html {
   height: auto;
 }
 
+.close {
+  font-size: 40px;
+  color: red;
+}
+
 .container {
   height: 100vh;
   max-width: 100vw;
@@ -82,9 +87,7 @@ html {
 /* E */
 
 .editForm {
-  position: relative;
-  margin: auto;
-  margin: auto;
+  padding: 0;
   height: fit-content;
   background-color: white;
   color: black;
@@ -226,6 +229,10 @@ label {
   align-items: center;
   min-height: 100vh;
   overflow-y: auto;
+}
+
+.modal-header {
+  border: 0;
 }
 
 /* N */

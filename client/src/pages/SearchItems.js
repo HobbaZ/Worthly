@@ -207,7 +207,7 @@ const SearchItemsForm = () => {
 
               <div className="text-center">
                 <Button
-                  className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto my-4 fornLengthButton"
+                  className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-3 mx-auto my-4 fornLengthButton"
                   disabled={!(searchInput.itemName && searchInput.userPaid)}
                   type="submit"
                 >
