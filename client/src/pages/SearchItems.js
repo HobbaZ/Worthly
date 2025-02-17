@@ -118,7 +118,8 @@ const SearchItemsForm = () => {
     <>
       <Container>
         <div className="main">
-          {/*<div className="w-50 mx-auto">
+          <div className="flex-col">
+            {/*<div className="w-50 mx-auto">
             <h3>Search Tips...</h3>
             <p>
               Include specific search terms like the item's brand, colour, size
@@ -135,94 +136,97 @@ const SearchItemsForm = () => {
             </p>
           </div>*/}
 
-          <h1 className="text-center">Search For Items</h1>
-          <Form
-            validated={validated}
-            onSubmit={handleFormSubmit}
-            className="mx-auto col-sm-12 col-md-9 col-lg-6"
-          >
-            <Form.Group>
-              <Form.Label>Item Name</Form.Label>
-              <Form.Control
-                className="inputField"
-                type="text"
-                placeholder="Name of item"
-                name="itemName"
-                onChange={handleInputChange}
-                required
-                minLength={1}
-                value={searchInput.itemName || ""}
-              ></Form.Control>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Cost of Item</Form.Label>
-              <Form.Control
-                className="inputField"
-                type="number"
-                placeholder="Cost of Item"
-                name="userPaid"
-                onChange={handleInputChange}
-                required
-                minLength={1}
-                value={searchInput.userPaid || ""}
-              ></Form.Control>
-            </Form.Group>
-
-            {searchInput.userPaid !== null && searchInput.userPaid < 0.01 ? (
-              <div className="text-center errMessage">
-                Cost of item can't be under $0.01
-              </div>
-            ) : (
-              ""
-            )}
-
-            {Auth.loggedIn() ? (
-              <Form.Group>
-                <Form.Label>Purchase Date</Form.Label>
+            <h1 className="text-center">Search For Items</h1>
+            <Form
+              validated={validated}
+              onSubmit={handleFormSubmit}
+              className="mx-auto"
+            >
+              <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-4 mx-auto">
+                <Form.Label>Item Name</Form.Label>
                 <Form.Control
                   className="inputField"
-                  type="date"
-                  placeholder="dd/mm/yyyy"
-                  name="purchaseDate"
-                  onChange={(e) => {
-                    setDateInput(e.target.value);
-                  }}
-                  value={dateInput || ""}
+                  type="text"
+                  placeholder="Name of item"
+                  name="itemName"
+                  onChange={handleInputChange}
+                  required
+                  minLength={1}
+                  value={searchInput.itemName || ""}
                 ></Form.Control>
               </Form.Group>
-            ) : null}
 
-            {/*Use UTC value for ease of comparison*/}
-            {dateInputFormat.getTime() > today.getTime() ? (
-              <div className="text-center errMessage">
-                Date can't be in the future
+              <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-4 mx-auto">
+                <Form.Label>Cost of Item</Form.Label>
+                <Form.Control
+                  className="inputField"
+                  type="number"
+                  placeholder="Cost of Item"
+                  name="userPaid"
+                  onChange={handleInputChange}
+                  required
+                  minLength={1}
+                  value={searchInput.userPaid || ""}
+                ></Form.Control>
+              </Form.Group>
+
+              {searchInput.userPaid !== null && searchInput.userPaid < 0.01 ? (
+                <div className="text-center errMessage">
+                  Cost of item can't be under $0.01
+                </div>
+              ) : (
+                ""
+              )}
+
+              {Auth.loggedIn() ? (
+                <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-4 mx-auto">
+                  <Form.Label>Purchase Date</Form.Label>
+                  <Form.Control
+                    className="inputField"
+                    type="date"
+                    placeholder="dd/mm/yyyy"
+                    name="purchaseDate"
+                    onChange={(e) => {
+                      setDateInput(e.target.value);
+                    }}
+                    value={dateInput || ""}
+                  ></Form.Control>
+                </Form.Group>
+              ) : null}
+
+              {/*Use UTC value for ease of comparison*/}
+              {dateInputFormat.getTime() > today.getTime() ? (
+                <div className="text-center errMessage">
+                  Date can't be in the future
+                </div>
+              ) : null}
+
+              {infoMessage && (
+                <div className="text-center errMessage">{infoMessage}</div>
+              )}
+
+              <div className="text-center">
+                <Button
+                  className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto my-4 fornLengthButton"
+                  disabled={!(searchInput.itemName && searchInput.userPaid)}
+                  type="submit"
+                >
+                  {loading ? <>Loading...</> : <>Search</>}
+                </Button>
               </div>
-            ) : null}
-
-            {infoMessage && (
-              <div className="text-center errMessage">{infoMessage}</div>
-            )}
-
-            <div className="text-center">
-              <Button
-                className="btn form-btn col-sm-12 col-md-8 col-lg-4 my-4"
-                disabled={!(searchInput.itemName && searchInput.userPaid)}
-                type="submit"
-              >
-                {loading ? <>Loading...</> : <>Search</>}
-              </Button>
+            </Form>
+            <div>
+              {searchClicked === true ? (
+                <SearchResults
+                  searchedItems={searchedItems}
+                  searchInput={searchInput}
+                  dateInputFormat={dateInputFormat}
+                  handleSaveItem={handleSaveItem}
+                  itemMessage={itemMessage}
+                />
+              ) : null}
             </div>
-          </Form>
-          {searchClicked === true ? (
-            <SearchResults
-              searchedItems={searchedItems}
-              searchInput={searchInput}
-              dateInputFormat={dateInputFormat}
-              handleSaveItem={handleSaveItem}
-              itemMessage={itemMessage}
-            />
-          ) : null}
+          </div>
         </div>
       </Container>
     </>

@@ -49,77 +49,79 @@ const SavedItems = () => {
     <>
       <Container>
         <div className="main">
-          {Auth.loggedIn() ? (
-            <div className="text-center">
-              <h1>My Collection</h1>
-              <h3>
-                {userData.savedItems?.length
-                  ? `Viewing ${userData.savedItems?.length} saved ${
-                      userData.savedItems?.length === 1 ? "item" : "items"
-                    }:`
-                  : "There's nothing here yet."}
-              </h3>
+          <div className="flex-col mt-5">
+            {Auth.loggedIn() ? (
+              <div className="text-center">
+                <h1>My Collection</h1>
+                <h3>
+                  {userData.savedItems?.length
+                    ? `Viewing ${userData.savedItems?.length} saved ${
+                        userData.savedItems?.length === 1 ? "item" : "items"
+                      }:`
+                    : "There's nothing here yet."}
+                </h3>
 
-              {userData.savedItems?.length !== 0 ? (
-                <div className="table-responsive">
-                  <table>
-                    <tbody>
-                      <tr>
-                        <th>Image</th>
-                        <th>Item Name</th>
-                        <th>Purchase Date</th>
-                        <th>Paid $</th>
-                        <th>Ave. Sell $</th>
-                        <th>Profit $</th>
-                        <th>Profit %</th>
-                        <th></th>
-                      </tr>
+                {userData.savedItems?.length !== 0 ? (
+                  <div className="table-responsive">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <th>Image</th>
+                          <th>Item Name</th>
+                          <th>Purchase Date</th>
+                          <th>Paid $</th>
+                          <th>Ave. Sell $</th>
+                          <th>Profit $</th>
+                          <th>Profit %</th>
+                          <th></th>
+                        </tr>
 
-                      {userData.savedItems?.map((item) => {
-                        /* Calculate Profit */
-                        let profit = Profit(
-                          item.price.toFixed(2),
-                          item.purchasePrice.toFixed(2)
-                        );
+                        {userData.savedItems?.map((item) => {
+                          /* Calculate Profit */
+                          let profit = Profit(
+                            item.price.toFixed(2),
+                            item.purchasePrice.toFixed(2)
+                          );
 
-                        return (
-                          <tr key={item._id}>
-                            <td data-label="Image" className="imgContainer">
-                              <img
-                                src={item.itemImages}
-                                alt={`${item.itemName}`}
-                                variant="top"
-                                className="tableImage"
-                              />
-                            </td>
+                          return (
+                            <tr key={item._id}>
+                              <td data-label="Image" className="imgContainer">
+                                <img
+                                  src={item.itemImages}
+                                  alt={`${item.itemName}`}
+                                  variant="top"
+                                  className="tableImage"
+                                />
+                              </td>
 
-                            <td data-label="Item Name">
-                              <span className="truncate">{item.itemName}</span>
-                            </td>
+                              <td data-label="Item Name">
+                                <span className="truncate">
+                                  {item.itemName}
+                                </span>
+                              </td>
 
-                            <td data-label="Purchase Date">
-                              {dateFormatter(item.purchaseDate)}
-                            </td>
+                              <td data-label="Purchase Date">
+                                {dateFormatter(item.purchaseDate)}
+                              </td>
 
-                            <td data-label="Paid $">
-                              ${item.purchasePrice.toFixed(2)}
-                            </td>
+                              <td data-label="Paid $">
+                                ${item.purchasePrice.toFixed(2)}
+                              </td>
 
-                            <td data-label="Ave. Sell $">
-                              ${item.price.toFixed(2)}
-                            </td>
+                              <td data-label="Ave. Sell $">
+                                ${item.price.toFixed(2)}
+                              </td>
 
-                            <td data-label="Profit $">${profit}</td>
+                              <td data-label="Profit $">${profit}</td>
 
-                            <td data-label="Profit %">
-                              {item.price &&
-                                Percentage(
-                                  profit,
-                                  item.purchasePrice.toFixed(2)
-                                )}
-                            </td>
+                              <td data-label="Profit %">
+                                {item.price &&
+                                  Percentage(
+                                    profit,
+                                    item.purchasePrice.toFixed(2)
+                                  )}
+                              </td>
 
-                            <div>
                               <td>
                                 <Button
                                   className="btn btn-danger item-btn"
@@ -137,37 +139,37 @@ const SavedItems = () => {
                                   <i className="fas fa-pen-to-square"></i>
                                 </Button>
                               </td>
-                            </div>
 
-                            {showEditForm === item._id && (
-                              <>
-                                <EditItemModal
-                                  item={userData.savedItems?.find(
-                                    (i) => i._id === showEditForm
-                                  )}
-                                  updateItem={updateItem}
-                                  show={showEditForm !== null}
-                                  onClose={() => setShowEditForm(null)}
-                                  Auth={Auth}
-                                />
-                              </>
-                            )}
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              ) : null}
+                              {showEditForm === item._id && (
+                                <>
+                                  <EditItemModal
+                                    item={userData.savedItems?.find(
+                                      (i) => i._id === showEditForm
+                                    )}
+                                    updateItem={updateItem}
+                                    show={showEditForm !== null}
+                                    onClose={() => setShowEditForm(null)}
+                                    Auth={Auth}
+                                  />
+                                </>
+                              )}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : null}
 
-              {/*Display net profit and loses if length is over 1 */}
-              {userData.savedItems?.length >= 1 ? (
-                <Networth userData={userData} />
-              ) : null}
-            </div>
-          ) : (
-            window.location.replace("./login")
-          )}
+                {/*Display net profit and loses if length is over 1 */}
+                {userData.savedItems?.length >= 1 ? (
+                  <Networth userData={userData} />
+                ) : null}
+              </div>
+            ) : (
+              window.location.replace("./login")
+            )}
+          </div>
         </div>
       </Container>
     </>

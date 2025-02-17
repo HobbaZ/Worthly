@@ -95,7 +95,7 @@ export default function EditProfileForm({ user, onClose, updateUser }) {
         <div className="text-center">
           <Button
             type="submit"
-            className=" btn form-btn col-sm-12 col-md-8 col-lg-4 my-2"
+            className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 my-4  mx-auto fornLengthButton"
           >
             Update
           </Button>
@@ -103,7 +103,7 @@ export default function EditProfileForm({ user, onClose, updateUser }) {
 
         <div className="text-center">
           <Button
-            className=" btn btn-danger col-sm-12 col-md-8 col-lg-4 my-2"
+            className=" btn btn-danger col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto fornLengthButton"
             aria-label="cancel and close"
             onClick={cancelChanges}
           >

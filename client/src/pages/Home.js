@@ -36,8 +36,8 @@ const Home = () => {
     <>
       <Container>
         <div className="main">
-          <div className="text-center">
-            <h1 className="">
+          <div className="flex-col">
+            <h1 className="text-center">
               How much is my <WordAnimation /> worth?
             </h1>
 
@@ -46,12 +46,14 @@ const Home = () => {
               anything, click the find out button to start searching.{" "}
             </p>
 
-            <Button
-              className="btn form-btn col-xs-12 col-sm-6 col-md-4 col-lg-3 my-5 mx-auto"
-              onClick={itemSearch}
-            >
-              Find Out
-            </Button>
+            <div className="text-center">
+              <Button
+                className="btn form-btn col-xs-12 col-sm-6 col-md-4 col-lg-3 my-5 mx-auto"
+                onClick={itemSearch}
+              >
+                Find Out
+              </Button>
+            </div>
           </div>
         </div>
       </Container>

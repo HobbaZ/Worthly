@@ -64,109 +64,115 @@ function SignupForm() {
   return (
     <Container>
       <div className="main">
-        <h1 className="text-center">Sign Up</h1>
+        <div className="flex-col">
+          <h1 className="text-center">Sign Up</h1>
 
-        {data ? (
-          <p className="text-center">Success! Creating your account</p>
-        ) : (
-          <Form
-            validated={validated}
-            onSubmit={handleSubmit}
-            className="mx-auto col-sm-12 col-md-9 col-lg-6"
-          >
-            <Form.Group>
-              <Form.Label>Create a username</Form.Label>
-              <Form.Control
-                className="inputField"
-                type="text"
-                name="username"
-                value={formInput.username || ""}
-                placeholder="username"
-                onChange={handleChange}
-                required
-                minLength={2}
-                formNoValidate={true}
-              />
-            </Form.Group>
+          {data ? (
+            <p className="text-center">Success! Creating your account</p>
+          ) : (
+            <Form
+              validated={validated}
+              onSubmit={handleSubmit}
+              className="mx-auto"
+            >
+              <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-4 mx-auto">
+                <Form.Label>Create a username</Form.Label>
+                <Form.Control
+                  className="inputField"
+                  type="text"
+                  name="username"
+                  value={formInput.username || ""}
+                  placeholder="username"
+                  onChange={handleChange}
+                  required
+                  minLength={2}
+                  formNoValidate={true}
+                />
+              </Form.Group>
 
-            {formInput.username !== "" && formInput.username.length < 2 ? (
-              <div className="text-center errMessage">
-                {"Username must be minimum 2 characters"}
+              {formInput.username !== "" && formInput.username.length < 2 ? (
+                <div className="text-center errMessage">
+                  {"Username must be minimum 2 characters"}
+                </div>
+              ) : (
+                ""
+              )}
+
+              <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-4 mx-auto">
+                <Form.Label>Create a Password</Form.Label>
+                <Form.Control
+                  className="inputField"
+                  type="password"
+                  name="password"
+                  value={formInput.password || ""}
+                  placeholder="Password"
+                  onChange={handleChange}
+                  required
+                  minLength={8}
+                />
+              </Form.Group>
+
+              {formInput.password !== "" && formInput.password.length < 8 ? (
+                <div className="text-center errMessage">
+                  {"Password must be minimum 8 characters"}
+                </div>
+              ) : (
+                ""
+              )}
+
+              <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-4 mx-auto">
+                <Form.Label>Enter your Email</Form.Label>
+                <Form.Control
+                  className="inputField"
+                  type="email"
+                  name="email"
+                  value={formInput.email || ""}
+                  placeholder="Enter email"
+                  onChange={handleChange}
+                  required
+                  minLength={2}
+                />
+              </Form.Group>
+
+              {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
+                <div className="text-center errMessage">
+                  {"Invalid email entered"}
+                </div>
+              ) : (
+                ""
+              )}
+
+              {infoMessage && (
+                <div className="text-center errMessage">{infoMessage}</div>
+              )}
+
+              <div className="text-center">
+                <Button
+                  type="submit"
+                  className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto my-4 fornLengthButton"
+                  disabled={
+                    !(
+                      formInput.username &&
+                      formInput.email &&
+                      formInput.password
+                    )
+                  }
+                >
+                  Sign Up
+                </Button>
               </div>
-            ) : (
-              ""
-            )}
 
-            <Form.Group>
-              <Form.Label>Create a Password</Form.Label>
-              <Form.Control
-                className="inputField"
-                type="password"
-                name="password"
-                value={formInput.password || ""}
-                placeholder="Password"
-                onChange={handleChange}
-                required
-                minLength={8}
-              />
-            </Form.Group>
-
-            {formInput.password !== "" && formInput.password.length < 8 ? (
-              <div className="text-center errMessage">
-                {"Password must be minimum 8 characters"}
+              <div className="text-center">
+                <Button
+                  className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto fornLengthButton"
+                  onClick={login}
+                >
+                  login instead
+                </Button>
               </div>
-            ) : (
-              ""
-            )}
-
-            <Form.Group>
-              <Form.Label>Enter your Email</Form.Label>
-              <Form.Control
-                className="inputField"
-                type="email"
-                name="email"
-                value={formInput.email || ""}
-                placeholder="Enter email"
-                onChange={handleChange}
-                required
-                minLength={2}
-              />
-            </Form.Group>
-
-            {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
-              <div className="text-center errMessage">
-                {"Invalid email entered"}
-              </div>
-            ) : (
-              ""
-            )}
-
-            {infoMessage && (
-              <div className="text-center errMessage">{infoMessage}</div>
-            )}
-
-            <div className="text-center">
-              <Button
-                type="submit"
-                className="btn form-btn col-sm-12 col-md-8 col-lg-4 my-3"
-                disabled={
-                  !(formInput.username && formInput.email && formInput.password)
-                }
-              >
-                Sign Up
-              </Button>
-            </div>
-
-            <div className="text-center">
-              <Button
-                className="btn form-btn col-sm-12 col-md-8 col-lg-4 mb-2"
-                onClick={login}
-              >
-                login instead
-              </Button>
-            </div>
-          </Form>
-        )}
+            </Form>
+          )}
+        </div>
       </div>
     </Container>
   );

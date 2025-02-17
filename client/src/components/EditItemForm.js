@@ -70,93 +70,85 @@ export default function EditItemForm({ item, onClose, updateItem }) {
   };
 
   return (
-    <Container>
-      <Form
-        validated={validated}
-        onSubmit={handleFormSubmit}
-        className="editform mx-auto col-12"
-      >
-        <Form.Group>
-          <Form.Label>Update Item Name</Form.Label>
-          <Form.Control
-            className="inputField"
-            type="text"
-            placeholder={item.itemName}
-            name="itemName"
-            onChange={handleInputChange}
-            required
-            minLength={1}
-            value={formInput.itemName !== "" ? formInput.itemName : ""}
-          ></Form.Control>
-        </Form.Group>
+    <Form validated={validated} onSubmit={handleFormSubmit} className="mx-auto">
+      <Form.Group>
+        <Form.Label>Update Item Name</Form.Label>
+        <Form.Control
+          className="inputField"
+          type="text"
+          placeholder={item.itemName}
+          name="itemName"
+          onChange={handleInputChange}
+          required
+          minLength={1}
+          value={formInput.itemName !== "" ? formInput.itemName : ""}
+        ></Form.Control>
+      </Form.Group>
 
-        <Form.Group>
-          <Form.Label>Update Cost of Item</Form.Label>
-          <Form.Control
-            className="inputField"
-            type="number"
-            placeholder={item.purchasePrice}
-            name="purchasePrice"
-            onChange={handleInputChange}
-            required
-            minLength={1}
-            value={
-              formInput.purchasePrice !== "" ? formInput.purchasePrice : ""
-            }
-          ></Form.Control>
-        </Form.Group>
+      <Form.Group>
+        <Form.Label>Update Cost of Item</Form.Label>
+        <Form.Control
+          className="inputField"
+          type="number"
+          placeholder={item.purchasePrice}
+          name="purchasePrice"
+          onChange={handleInputChange}
+          required
+          minLength={1}
+          value={formInput.purchasePrice !== "" ? formInput.purchasePrice : ""}
+        ></Form.Control>
+      </Form.Group>
 
-        {formInput.purchasePrice !== null && formInput.purchasePrice < 0.01 && (
-          <div className="text-center errMessage">
-            Cost of item can't be under $0.01
-          </div>
-        )}
-
-        <Form.Group>
-          <Form.Label>Update Purchase Date</Form.Label>
-          <Form.Control
-            className="inputField"
-            type="date"
-            placeholder={dateInput}
-            name="purchaseDate"
-            onChange={(e) => {
-              setDateInput(e.target.value);
-            }}
-            value={formInput.purchaseDate !== "" ? formInput.purchaseDate : ""}
-          ></Form.Control>
-        </Form.Group>
-
-        {/*Use UTC value for ease of comparison*/}
-        {dateInputFormat.getTime() > today.getTime() ? (
-          <div className="text-center errMessage">
-            Date can't be in the future
-          </div>
-        ) : null}
-
-        {infoMessage && (
-          <div className="text-center errMessage">{infoMessage}</div>
-        )}
-
-        <div className="text-center">
-          <Button
-            type="submit"
-            className=" btn form-btn col-sm-12 col-md-8 col-lg-4 my-2"
-            aria-label="update and close"
-          >
-            Update
-          </Button>
+      {formInput.purchasePrice !== null && formInput.purchasePrice < 0.01 && (
+        <div className="text-center errMessage">
+          Cost of item can't be under $0.01
         </div>
+      )}
 
-        <div className="text-center">
-          <Button
-            className=" btn btn-danger col-sm-12 col-md-8 col-lg-4 my-2"
-            aria-label="cancel and close"
-            onClick={cancelChanges}
-          >
-            Cancel
-          </Button>
+      <Form.Group>
+        <Form.Label>Update Purchase Date</Form.Label>
+        <Form.Control
+          className="inputField"
+          type="date"
+          placeholder={dateInput}
+          name="purchaseDate"
+          onChange={(e) => {
+            setDateInput(e.target.value);
+          }}
+          value={formInput.purchaseDate !== "" ? formInput.purchaseDate : ""}
+        ></Form.Control>
+      </Form.Group>
+
+      {/*Use UTC value for ease of comparison*/}
+      {dateInputFormat.getTime() > today.getTime() ? (
+        <div className="text-center errMessage">
+          Date can't be in the future
         </div>
-      </Form>
-    </Container>
+      ) : null}
+
+      {infoMessage && (
+        <div className="text-center errMessage">{infoMessage}</div>
+      )}
+
+      <div className="text-center">
+        <Button
+          type="submit"
+          className=" btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto my-4 fornLengthButton"
+          aria-label="update and close"
+        >
+          Update
+        </Button>
+      </div>
+
+      <div className="text-center">
+        <Button
+          className=" btn btn-danger col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto fornLengthButton"
+          aria-label="cancel and close"
+          onClick={cancelChanges}
+        >
+          Cancel
+        </Button>
+      </div>
+    </Form>
   );
 }

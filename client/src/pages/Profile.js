@@ -7,7 +7,6 @@ import EditProfileModal from "../components/EditProfileModal";
 import Greeting from "../components/Greeting";
 import Auth from "../utils/auth";
 import DeleteUser from "../components/DeleteUser";
-import AuthLogin from "../components/AuthLogin";
 
 const Profile = () => {
   const { data, loading } = useQuery(QUERY_ME);
@@ -25,14 +24,14 @@ const Profile = () => {
   return (
     <Container>
       <div className="main">
-        {Auth.loggedIn() ? (
-          <>
-            <h2 className="text-center my-5">Your Profile</h2>
-            {loading && <p>Loading...</p>}
+        <div className="flex-col">
+          {Auth.loggedIn() ? (
+            <>
+              <h2 className="text-center my-3">Your Profile</h2>
+              {loading && <p>Loading...</p>}
 
-            {/*Greeting import */}
-            <div className="w-100">
-              <div className="col-xs-10 col-sm-6 col-md-6 col-lg-5 mx-auto">
+              {/*Greeting import */}
+              <div className="mx-auto">
                 <div className="text-center">
                   <Greeting
                     username={userData.username}
@@ -42,10 +41,10 @@ const Profile = () => {
 
                 {/* Edit Profile Button */}
 
-                <div className="text-center col-xs-10 col-sm-10 col-md-10 col-lg-8 col-xl-4 my-3 p-0 mx-auto">
+                <div className="text-center my-4">
                   <Button
                     onClick={() => handleEditFormToggle(userData._id)}
-                    className="btn form-btn w-75 my-3"
+                    className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto fornLengthButton"
                   >
                     Edit <i className="fas fa-pen-to-square"></i>
                   </Button>
@@ -65,9 +64,9 @@ const Profile = () => {
 
                 {/* Delete Profile Button */}
 
-                <div className="text-center col-xs-10 col-sm-10 col-md-10 col-lg-8 col-xl-4 my-3 p-0 mx-auto">
+                <div className="text-center">
                   <Button
-                    className="btn btn-danger w-75 my-3"
+                    className="btn btn-danger col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto fornLengthButton"
                     onClick={() =>
                       DeleteUser(userData._id, setInfoMessage, deleteUser)
                     }
@@ -76,11 +75,11 @@ const Profile = () => {
                   </Button>
                 </div>
               </div>
-            </div>
-          </>
-        ) : (
-          window.location.replace("./login")
-        )}
+            </>
+          ) : (
+            window.location.replace("./login")
+          )}
+        </div>
       </div>
     </Container>
   );

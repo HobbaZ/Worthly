@@ -67,16 +67,15 @@ html {
 
 /* C */
 .card {
-  width: 100%; /* Ensures the card takes full width */
-  max-width: 350px; /* Prevents it from getting too wide */
-  margin: auto; /* Centers the card */
-  max-height: 500px; /* Adjust based on content */
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  height: auto;
 }
 
 .container {
-  position: relative;
   height: 100vh;
-  max-width: 100%;
+  max-width: 100vw;
   padding: 10px;
 }
 
@@ -84,7 +83,7 @@ html {
 
 .editForm {
   position: relative;
-  width: fit-content;
+  margin: auto;
   margin: auto;
   height: fit-content;
   background-color: white;
@@ -97,11 +96,6 @@ html {
 }
 
 /* F */
-
-.flex {
-  display: flex;
-  flex-direction: row;
-}
 
 footer {
   align-items: center;
@@ -149,6 +143,10 @@ form {
   color: var(--dark);
 }
 
+.fornLengthButton {
+  min-width: 200px;
+}
+
 .item-btn,
 .footer-btn {
   display: inline-flex;
@@ -170,6 +168,12 @@ form {
   outline: 2px solid var(--accent);
   border: none;
   color: var(--accent);
+}
+
+.formGroup {
+  padding: 0;
+  min-width: 300px;
+  margin: auto;
 }
 
 .formStyle {
@@ -216,9 +220,12 @@ label {
 
 .main {
   width: 100vw;
-  padding: 0;
-  margin: 100px 0 0 0;
-  height: 100vh;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-y: auto;
 }
 
 /* N */
@@ -279,20 +286,22 @@ p {
 /* T */
 
 .table-responsive {
-  overflow-x: auto;
   width: 100%;
+  max-width: 100vw;
+  overflow-x: auto;
+  margin: auto;
 }
 
-.table {
+table {
   width: 100%;
-  min-width: 600px;
+  min-width: 300px;
   text-align: left;
 }
 
 td,
 th {
   white-space: nowrap;
-  text-align: left; /* Ensures left alignment */
+  text-align: left;
 }
 
 th {
@@ -312,7 +321,6 @@ tr {
 }
 
 .truncate {
-  -ms-text-overflow: ellipsis;
   max-width: 250px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -320,9 +328,11 @@ tr {
 }
 
 .truncate:hover {
-  overflow: visible;
+  overflow: hidden;
   background-color: var(--dark);
-  white-space: wrap;
+  white-space: normal;
+  text-overflow: clip;
+  width: auto;
 }
 
 /* Media Queries*/
@@ -366,36 +376,48 @@ tr {
   }
 
   .truncate {
-    width: 250px;
+    max-width: 250px;
+    white-space: nowrap;
   }
 }
 
 @media screen and (width: 768px) {
   img {
-    width: 50%;
+    width: 100%;
     height: auto;
   }
 
   table {
-    padding: 10px;
     width: 100%;
-    display: block;
     overflow-x: auto;
   }
 
   .truncate {
-    width: 200px;
+    max-width: 200px;
+    white-space: normal;
   }
 
   td,
   th {
     word-break: break-word;
-    min-width: 100px;
     padding: 5px;
-    flex: 1;
+    margin: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 100px;
+    text-wrap: nowrap;
+  }
+}
+
+/* Media Queries*/
+@media screen and (min-width: 425px) {
+  img {
+    min-width: 150px;
+    height: auto;
   }
 
+  th,
   td {
-    text-wrap: nowrap;
+    padding: 5px;
   }
 }

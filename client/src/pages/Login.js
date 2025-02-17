@@ -61,81 +61,83 @@ function Login() {
   return (
     <Container>
       <div className="main">
-        <h1 className="text-center">Login</h1>
-        {data ? (
-          <p className="text-center">Success! Logging you in</p>
-        ) : (
-          <Form
-            validated={validated}
-            onSubmit={submitForm}
-            className="mx-auto col-sm-12 col-md-9 col-lg-6"
-          >
-            <Form.Group>
-              <Form.Label className="text-left"> Email address</Form.Label>
-              <Form.Control
-                className="inputField"
-                type="email"
-                name="email"
-                value={formInput.email || ""}
-                placeholder="Enter email"
-                onChange={inputChange}
-                required
-              />
-            </Form.Group>
+        <div className="flex-col">
+          <h1 className="text-center">Login</h1>
+          {data ? (
+            <p className="text-center">Success! Logging you in</p>
+          ) : (
+            <Form
+              validated={validated}
+              onSubmit={submitForm}
+              className="mx-auto"
+            >
+              <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-6 mx-auto">
+                <Form.Label> Email address</Form.Label>
+                <Form.Control
+                  className="inputField"
+                  type="email"
+                  name="email"
+                  value={formInput.email || ""}
+                  placeholder="Enter email"
+                  onChange={inputChange}
+                  required
+                />
+              </Form.Group>
 
-            {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
-              <div className="text-center errMessage">
-                {"Invalid email entered"}
+              {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
+                <div className="text-center errMessage">
+                  {"Invalid email entered"}
+                </div>
+              ) : (
+                ""
+              )}
+
+              <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-6 mx-auto">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  className="inputField"
+                  type="password"
+                  name="password"
+                  value={formInput.password || ""}
+                  placeholder="Password"
+                  onChange={inputChange}
+                  required
+                />
+              </Form.Group>
+
+              {formInput.password !== "" && formInput.password.length < 8 ? (
+                <div className="text-center errMessage">
+                  {"Password must be minimum 8 characters"}
+                </div>
+              ) : (
+                ""
+              )}
+
+              {infoMessage && (
+                <div className="text-center errMessage">{infoMessage}</div>
+              )}
+
+              <div className="text-center">
+                <Button
+                  type="submit"
+                  className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto my-4  fornLengthButton"
+                  disabled={!(formInput.email && formInput.password)}
+                >
+                  Login
+                </Button>
               </div>
-            ) : (
-              ""
-            )}
 
-            <Form.Group>
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                className="inputField"
-                type="password"
-                name="password"
-                value={formInput.password || ""}
-                placeholder="Password"
-                onChange={inputChange}
-                required
-              />
-            </Form.Group>
-
-            {formInput.password !== "" && formInput.password.length < 8 ? (
-              <div className="text-center errMessage">
-                {"Password must be minimum 8 characters"}
+              <div className="text-center">
+                <Button
+                  className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto fornLengthButton"
+                  onClick={signup}
+                >
+                  Sign Up instead
+                </Button>
               </div>
-            ) : (
-              ""
-            )}
-
-            {infoMessage && (
-              <div className="text-center errMessage">{infoMessage}</div>
-            )}
-
-            <div className="text-center">
-              <Button
-                type="submit"
-                className="btn form-btn col-sm-12 col-md-8 col-lg-4 my-4"
-                disabled={!(formInput.email && formInput.password)}
-              >
-                Login
-              </Button>
-            </div>
-
-            <div className="text-center">
-              <Button
-                className="btn form-btn col-sm-12 col-md-8 col-lg-4 mb-2"
-                onClick={signup}
-              >
-                Sign Up instead
-              </Button>
-            </div>
-          </Form>
-        )}
+            </Form>
+          )}
+        </div>
       </div>
     </Container>
   );
