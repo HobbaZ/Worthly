@@ -20,19 +20,23 @@ const SearchItemsForm = () => {
     itemImages: "",
     purchaseDate: "",
   });
+
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState({
     itemName: "",
-    userPaid: 0.01,
+    purchasePrice: 0.01,
   });
-  let [dateInput, setDateInput] = useState();
+
+  const selectedDate = searchInput.purchaseDate
+    ? new Date(searchInput.purchaseDate + "T00:00:00")
+    : null;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   const [validated] = useState(false);
 
   const [loading, setIsLoading] = useState(false);
-
-  const today = new Date();
-  const dateInputFormat = new Date(dateInput);
 
   const [saveItem] = useMutation(SAVE_ITEM);
 
@@ -55,18 +59,21 @@ const SearchItemsForm = () => {
     setSearchClicked(false); // Reset searchClicked before a new search starts
 
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (
+      form.checkValidity() === false ||
+      searchInput.purchasePrice < 0.01 ||
+      !searchInput.itemName.trim() ||
+      (selectedDate && selectedDate > today)
+    ) {
       event.stopPropagation();
       return;
     }
-
-    if (!searchInput) return false;
 
     try {
       setIsLoading(true);
 
       const response = await fetch(
-        `https://api.countdownapi.com/request?api_key=${apiKey}&type=search&ebay_domain=ebay.com.au&search_term=${searchInput.itemName}&sold_items=true&completed_items=true&sort_by=price_high_to_low`
+        `https://api.countdownapi.com/request?api_key=${apiKey}&type=search&ebay_domain=ebay.com.au&search_term=${searchInput.itemName.trim()}&sold_items=true&completed_items=true&sort_by=price_high_to_low`,
       );
 
       if (!response.ok) {
@@ -85,11 +92,11 @@ const SearchItemsForm = () => {
         quantity: search_results.length,
         itemImages: search_results[0]?.image || "",
         price: parseFloat(ave),
-        purchasePrice: parseFloat(searchInput.userPaid),
-        purchaseDate: dateInput,
+        purchasePrice: parseFloat(searchInput.purchasePrice),
+        purchaseDate: searchInput.purchaseDate,
       });
 
-      setSearcheditems(searchData);
+      setSearcheditems(searchData());
       setSearchClicked(true); // Set searchClicked to true after search completes
     } catch (err) {
       console.error(err);
@@ -119,23 +126,6 @@ const SearchItemsForm = () => {
       <Container>
         <div className="main">
           <div className="flex-col">
-            {/*<div className="w-50 mx-auto">
-            <h3>Search Tips...</h3>
-            <p>
-              Include specific search terms like the item's brand, colour, size
-              and model number instead of more vague search terms like colour
-              and type of item.
-              <br />
-              <br />
-              To search for one word or another, put the words in parentheses
-              divided by commas, e.g. [Volkswagen, VW].
-              <br />
-              <br />
-              Put double quotes around the search to search for the exact words
-              in the exact order.
-            </p>
-          </div>*/}
-
             <h1 className="text-center">Search For Items</h1>
             <Form
               validated={validated}
@@ -162,15 +152,17 @@ const SearchItemsForm = () => {
                   className="inputField"
                   type="number"
                   placeholder="Cost of Item"
-                  name="userPaid"
+                  name="purchasePrice"
                   onChange={handleInputChange}
                   required
-                  minLength={1}
-                  value={searchInput.userPaid || ""}
+                  min={0.01}
+                  step={0.01}
+                  value={searchInput.purchasePrice || ""}
                 ></Form.Control>
               </Form.Group>
 
-              {searchInput.userPaid !== null && searchInput.userPaid < 0.01 ? (
+              {searchInput.purchasePrice !== null &&
+              searchInput.purchasePrice < 0.01 ? (
                 <div className="text-center errMessage">
                   Cost of item can't be under $0.01
                 </div>
@@ -187,19 +179,22 @@ const SearchItemsForm = () => {
                     placeholder="dd/mm/yyyy"
                     name="purchaseDate"
                     onChange={(e) => {
-                      setDateInput(e.target.value);
+                      setSearchInput({
+                        ...searchInput,
+                        purchaseDate: e.target.value,
+                      });
                     }}
-                    value={dateInput || ""}
+                    value={searchInput.purchaseDate || ""}
                   ></Form.Control>
                 </Form.Group>
               ) : null}
 
               {/*Use UTC value for ease of comparison*/}
-              {dateInputFormat.getTime() > today.getTime() ? (
+              {selectedDate && selectedDate > today && (
                 <div className="text-center errMessage">
                   Date can't be in the future
                 </div>
-              ) : null}
+              )}
 
               {infoMessage && (
                 <div className="text-center errMessage">{infoMessage}</div>
@@ -208,7 +203,11 @@ const SearchItemsForm = () => {
               <div className="text-center">
                 <Button
                   className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-3 mx-auto my-4 fornLengthButton"
-                  disabled={!(searchInput.itemName && searchInput.userPaid)}
+                  disabled={
+                    !searchInput.itemName.trim() ||
+                    searchInput.purchasePrice < 0.01 ||
+                    (selectedDate && selectedDate > today)
+                  }
                   type="submit"
                 >
                   {loading ? <>Loading...</> : <>Search</>}
@@ -220,7 +219,7 @@ const SearchItemsForm = () => {
                 <SearchResults
                   searchedItems={searchedItems}
                   searchInput={searchInput}
-                  dateInputFormat={dateInputFormat}
+                  dateInputFormat={selectedDate}
                   handleSaveItem={handleSaveItem}
                   itemMessage={itemMessage}
                 />

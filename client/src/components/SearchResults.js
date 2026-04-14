@@ -37,7 +37,7 @@ export default function SearchResults({
           </h4>
         )}
         {/* Quantity */}
-        {quantity > 0 && <h4>{quantity} results</h4>}
+        {quantity > 0 && <h4>{quantity} items for sale</h4>}
         {/* Purchase Price */}
 
         <p>Purchase Price: ${purchasePrice.toFixed(2)}</p>

@@ -3,32 +3,33 @@ import { Profit } from "./Profit";
 
 // Calculate total average sell value of all items
 const totalValue = (userData) => {
-  return userData.savedItems
-    ?.reduce((total, item) => total + parseFloat(item.price || 0), 0)
-    .toFixed(2);
+  return (
+    userData.savedItems?.reduce(
+      (total, item) => total + parseFloat(item.price || 0),
+      0,
+    ) || 0
+  );
 };
 
 const sort = (userData) => {
-  if (!userData.savedItems?.length) return [0, 0];
+  const items = userData.savedItems || [];
+  if (items.length === 0) return [0, 0];
 
-  const profits = userData.savedItems.map((item) =>
-    Profit(item.price, item.purchasePrice)
-  );
+  const profits = items.map((item) => Profit(item.price, item.purchasePrice));
 
-  let most = Math.max(...profits);
-  let loss = Math.min(...profits);
+  const maxProfit = Math.max(...profits);
+  const minProfit = Math.min(...profits);
 
-  // If there's only one item, adjust values accordingly
-  if (profits.length === 1) {
-    if (most > 0) loss = 0;
-    if (loss < 0) most = 0;
-  }
+  const biggestProfit = maxProfit > 0 ? maxProfit : 0;
+  const biggestLoss = minProfit < 0 ? minProfit : 0;
 
-  return [most, loss];
+  return [biggestProfit, biggestLoss];
 };
 
 export default function Networth({ userData }) {
   let totalProfit = TotalProfit(userData.savedItems);
+
+  const [biggestProfit, biggestLoss] = sort(userData);
 
   return (
     <>
@@ -38,12 +39,12 @@ export default function Networth({ userData }) {
         <p>
           Total Paid: $
           {(parseFloat(totalValue(userData)) - parseFloat(totalProfit)).toFixed(
-            2
+            2,
           )}
           <br />
-          Biggest Profit: ${sort(userData)[0]}
+          Biggest Profit: ${biggestProfit.toFixed(2)}
           <br />
-          Biggest Loss: ${sort(userData)[1]}
+          Biggest Loss: ${biggestLoss.toFixed(2)}
           <br />
           Total Value: ${totalValue(userData)} <br />
           Total Profit: ${totalProfit}

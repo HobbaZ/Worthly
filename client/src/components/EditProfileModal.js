@@ -13,7 +13,7 @@ export default function EditProfileModal({ user, show, onClose, updateUser }) {
             </Modal.Title>
 
             <Button
-              variant="danger"
+              variant="btn-danger"
               onClick={onClose}
               className="close"
               aria-label="close"

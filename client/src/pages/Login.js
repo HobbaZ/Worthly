@@ -15,7 +15,6 @@ const signup = () => {
 function Login() {
   const [formInput, setFormInput] = useState({ email: "", password: "" });
   const [login, { data }] = useMutation(LOGIN_USER);
-  const [validated] = useState(false);
 
   // update state based on form input changes
   function inputChange(event) {
@@ -34,14 +33,14 @@ function Login() {
   const submitForm = async (event) => {
     event.preventDefault();
 
-    if (!formInput) {
-      return false;
-    }
+    const isInvalid =
+      !EmailRegex.test(formInput.email) || formInput.password.length < 8;
 
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (form.checkValidity() === false || isInvalid) {
       event.preventDefault();
       event.stopPropagation();
+      return;
     }
 
     //Send data to login endpoint
@@ -66,11 +65,7 @@ function Login() {
           {data ? (
             <p className="text-center">Success! Logging you in</p>
           ) : (
-            <Form
-              validated={validated}
-              onSubmit={submitForm}
-              className="mx-auto"
-            >
+            <Form onSubmit={submitForm} className="mx-auto">
               <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-6 mx-auto">
                 <Form.Label> Email address</Form.Label>
                 <Form.Control
@@ -121,7 +116,9 @@ function Login() {
                 <Button
                   type="submit"
                   className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto my-4  fornLengthButton"
-                  disabled={!(formInput.email && formInput.password)}
+                  disabled={
+                    !(formInput.email.trim() && formInput.password.trim())
+                  }
                 >
                   Login
                 </Button>

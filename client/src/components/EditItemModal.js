@@ -11,7 +11,7 @@ export default function EditItemModal({ show, onClose, item, updateItem }) {
             <Modal.Title className="font-weight-bold">Editing Item</Modal.Title>
 
             <Button
-              variant="danger"
+              variant="btn-danger"
               onClick={onClose}
               className="close"
               aria-label="close"

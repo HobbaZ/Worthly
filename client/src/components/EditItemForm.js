@@ -4,7 +4,6 @@ import UpdateItem from "./UpdateItem";
 import AuthLogin from "./AuthLogin";
 
 export default function EditItemForm({ item, onClose, updateItem }) {
-  const [validated, setValidated] = useState(false);
   const [formInput, setFormInput] = useState({
     itemName: ``,
     purchaseDate: ``,
@@ -39,7 +38,7 @@ export default function EditItemForm({ item, onClose, updateItem }) {
   const cancelChanges = () => {
     setFormInput({
       itemName: item.itemName,
-      purchaseDate: item.purchaseDate,
+      purchaseDate: item.purchaseDate ? item.purchaseDate.split("T")[0] : "",
       purchasePrice: item.purchasePrice,
     });
     onClose();
@@ -49,7 +48,12 @@ export default function EditItemForm({ item, onClose, updateItem }) {
     event.preventDefault();
 
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (
+      form.checkValidity() === false ||
+      formInput.purchasePrice < 0.01 ||
+      !formInput.itemName.trim() ||
+      (selectedDate && selectedDate > today)
+    ) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -65,18 +69,12 @@ export default function EditItemForm({ item, onClose, updateItem }) {
       purchasePrice: parseFloat(formInput.purchasePrice),
     };
 
-    setValidated(true);
-
     //Send data to update endpoint
     UpdateItem(item._id, updatedData, setInfoMessage, setFormInput, updateItem);
   };
 
   return (
-    <Form
-      validated={validated}
-      onSubmit={handleFormSubmit}
-      className="editform mx-auto col-12"
-    >
+    <Form onSubmit={handleFormSubmit} className="editform mx-auto col-12">
       <Form.Group>
         <Form.Label>Update Item Name</Form.Label>
         <Form.Control
@@ -100,7 +98,8 @@ export default function EditItemForm({ item, onClose, updateItem }) {
           name="purchasePrice"
           onChange={handleInputChange}
           required
-          minLength={1}
+          min={0.01}
+          step={0.01}
           value={formInput.purchasePrice !== "" ? formInput.purchasePrice : ""}
         ></Form.Control>
       </Form.Group>
@@ -142,6 +141,11 @@ export default function EditItemForm({ item, onClose, updateItem }) {
           type="submit"
           className=" btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto my-4 fornLengthButton"
           aria-label="update and close"
+          disabled={
+            !formInput.itemName ||
+            formInput.purchasePrice < 0.01 ||
+            (selectedDate && selectedDate > today)
+          }
         >
           Update
         </Button>

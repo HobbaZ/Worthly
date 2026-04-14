@@ -28,6 +28,15 @@ export default function EditProfileForm({ user, onClose, updateUser }) {
 
   const submitForm = async (event) => {
     event.preventDefault();
+
+    const isInvalid =
+      formInput.username.length < 2 || !EmailRegex.test(formInput.email);
+
+    if (isInvalid) {
+      setInfoMessage("Please fix the errors above");
+      return; // 🔥 stop submission
+    }
+
     setSubmittingForm(true);
 
     AuthLogin(setInfoMessage);
@@ -44,73 +53,69 @@ export default function EditProfileForm({ user, onClose, updateUser }) {
   };
 
   return (
-    <Container>
-      <Form onSubmit={submitForm} className="editform mx-auto col-12">
-        <Form.Group className="mb-3" disabled={submittingForm}>
-          <Form.Label>Update Username</Form.Label>
-          <Form.Control
-            className="inputField"
-            type="text"
-            name="username"
-            value={formInput.username || user.username}
-            placeholder={user.username}
-            onChange={handleChange}
-            minLength={2}
-          />
-        </Form.Group>
+    <Form onSubmit={submitForm} className="editform mx-auto col-12">
+      <Form.Group className="mb-3" disabled={submittingForm}>
+        <Form.Label>Update Username</Form.Label>
+        <Form.Control
+          className="inputField"
+          type="text"
+          name="username"
+          value={formInput.username || ""}
+          placeholder={user.username}
+          onChange={handleChange}
+          minLength={2}
+        />
+      </Form.Group>
 
-        {formInput.username !== "" && formInput.username.length < 2 ? (
-          <div className="text-center errMessage">
-            {"Username must be minimum 2 characters"}
-          </div>
-        ) : (
-          ""
-        )}
-
-        <Form.Group className="mb-3" disabled={submittingForm}>
-          <Form.Label>Update Email address</Form.Label>
-          <Form.Control
-            className="inputField"
-            type="email"
-            name="email"
-            value={formInput.email || user.email}
-            placeholder={user.email}
-            onChange={handleChange}
-            minLength={2}
-          />
-        </Form.Group>
-
-        {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
-          <div className="text-center errMessage">
-            {"Invalid email entered"}
-          </div>
-        ) : (
-          ""
-        )}
-
-        {infoMessage && (
-          <div className="text-center errMessage">{infoMessage}</div>
-        )}
-
-        <div className="text-center">
-          <Button
-            type="submit"
-            className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 my-4 mx-auto fornLengthButton"
-          >
-            Update
-          </Button>
+      {formInput.username !== "" && formInput.username.length < 2 ? (
+        <div className="text-center errMessage">
+          {"Username must be minimum 2 characters"}
         </div>
+      ) : (
+        ""
+      )}
 
-        <div className="text-center">
-          <Button
-            className=" btn btn-danger col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto fornLengthButton"
-            aria-label="cancel and close"
-            onClick={cancelChanges}
-          >
-            Cancel
-          </Button>
-        </div>
-      </Form>
-    </Container>
+      <Form.Group className="mb-3" disabled={submittingForm}>
+        <Form.Label>Update Email address</Form.Label>
+        <Form.Control
+          className="inputField"
+          type="email"
+          name="email"
+          value={formInput.email || ""}
+          placeholder={user.email}
+          onChange={handleChange}
+          minLength={2}
+        />
+      </Form.Group>
+
+      {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
+        <div className="text-center errMessage">{"Invalid email entered"}</div>
+      ) : (
+        ""
+      )}
+
+      {infoMessage && (
+        <div className="text-center errMessage">{infoMessage}</div>
+      )}
+
+      <div className="text-center">
+        <Button
+          type="submit"
+          className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 my-4 mx-auto fornLengthButton"
+        >
+          Update
+        </Button>
+      </div>
+
+      <div className="text-center">
+        <Button
+          className=" btn btn-danger col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto fornLengthButton"
+          aria-label="cancel and close"
+          onClick={cancelChanges}
+        >
+          Cancel
+        </Button>
+      </div>
+    </Form>
   );
 }
