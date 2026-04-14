@@ -4,25 +4,27 @@ import UpdateItem from "./UpdateItem";
 import AuthLogin from "./AuthLogin";
 
 export default function EditItemForm({ item, onClose, updateItem }) {
-  const [validated] = useState(false);
+  const [validated, setValidated] = useState(false);
   const [formInput, setFormInput] = useState({
     itemName: ``,
     purchaseDate: ``,
     purchasePrice: 0,
   });
 
-  let [dateInput, setDateInput] = useState();
+  const selectedDate = formInput.purchaseDate
+    ? new Date(formInput.purchaseDate + "T00:00:00")
+    : null;
+
   const today = new Date();
-  const dateInputFormat = new Date(dateInput);
+  today.setHours(0, 0, 0, 0);
 
   useEffect(() => {
     if (item) {
       setFormInput({
         itemName: item.itemName || "",
-        purchaseDate: item.purchaseDate || "",
+        purchaseDate: item.purchaseDate ? item.purchaseDate.split("T")[0] : "",
         purchasePrice: item.purchasePrice || 0,
       });
-      setDateInput(item.purchaseDate || "");
     }
   }, [item]);
 
@@ -50,22 +52,23 @@ export default function EditItemForm({ item, onClose, updateItem }) {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+      return;
     }
 
     //Send data to update user endpoint
     AuthLogin(setInfoMessage);
 
-    const editedProperties = () => ({
+    const updatedData = {
       _id: item._id,
       itemName: formInput.itemName,
       purchaseDate: formInput.purchaseDate,
       purchasePrice: parseFloat(formInput.purchasePrice),
-    });
+    };
 
-    setFormInput(editedProperties());
+    setValidated(true);
 
     //Send data to update endpoint
-    UpdateItem(item._id, formInput, setInfoMessage, setFormInput, updateItem);
+    UpdateItem(item._id, updatedData, setInfoMessage, setFormInput, updateItem);
   };
 
   return (
@@ -111,23 +114,24 @@ export default function EditItemForm({ item, onClose, updateItem }) {
       <Form.Group>
         <Form.Label>Update Purchase Date</Form.Label>
         <Form.Control
-          className="inputField"
           type="date"
-          placeholder={dateInput}
           name="purchaseDate"
           onChange={(e) => {
-            setDateInput(e.target.value);
+            setFormInput({
+              ...formInput,
+              purchaseDate: e.target.value,
+            });
           }}
-          value={formInput.purchaseDate !== "" ? formInput.purchaseDate : ""}
-        ></Form.Control>
+          value={formInput.purchaseDate || ""}
+        />
       </Form.Group>
 
       {/*Use UTC value for ease of comparison*/}
-      {dateInputFormat.getTime() > today.getTime() ? (
+      {selectedDate && selectedDate > today && (
         <div className="text-center errMessage">
           Date can't be in the future
         </div>
-      ) : null}
+      )}
 
       {infoMessage && (
         <div className="text-center errMessage">{infoMessage}</div>
