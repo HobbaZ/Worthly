@@ -8,7 +8,12 @@ import Auth from "../utils/auth";
 
 import { Container, Button, Form } from "react-bootstrap";
 
-import { EmailRegex } from "../components/EmailRegex";
+import { EmailRegex, isInvalid } from "../components/EmailRegex";
+import {
+  EmailError,
+  PasswordError,
+  UsernameError,
+} from "../components/ErrorMessages";
 
 function login() {
   window.location.replace("/login");
@@ -41,7 +46,7 @@ function SignupForm() {
     event.preventDefault();
 
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (form.checkValidity() === false || isInvalid(formInput)) {
       event.preventDefault();
       event.stopPropagation();
     }
@@ -90,13 +95,7 @@ function SignupForm() {
                 />
               </Form.Group>
 
-              {formInput.username !== "" && formInput.username.length < 2 ? (
-                <div className="text-center errMessage">
-                  {"Username must be minimum 2 characters"}
-                </div>
-              ) : (
-                ""
-              )}
+              <UsernameError username={formInput.username} />
 
               <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-4 mx-auto">
                 <Form.Label>Create a Password</Form.Label>
@@ -112,13 +111,7 @@ function SignupForm() {
                 />
               </Form.Group>
 
-              {formInput.password !== "" && formInput.password.length < 8 ? (
-                <div className="text-center errMessage">
-                  {"Password must be minimum 8 characters"}
-                </div>
-              ) : (
-                ""
-              )}
+              <PasswordError password={formInput.password} />
 
               <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-4 mx-auto">
                 <Form.Label>Enter your Email</Form.Label>
@@ -134,13 +127,7 @@ function SignupForm() {
                 />
               </Form.Group>
 
-              {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
-                <div className="text-center errMessage">
-                  {"Invalid email entered"}
-                </div>
-              ) : (
-                ""
-              )}
+              <EmailError email={formInput.email} />
 
               {infoMessage && (
                 <div className="text-center errMessage">{infoMessage}</div>

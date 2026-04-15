@@ -1,8 +1,9 @@
-import { Button, Container, Form } from "react-bootstrap";
-import { EmailRegex } from "../components/EmailRegex.js";
+import { Button, Form } from "react-bootstrap";
+import { EmailError, UsernameError } from "./ErrorMessages.js";
 import { useState, useEffect } from "react";
 import UpdateUser from "./UpdateUser.js";
 import AuthLogin from "./AuthLogin.js";
+import { isUpdateUserInvalid } from "./EmailRegex.js";
 
 export default function EditProfileForm({ user, onClose, updateUser }) {
   const [submittingForm, setSubmittingForm] = useState(false);
@@ -29,12 +30,9 @@ export default function EditProfileForm({ user, onClose, updateUser }) {
   const submitForm = async (event) => {
     event.preventDefault();
 
-    const isInvalid =
-      formInput.username.length < 2 || !EmailRegex.test(formInput.email);
-
-    if (isInvalid) {
+    if (isUpdateUserInvalid) {
       setInfoMessage("Please fix the errors above");
-      return; // 🔥 stop submission
+      return;
     }
 
     setSubmittingForm(true);
@@ -67,13 +65,7 @@ export default function EditProfileForm({ user, onClose, updateUser }) {
         />
       </Form.Group>
 
-      {formInput.username !== "" && formInput.username.length < 2 ? (
-        <div className="text-center errMessage">
-          {"Username must be minimum 2 characters"}
-        </div>
-      ) : (
-        ""
-      )}
+      <UsernameError username={formInput.username} />
 
       <Form.Group className="mb-3" disabled={submittingForm}>
         <Form.Label>Update Email address</Form.Label>
@@ -88,11 +80,7 @@ export default function EditProfileForm({ user, onClose, updateUser }) {
         />
       </Form.Group>
 
-      {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
-        <div className="text-center errMessage">{"Invalid email entered"}</div>
-      ) : (
-        ""
-      )}
+      <EmailError email={formInput.email} />
 
       {infoMessage && (
         <div className="text-center errMessage">{infoMessage}</div>

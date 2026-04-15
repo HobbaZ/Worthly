@@ -7,6 +7,7 @@ import SearchResults from "../components/SearchResults";
 import { AvePrice } from "../components/AvePrice";
 import { Percentage } from "../components/Percentage";
 import AuthLogin from "../components/AuthLogin";
+import { DateError, getToday, PriceError } from "../components/ErrorMessages";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -63,7 +64,7 @@ const SearchItemsForm = () => {
       form.checkValidity() === false ||
       searchInput.purchasePrice < 0.01 ||
       !searchInput.itemName.trim() ||
-      (selectedDate && selectedDate > today)
+      (selectedDate && selectedDate > getToday())
     ) {
       event.stopPropagation();
       return;
@@ -161,14 +162,7 @@ const SearchItemsForm = () => {
                 ></Form.Control>
               </Form.Group>
 
-              {searchInput.purchasePrice !== null &&
-              searchInput.purchasePrice < 0.01 ? (
-                <div className="text-center errMessage">
-                  Cost of item can't be under $0.01
-                </div>
-              ) : (
-                ""
-              )}
+              <PriceError price={searchInput.purchasePrice} />
 
               {Auth.loggedIn() ? (
                 <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-4 mx-auto">
@@ -189,12 +183,7 @@ const SearchItemsForm = () => {
                 </Form.Group>
               ) : null}
 
-              {/*Use UTC value for ease of comparison*/}
-              {selectedDate && selectedDate > today && (
-                <div className="text-center errMessage">
-                  Date can't be in the future
-                </div>
-              )}
+              <DateError date={searchInput.purchaseDate} />
 
               {infoMessage && (
                 <div className="text-center errMessage">{infoMessage}</div>
@@ -206,7 +195,7 @@ const SearchItemsForm = () => {
                   disabled={
                     !searchInput.itemName.trim() ||
                     searchInput.purchasePrice < 0.01 ||
-                    (selectedDate && selectedDate > today)
+                    (selectedDate && selectedDate > getToday())
                   }
                   type="submit"
                 >

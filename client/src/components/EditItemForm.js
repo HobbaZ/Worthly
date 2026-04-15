@@ -2,6 +2,7 @@ import { Form, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import UpdateItem from "./UpdateItem";
 import AuthLogin from "./AuthLogin";
+import { DateError, selectedDate, getToday } from "./ErrorMessages";
 
 export default function EditItemForm({ item, onClose, updateItem }) {
   const [formInput, setFormInput] = useState({
@@ -9,13 +10,6 @@ export default function EditItemForm({ item, onClose, updateItem }) {
     purchaseDate: ``,
     purchasePrice: 0,
   });
-
-  const selectedDate = formInput.purchaseDate
-    ? new Date(formInput.purchaseDate + "T00:00:00")
-    : null;
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
 
   useEffect(() => {
     if (item) {
@@ -52,7 +46,7 @@ export default function EditItemForm({ item, onClose, updateItem }) {
       form.checkValidity() === false ||
       formInput.purchasePrice < 0.01 ||
       !formInput.itemName.trim() ||
-      (selectedDate && selectedDate > today)
+      (selectedDate && selectedDate > getToday())
     ) {
       event.preventDefault();
       event.stopPropagation();
@@ -125,12 +119,7 @@ export default function EditItemForm({ item, onClose, updateItem }) {
         />
       </Form.Group>
 
-      {/*Use UTC value for ease of comparison*/}
-      {selectedDate && selectedDate > today && (
-        <div className="text-center errMessage">
-          Date can't be in the future
-        </div>
-      )}
+      <DateError date={formInput.purchaseDate} />
 
       {infoMessage && (
         <div className="text-center errMessage">{infoMessage}</div>
@@ -144,7 +133,7 @@ export default function EditItemForm({ item, onClose, updateItem }) {
           disabled={
             !formInput.itemName ||
             formInput.purchasePrice < 0.01 ||
-            (selectedDate && selectedDate > today)
+            (selectedDate && selectedDate > getToday())
           }
         >
           Update

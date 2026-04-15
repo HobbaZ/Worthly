@@ -37,16 +37,16 @@ export default function Networth({ userData }) {
       <div className="mx-auto col-sm-12 col-md-8 col-lg-4">
         <h4 className="font-weight-bold"> My Item Networth</h4>
         <p>
-          Total Paid: $
-          {(parseFloat(totalValue(userData)) - parseFloat(totalProfit)).toFixed(
-            2,
-          )}
-          <br />
           Biggest Profit: ${biggestProfit.toFixed(2)}
           <br />
           Biggest Loss: ${biggestLoss.toFixed(2)}
           <br />
-          Total Value: ${totalValue(userData)} <br />
+          Total Item Value: ${totalValue(userData)} <br />
+          Total Purchase Price: $
+          {(parseFloat(totalValue(userData)) - parseFloat(totalProfit)).toFixed(
+            2,
+          )}
+          <br />
           Total Profit: ${totalProfit}
         </p>
       </div>

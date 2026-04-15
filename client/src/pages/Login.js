@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
-import { EmailRegex } from "../components/EmailRegex";
+import { isInvalid } from "../components/EmailRegex";
+import { EmailError, PasswordError } from "../components/ErrorMessages";
 
 import Auth from "../utils/auth";
 
@@ -33,11 +34,8 @@ function Login() {
   const submitForm = async (event) => {
     event.preventDefault();
 
-    const isInvalid =
-      !EmailRegex.test(formInput.email) || formInput.password.length < 8;
-
     const form = event.currentTarget;
-    if (form.checkValidity() === false || isInvalid) {
+    if (form.checkValidity() === false || isInvalid(formInput)) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -79,13 +77,7 @@ function Login() {
                 />
               </Form.Group>
 
-              {!EmailRegex.test(formInput.email) && formInput.email !== "" ? (
-                <div className="text-center errMessage">
-                  {"Invalid email entered"}
-                </div>
-              ) : (
-                ""
-              )}
+              <EmailError email={formInput.email} />
 
               <Form.Group className="formGroup col-xs-10 col-sm-12 col-md-6 col-lg-4 col-xl-6 mx-auto">
                 <Form.Label>Password</Form.Label>
@@ -100,13 +92,7 @@ function Login() {
                 />
               </Form.Group>
 
-              {formInput.password !== "" && formInput.password.length < 8 ? (
-                <div className="text-center errMessage">
-                  {"Password must be minimum 8 characters"}
-                </div>
-              ) : (
-                ""
-              )}
+              <PasswordError password={formInput.password} />
 
               {infoMessage && (
                 <div className="text-center errMessage">{infoMessage}</div>
@@ -116,9 +102,7 @@ function Login() {
                 <Button
                   type="submit"
                   className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto my-4  fornLengthButton"
-                  disabled={
-                    !(formInput.email.trim() && formInput.password.trim())
-                  }
+                  disabled={isInvalid(formInput)}
                 >
                   Login
                 </Button>
