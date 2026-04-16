@@ -2,8 +2,11 @@ import decode from "jwt-decode";
 
 class AuthService {
   getProfile() {
+    const token = this.getToken();
+    if (!token) return null;
+
     try {
-      return decode(this.getToken());
+      return decode(token);
     } catch (err) {
       console.error("Invalid token:", err);
       return null;
@@ -12,7 +15,14 @@ class AuthService {
 
   loggedIn() {
     const token = this.getToken();
-    return token && !this.isTokenExpired(token);
+    if (!token) return false;
+
+    if (this.isTokenExpired(token)) {
+      this.logout(); // 🔥 auto cleanup
+      return false;
+    }
+
+    return true;
   }
 
   isTokenExpired(token) {

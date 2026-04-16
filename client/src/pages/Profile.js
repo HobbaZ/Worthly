@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Container, Button } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
 import { UPDATE_ME, DELETE_ME } from "../utils/mutations";

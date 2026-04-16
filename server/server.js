@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
@@ -18,26 +19,34 @@ const server = new ApolloServer({
   context: authMiddleware,
 });
 
-server.applyMiddleware({ app });
-
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://worthly.herokuapp.com"
+        : "http://localhost:3000",
+    credentials: true,
+  }),
+);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
   );
   next();
 });
 
+server.applyMiddleware({ app });
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
-}
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  });
+}
 
 db.once("open", () => {
   app.listen(PORT, () => {

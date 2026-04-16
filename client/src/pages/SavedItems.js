@@ -80,7 +80,7 @@ const SavedItems = () => {
                           /* Calculate Profit */
                           let profit = Profit(
                             item.price.toFixed(2),
-                            item.purchasePrice.toFixed(2)
+                            item.purchasePrice.toFixed(2),
                           );
 
                           return (
@@ -118,7 +118,7 @@ const SavedItems = () => {
                                 {item.price &&
                                   Percentage(
                                     profit,
-                                    item.purchasePrice.toFixed(2)
+                                    item.purchasePrice.toFixed(2),
                                   )}
                               </td>
 
@@ -144,7 +144,7 @@ const SavedItems = () => {
                                 <>
                                   <EditItemModal
                                     item={userData.savedItems?.find(
-                                      (i) => i._id === showEditForm
+                                      (i) => i._id === showEditForm,
                                     )}
                                     updateItem={updateItem}
                                     show={showEditForm !== null}

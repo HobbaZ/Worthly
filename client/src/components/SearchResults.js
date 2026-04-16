@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Auth from "../utils/auth";
 import { Percentage } from "./Percentage.js";
@@ -14,6 +15,8 @@ export default function SearchResults({
     searchedItems;
 
   const profit = Profit(price, purchasePrice);
+
+  const [loading, setIsLoading] = useState(false);
 
   return searchedItems && itemName ? (
     <div className="row p-4">
@@ -40,18 +43,19 @@ export default function SearchResults({
         {quantity > 0 && <h4>{quantity} items for sale</h4>}
         {/* Purchase Price */}
 
-        <p>Purchase Price: ${purchasePrice.toFixed(2)}</p>
+        <p>Purchase Price: ${(purchasePrice || 0).toFixed(2)}</p>
 
         {/* Average Sale Price */}
 
         <p>
-          Average Sale Price: ${price} {Percentage(profit, purchasePrice)}
+          Average Sale Price: ${(price || 0).toFixed(2)}{" "}
+          {Percentage(profit, purchasePrice)}
         </p>
-        <p>Profit: ${profit} </p>
+        <p>Profit: ${(profit || 0).toFixed(2)} </p>
 
         {/* Purchase Date (if logged in) */}
         {Auth.loggedIn() && itemName && dateInputFormat && (
-          <p>Purchase Date: {new Date(dateInputFormat).toLocaleDateString()}</p>
+          <p>Purchase Date: {dateInputFormat.toLocaleDateString()}</p>
         )}
         {/* Save Button & Message */}
         {Auth.loggedIn() && itemName && (
@@ -59,9 +63,14 @@ export default function SearchResults({
             <div>
               <Button
                 className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto my-4 fornLengthButton"
-                onClick={handleSaveItem}
+                onClick={async () => {
+                  setIsLoading(true);
+                  await handleSaveItem();
+                  setIsLoading(false);
+                }}
+                disabled={loading}
               >
-                Add to Collection
+                {loading ? <>Adding...</> : <>Add to collection</>}
               </Button>
               {itemMessage && <p className="errMessage">{itemMessage}</p>}
             </div>
