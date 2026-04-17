@@ -41,7 +41,7 @@ export default function Networth({ userData }) {
           <br />
           Biggest Loss: ${biggestLoss.toFixed(2)}
           <br />
-          Total Item Value: ${totalValue(userData)} <br />
+          Total Item Value: ${totalValue(userData).toFixed(2)} <br />
           Total Purchase Price: $
           {(parseFloat(totalValue(userData)) - parseFloat(totalProfit)).toFixed(
             2,

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
-
+import { ItemCount } from "../components/ItemCount.js";
 import Auth from "../utils/auth";
 
 const AppNavbar = () => {
@@ -42,12 +42,13 @@ const AppNavbar = () => {
             {Auth.loggedIn() ? (
               <>
                 <NavLink
-                  className="ml-3 my-2 navLink"
+                  className="ml-3 my-2 navLink d-flex align-items-center badgeCont"
                   to="/saved"
                   data-toggle="collapse"
                   data-target="#navbarNav"
                 >
                   My Collection
+                  <ItemCount />
                 </NavLink>
                 <NavLink
                   className="ml-3 my-2 navLink"

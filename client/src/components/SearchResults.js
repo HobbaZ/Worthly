@@ -18,7 +18,7 @@ export default function SearchResults({
 
   const [loading, setIsLoading] = useState(false);
 
-  return searchedItems && itemName ? (
+  return itemName ? (
     <div className="row p-4">
       {/* Item Image */}
       <div className="col-md text-center">
@@ -43,15 +43,15 @@ export default function SearchResults({
         {quantity > 0 && <h4>{quantity} items for sale</h4>}
         {/* Purchase Price */}
 
-        <p>Purchase Price: ${(purchasePrice || 0).toFixed(2)}</p>
+        <p>Purchase Price: ${Number(purchasePrice || 0).toFixed(2)}</p>
 
         {/* Average Sale Price */}
 
         <p>
-          Average Sale Price: ${(price || 0).toFixed(2)}{" "}
+          Average Sale Price: ${Number(price || 0).toFixed(2)}{" "}
           {Percentage(profit, purchasePrice)}
         </p>
-        <p>Profit: ${(profit || 0).toFixed(2)} </p>
+        <p>Profit: ${Number(profit || 0).toFixed(2)} </p>
 
         {/* Purchase Date (if logged in) */}
         {Auth.loggedIn() && itemName && dateInputFormat && (
@@ -64,11 +64,13 @@ export default function SearchResults({
               <Button
                 className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto my-4 fornLengthButton"
                 onClick={async () => {
-                  setIsLoading(true);
-                  await handleSaveItem();
-                  setIsLoading(false);
+                  try {
+                    setIsLoading(true);
+                    await handleSaveItem();
+                  } finally {
+                    setIsLoading(false);
+                  }
                 }}
-                disabled={loading}
               >
                 {loading ? <>Adding...</> : <>Add to collection</>}
               </Button>

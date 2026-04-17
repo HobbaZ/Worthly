@@ -94,7 +94,10 @@ const SavedItems = () => {
                                 />
                               </td>
 
-                              <td data-label="Item Name">
+                              <td
+                                data-label="Item Name"
+                                className="itemNameCont"
+                              >
                                 <span className="truncate">
                                   {item.itemName}
                                 </span>

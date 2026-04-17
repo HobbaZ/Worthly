@@ -180,7 +180,7 @@ const SearchItemsForm = () => {
                 </Form.Group>
               ) : null}
 
-              <DateError date={searchInput.purchaseDate} />
+              <DateError date={selectedDate} />
 
               {infoMessage && (
                 <div className="text-center errMessage">{infoMessage}</div>
@@ -190,7 +190,7 @@ const SearchItemsForm = () => {
                 <Button
                   className="btn form-btn col-xs-10 col-sm-12 col-md-8 col-lg-6 col-xl-3 mx-auto my-4 fornLengthButton"
                   disabled={
-                    { loading } ||
+                    loading ||
                     !searchInput.itemName.trim() ||
                     searchInput.purchasePrice < 0.01 ||
                     (selectedDate && selectedDate > getToday())
