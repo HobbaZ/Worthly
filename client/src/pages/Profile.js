@@ -9,7 +9,7 @@ import Auth from "../utils/auth";
 import DeleteUser from "../components/DeleteUser";
 
 const Profile = () => {
-  const { data, loading } = useQuery(QUERY_ME);
+  const { data, loading, error } = useQuery(QUERY_ME);
   const userData = data?.me || {};
   const [showEditForm, setShowEditForm] = useState(false);
   const [deleteUser] = useMutation(DELETE_ME);
@@ -28,7 +28,8 @@ const Profile = () => {
           {Auth.loggedIn() ? (
             <>
               <h2 className="text-center my-3">Your Profile</h2>
-              {loading && <p>Loading...</p>}
+              {loading && <p className="text-center">Loading...</p>}
+              {error && <p className="text-center">Error loading profile...</p>}
 
               {/*Greeting import */}
               <div className="mx-auto">

@@ -6,6 +6,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Profile from "./pages/Profile";
@@ -16,15 +17,19 @@ import Home from "./pages/Home";
 import SavedItems from "./pages/SavedItems";
 import Footer from "./components/Footer";
 import AppNavBar from "./components/NavBar";
+import Auth from "./utils/auth";
 
 import "./app.css";
 
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "/graphql"
+      : "http://localhost:3002/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem("id_token");
+  const token = Auth.getToken();
   return {
     headers: {
       ...headers,
@@ -33,8 +38,20 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    graphQLErrors.forEach(({ message }) =>
+      console.error("GraphQL error:", message),
+    );
+  }
+
+  if (networkError) {
+    console.error("Network error:", networkError);
+  }
+});
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: errorLink.concat(authLink.concat(httpLink)),
   cache: new InMemoryCache(),
 });
 
@@ -42,21 +59,17 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div>
-          <AppNavBar />
-          <div>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/search" element={<SearchItems />} />
-              <Route path="/saved" element={<SavedItems />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="*" element={<h1>404! This page doesn't exist</h1>} />
-            </Routes>
-          </div>
-          <Footer />
-        </div>
+        <AppNavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<SearchItems />} />
+          <Route path="/saved" element={<SavedItems />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<h1>404! This page doesn't exist</h1>} />
+        </Routes>
+        <Footer />
       </Router>
     </ApolloProvider>
   );
